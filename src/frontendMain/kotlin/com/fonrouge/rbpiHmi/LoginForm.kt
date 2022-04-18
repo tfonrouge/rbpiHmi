@@ -8,39 +8,36 @@ import io.kvision.panel.hPanel
 
 class LoginForm : SimplePanel() {
 
-    val colW = 4
+    val colW = 3
 
     init {
-        div(className = "container") {
+        var i = 0
 
-            var i = 0
-
-            hPanel {
-                div {
-                    text(label = "Password:")
-                }
-                div {
-                    for (x in 1..3) {
-                        div(className = "row") {
-                            for (y in 1..3) {
-                                ++i
-                                div(className = "col-$colW") {
-                                    val n = i
-                                    button(text = i.toString(), className = "btn-digit").onClick {
-                                        digitPressed(n)
-                                    }
+        hPanel {
+            div {
+                text(label = "Password:")
+            }
+            div(className = "container-xl") {
+                for (x in 1..3) {
+                    div(className = "row") {
+                        for (y in 1..3) {
+                            ++i
+                            div(className = "col-$colW") {
+                                val n = i
+                                button(text = i.toString(), className = "btn-digit").onClick {
+                                    digitPressed(n)
                                 }
                             }
                         }
                     }
-                    div(className = "row") {
-                        div(className = "col-$colW") {
-                            button(text = "0", className = "btn-digit").onClick { digitPressed(0) }
-                        }
-                        div(className = "col-${colW * 2}") {
-                            button(text = "ENTER", className = "btn-digit").onClick {
+                }
+                div(className = "row") {
+                    div(className = "col-$colW") {
+                        button(text = "0", className = "btn-digit").onClick { digitPressed(0) }
+                    }
+                    div(className = "col-${colW * 2}") {
+                        button(text = "ENTER", className = "btn-digit").onClick {
 
-                            }
                         }
                     }
                 }
