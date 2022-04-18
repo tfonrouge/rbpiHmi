@@ -1,8 +1,16 @@
 
+.body {
+    background-color: beige;
+}
+
+.header1 {
+    background-color: cadetblue;
+}
+
 .btn-digit {
     width: 100%;
     /*padding: 1rem;*/
-    font-size: 4rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
     border-radius: 50px;
 }

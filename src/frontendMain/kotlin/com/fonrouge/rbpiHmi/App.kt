@@ -21,7 +21,7 @@ class App : Application() {
 
     override fun start(state: Map<String, Any>) {
         val root = root("kvapp") {
-            header(content = "<h1>HMI v1.0</h1>", rich = true) {
+            header(content = "<h1>HMI v1.0</h1>", rich = true, className = "header1") {
                 align = Align.CENTER
             }
             add(LoginForm())
@@ -29,8 +29,6 @@ class App : Application() {
         AppScope.launch {
             val pingResult = Model.ping("Hello world from client!")
             Toast.info(pingResult)
-            console.warn(pingResult)
-            root.add(Span(pingResult))
         }
     }
 }
