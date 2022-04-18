@@ -1,7 +1,6 @@
 package com.fonrouge.rbpiHmi
 
 import io.kvision.core.AlignItems
-import io.kvision.core.JustifyContent
 import io.kvision.form.text.Password
 import io.kvision.form.text.password
 import io.kvision.html.*
@@ -63,7 +62,11 @@ class LoginForm : SimplePanel() {
     }
 
     private fun digitPressed(i: Int) {
-        password.value += i
-        console.warn("digit pressed:", i)
+        if (password.value == null) {
+            password.value = i.toString()
+        } else {
+            password.value += i
+        }
+        console.warn("digit pressed:", i, "pwd", password.value)
     }
 }
