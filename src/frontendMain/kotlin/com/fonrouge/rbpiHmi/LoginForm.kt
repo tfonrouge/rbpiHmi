@@ -18,7 +18,10 @@ class LoginForm : SimplePanel() {
 
         div(className = "container shadow") {
             div(className = "row") {
-                div(className = "col-4 d-flex align-items-center") {
+                div(className = "col-1") {
+
+                }
+                div(className = "col-5 d-flex align-items-center") {
                     hPanel(alignItems = AlignItems.BASELINE/*,  justify = JustifyContent.SPACEBETWEEN*/) {
                         label(content = "Password:")
                         password = password(value = "")
@@ -27,10 +30,7 @@ class LoginForm : SimplePanel() {
                         }
                     }
                 }
-                div(className = "col-4") {
-                    span(content = "...")
-                }
-                div(className = "col-4") {
+                div(className = "col-5") {
                     div(className = "container") {
                         for (x in 1..3) {
                             div(className = "row") {
@@ -56,6 +56,9 @@ class LoginForm : SimplePanel() {
                             }
                         }
                     }
+                }
+                div(className = "col-1") {
+
                 }
             }
         }

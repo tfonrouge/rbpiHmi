@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* updated">
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/tables/Sensors.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/tables/User.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/LoginForm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/LoginForm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/Model.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/resources/css/kvapp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/resources/css/kvapp.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +80,7 @@
       <recent name="$PROJECT_DIR$/src/frontendMain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run frontendRun">
+  <component name="RunManager" selected="Gradle.Run backendRun">
     <configuration name="Run backendRun" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -187,7 +193,10 @@
       <workItem from="1650219611535" duration="2545000" />
       <workItem from="1650246748694" duration="928000" />
       <workItem from="1650253343483" duration="12500000" />
-      <workItem from="1650315505166" duration="7041000" />
+      <workItem from="1650315505166" duration="11124000" />
+      <workItem from="1650395582977" duration="170000" />
+      <workItem from="1650488277293" duration="569000" />
+      <workItem from="1650492005747" duration="767000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -210,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650322616625</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="* updated">
+      <created>1650323345161</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650323345161</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

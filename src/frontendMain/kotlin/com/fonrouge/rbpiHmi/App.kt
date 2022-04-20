@@ -1,15 +1,16 @@
 package com.fonrouge.rbpiHmi
 
 import io.kvision.*
-import io.kvision.core.AlignContent
-import io.kvision.html.*
+import io.kvision.html.Align
+import io.kvision.html.header
 import io.kvision.panel.root
 import io.kvision.toast.Toast
-import io.kvision.utils.px
+import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 val AppScope = CoroutineScope(window.asCoroutineDispatcher())
 
@@ -28,8 +29,18 @@ class App : Application() {
         }
         AppScope.launch {
             val pingResult = Model.ping("Hello world from client!")
-            Toast.info(pingResult)
+            Toast.info("$pingResult ${getViewport()}")
         }
+    }
+
+    private fun getViewport(): String {
+        // https://stackoverflow.com/a/8876069
+        val width = max(document.documentElement?.clientWidth ?: -1, window.innerWidth)
+        if (width <= 576) return "xs"
+        if (width <= 768) return "sm"
+        if (width <= 992) return "md"
+        if (width <= 1200) return "lg"
+        return "xl"
     }
 }
 
