@@ -97,6 +97,8 @@ kotlin {
         val frontendMain by getting {
             resources.srcDir(webDir)
             dependencies {
+                implementation(npm("react-canvas-gauges", "*"))
+                implementation(npm("prop-types", "*"))
                 implementation("io.kvision:kvision:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap:$kvisionVersion")
                 implementation("io.kvision:kvision-bootstrap-css:$kvisionVersion")
@@ -110,6 +112,7 @@ kotlin {
                 implementation("io.kvision:kvision-simple-select-remote:$kvisionVersion")
                 implementation("io.kvision:kvision-toast:$kvisionVersion")
                 implementation("io.kvision:kvision-print:$kvisionVersion")
+                implementation("io.kvision:kvision-react:$kvisionVersion")
             }
             kotlin.srcDir("build/generated-src/frontend")
         }

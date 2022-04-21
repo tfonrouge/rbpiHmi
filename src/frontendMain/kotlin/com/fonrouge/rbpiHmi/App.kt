@@ -2,7 +2,9 @@ package com.fonrouge.rbpiHmi
 
 import io.kvision.*
 import io.kvision.html.Align
+import io.kvision.html.footer
 import io.kvision.html.header
+import io.kvision.panel.flexPanel
 import io.kvision.panel.root
 import io.kvision.toast.Toast
 import kotlinx.browser.document
@@ -25,7 +27,11 @@ class App : Application() {
             header(content = "<h1>HMI v1.0</h1>", rich = true, className = "header1") {
                 align = Align.CENTER
             }
-            add(LoginForm())
+            add(SensorsForm())
+//            add(LoginForm())
+            footer {
+                add(FooterForm())
+            }
         }
         AppScope.launch {
             val pingResult = Model.ping("Hello world from client!")
