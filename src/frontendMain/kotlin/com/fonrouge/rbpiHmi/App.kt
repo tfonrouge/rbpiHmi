@@ -6,6 +6,8 @@ import io.kvision.html.footer
 import io.kvision.html.header
 import io.kvision.panel.flexPanel
 import io.kvision.panel.root
+import io.kvision.panel.tab
+import io.kvision.panel.tabPanel
 import io.kvision.toast.Toast
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -27,8 +29,17 @@ class App : Application() {
             header(content = "<h1>HMI v1.0</h1>", rich = true, className = "header1") {
                 align = Align.CENTER
             }
-            add(SensorsForm())
-//            add(LoginForm())
+            tabPanel {
+                tab("Main") {
+                    add(SensorsForm())
+                }
+                tab("Sensors") {
+
+                }
+                tab("Config") {
+
+                }
+            }
             footer {
                 add(FooterForm())
             }

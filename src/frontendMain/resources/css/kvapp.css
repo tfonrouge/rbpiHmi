@@ -21,7 +21,7 @@ body {
     border: 1px solid dimgrey;
     padding: 1rem;
     box-shadow: 5px 5px;
-    min-width: 20rem;
+    /*min-width: 20rem;*/
 }
 
 /*div.title1 {*/
@@ -42,11 +42,11 @@ body {
     padding: 5px;
     font-size: 5rem;
     border: 2px solid dimgrey;
-
+    /*background-color: cadetblue;*/
 }
 
 footer .btn {
-    font-size: 5rem;
+    font-size: 3rem;
     min-width: 25rem;
     border-radius: 0;
     /*box-shadow: 5px 5px;*/
