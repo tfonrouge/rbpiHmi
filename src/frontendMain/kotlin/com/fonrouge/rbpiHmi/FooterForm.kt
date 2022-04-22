@@ -4,12 +4,17 @@ import io.kvision.core.AlignItems
 import io.kvision.core.FlexDirection
 import io.kvision.core.FlexWrap
 import io.kvision.core.JustifyContent
+import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.html.button
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.flexPanel
 
 class FooterForm : SimplePanel() {
+
+    lateinit var buttonMain: Button
+    lateinit var buttonSensors: Button
+    lateinit var buttonConfig: Button
 
     init {
         flexPanel(
@@ -21,13 +26,13 @@ class FooterForm : SimplePanel() {
             spacing = 10,
             className = "footer1"
         ) {
-            button("Main", style = ButtonStyle.SECONDARY).onClick {
+            buttonMain = button("Main", style = ButtonStyle.SECONDARY).onClick {
                 viewTypeObservableValue.setState(App.ViewType.Main)
             }
-            button("Sensors", style = ButtonStyle.SECONDARY).onClick {
+            buttonSensors = button("Sensors", style = ButtonStyle.SECONDARY).onClick {
                 viewTypeObservableValue.setState(App.ViewType.Sensors)
             }
-            button("Config", style = ButtonStyle.SECONDARY).onClick {
+            buttonConfig = button("Config", style = ButtonStyle.SECONDARY).onClick {
                 viewTypeObservableValue.setState(App.ViewType.Config)
             }
         }

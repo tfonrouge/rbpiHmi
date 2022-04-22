@@ -10,6 +10,7 @@ fun Application.main() {
     install(Compression)
     routing {
         applyRoutes(PingServiceManager)
+        applyRoutes(AuthServiceManager)
     }
     kvisionInit()
 }

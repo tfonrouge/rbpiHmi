@@ -1,5 +1,6 @@
 package com.fonrouge.rbpiHmi.views
 
+import com.fonrouge.rbpiHmi.FooterForm
 import com.fonrouge.rbpiHmi.RadialGauge
 import com.fonrouge.rbpiHmi.ReactCanvasGaugesProps
 import io.kvision.core.AlignItems
@@ -12,7 +13,7 @@ import io.kvision.panel.flexPanel
 import io.kvision.react.React
 import io.kvision.react.react
 
-class MainView : SimplePanel() {
+class MainView(footer: FooterForm?) : SimplePanel() {
 
     private lateinit var radialGaugeRollerFeed: React<Number>
     private lateinit var radialGaugeRollerA: React<Number>

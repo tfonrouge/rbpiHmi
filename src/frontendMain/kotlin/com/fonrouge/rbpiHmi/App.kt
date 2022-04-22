@@ -1,5 +1,6 @@
 package com.fonrouge.rbpiHmi
 
+import com.fonrouge.rbpiHmi.views.AuthView
 import com.fonrouge.rbpiHmi.views.ConfigView
 import com.fonrouge.rbpiHmi.views.MainView
 import com.fonrouge.rbpiHmi.views.SensorsView
@@ -9,6 +10,9 @@ import io.kvision.panel.root
 import io.kvision.state.ObservableValue
 import io.kvision.state.bind
 import io.kvision.toast.Toast
+import io.kvision.toast.ToastMethod
+import io.kvision.toast.ToastOptions
+import io.kvision.toast.ToastPosition
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
@@ -24,8 +28,34 @@ class App : Application() {
 
     private val headerTitlePrefix = "HMI v1.0"
 
+    private var authConfig = false
+
+    var footerForm: FooterForm? = null
+
     init {
         require("css/kvapp.css")
+
+        viewTypeObservableValue.subscribe { viewType ->
+            footerForm?.let { footerForm ->
+                when (viewType) {
+                    ViewType.Main -> {
+                        footerForm.buttonMain.style = ButtonStyle.PRIMARY
+                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
+                        footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
+                    }
+                    ViewType.Sensors -> {
+                        footerForm.buttonSensors.style = ButtonStyle.PRIMARY
+                        footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
+                        footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
+                    }
+                    ViewType.Config -> {
+                        footerForm.buttonConfig.style = ButtonStyle.PRIMARY
+                        footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
+                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
+                    }
+                }
+            }
+        }
     }
 
     override fun start(state: Map<String, Any>) {
@@ -35,16 +65,46 @@ class App : Application() {
                 val header = header(content = headerTitlePrefix, className = "header1") {
                     align = Align.CENTER
                 }
-                main().bind(observableState = viewTypeObservableValue) {
-                    when (it) {
-                        ViewType.Main -> add(MainView())
-                        ViewType.Sensors -> add(SensorsView())
-                        ViewType.Config -> add(ConfigView())
+                main().bind(observableState = viewTypeObservableValue) { viewType ->
+                    when (viewType) {
+                        ViewType.Main -> add(MainView(footerForm))
+                        ViewType.Sensors -> add(SensorsView(footerForm))
+                        ViewType.Config -> {
+                            AppScope.launch {
+                                val a = AuthView()
+                                a.getResult()?.let {
+                                    if (it) {
+                                        add(ConfigView(footerForm))
+                                    } else {
+                                        viewTypeObservableValue.setState(ViewType.Main)
+                                        Toast.error(
+                                            message = "Authentication failed: incorrect password.",
+                                            options = ToastOptions(
+                                                positionClass = ToastPosition.TOPRIGHT,
+                                                hideMethod = ToastMethod.SLIDEUP
+                                            )
+                                        )
+                                    }
+                                } ?: kotlin.run {
+                                    viewTypeObservableValue.setState(ViewType.Main)
+                                    Toast.warning(
+                                        message = "Authentication cancelled.",
+                                        options = ToastOptions(
+                                            positionClass = ToastPosition.TOPRIGHT,
+                                            hideMethod = ToastMethod.SLIDEUP
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
-                    header.content = "$headerTitlePrefix - ${it.name}"
+                    header.content = "$headerTitlePrefix - ${viewType.name}"
                 }
                 footer(className = "mt-auto") {
-                    add(FooterForm())
+                    FooterForm().let {
+                        footerForm = it
+                        add(it)
+                    }
                 }
             }
         }
