@@ -21,9 +21,15 @@ class FooterForm : SimplePanel() {
             spacing = 10,
             className = "footer1"
         ) {
-            button("Main", style = ButtonStyle.SECONDARY, className = "btn-lg")
-            button("Sensors", style = ButtonStyle.SECONDARY)
-            button("Config", style = ButtonStyle.SECONDARY)
+            button("Main", style = ButtonStyle.SECONDARY).onClick {
+                viewTypeObservableValue.setState(App.ViewType.Main)
+            }
+            button("Sensors", style = ButtonStyle.SECONDARY).onClick {
+                viewTypeObservableValue.setState(App.ViewType.Sensors)
+            }
+            button("Config", style = ButtonStyle.SECONDARY).onClick {
+                viewTypeObservableValue.setState(App.ViewType.Config)
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 package com.fonrouge.rbpiHmi
 
+import com.fonrouge.rbpiHmi.views.ConfigView
+import com.fonrouge.rbpiHmi.views.MainView
+import com.fonrouge.rbpiHmi.views.SensorsView
 import io.kvision.*
-import io.kvision.html.Align
-import io.kvision.html.footer
-import io.kvision.html.header
-import io.kvision.panel.flexPanel
+import io.kvision.html.*
 import io.kvision.panel.root
-import io.kvision.panel.tab
-import io.kvision.panel.tabPanel
+import io.kvision.state.ObservableValue
+import io.kvision.state.bind
 import io.kvision.toast.Toast
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -18,7 +18,11 @@ import kotlin.math.max
 
 val AppScope = CoroutineScope(window.asCoroutineDispatcher())
 
+var viewTypeObservableValue = ObservableValue(App.ViewType.Main)
+
 class App : Application() {
+
+    private val headerTitlePrefix = "HMI v1.0"
 
     init {
         require("css/kvapp.css")
@@ -26,22 +30,22 @@ class App : Application() {
 
     override fun start(state: Map<String, Any>) {
         val root = root("kvapp") {
-            header(content = "<h1>HMI v1.0</h1>", rich = true, className = "header1") {
-                align = Align.CENTER
-            }
-            tabPanel {
-                tab("Main") {
-                    add(SensorsForm())
+//            div(className = "min-vh-100 d-flex flex-column justify-content-between") {
+            div(className = "d-flex flex-column min-vh-100") {
+                val header = header(content = headerTitlePrefix, className = "header1") {
+                    align = Align.CENTER
                 }
-                tab("Sensors") {
-
+                main().bind(observableState = viewTypeObservableValue) {
+                    when (it) {
+                        ViewType.Main -> add(MainView())
+                        ViewType.Sensors -> add(SensorsView())
+                        ViewType.Config -> add(ConfigView())
+                    }
+                    header.content = "$headerTitlePrefix - ${it.name}"
                 }
-                tab("Config") {
-
+                footer(className = "mt-auto") {
+                    add(FooterForm())
                 }
-            }
-            footer {
-                add(FooterForm())
             }
         }
         AppScope.launch {
@@ -58,6 +62,12 @@ class App : Application() {
         if (width <= 992) return "md"
         if (width <= 1200) return "lg"
         return "xl"
+    }
+
+    enum class ViewType {
+        Main,
+        Sensors,
+        Config,
     }
 }
 

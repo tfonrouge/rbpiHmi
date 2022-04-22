@@ -3,7 +3,10 @@ package com.fonrouge.rbpiHmi
 import io.kvision.core.AlignItems
 import io.kvision.form.text.Password
 import io.kvision.form.text.password
-import io.kvision.html.*
+import io.kvision.html.ButtonStyle
+import io.kvision.html.button
+import io.kvision.html.div
+import io.kvision.html.label
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.hPanel
 

@@ -1,5 +1,7 @@
-package com.fonrouge.rbpiHmi
+package com.fonrouge.rbpiHmi.views
 
+import com.fonrouge.rbpiHmi.RadialGauge
+import com.fonrouge.rbpiHmi.ReactCanvasGaugesProps
 import io.kvision.core.AlignItems
 import io.kvision.core.FlexDirection
 import io.kvision.core.FlexWrap
@@ -10,7 +12,7 @@ import io.kvision.panel.flexPanel
 import io.kvision.react.React
 import io.kvision.react.react
 
-class SensorsForm : SimplePanel() {
+class MainView : SimplePanel() {
 
     private lateinit var radialGaugeRollerFeed: React<Number>
     private lateinit var radialGaugeRollerA: React<Number>
@@ -110,73 +112,61 @@ class SensorsForm : SimplePanel() {
         }
     }
 
+    private fun ReactCanvasGaugesProps.setCanvasGaugesParams(
+        radialGaugeType: RadialGaugeType,
+        id: String? = null
+    ) {
+
+        val w = 250
+        val h = 250
+
+        when (radialGaugeType) {
+            RadialGaugeType.MainRoller -> {
+                width = w
+                height = h
+                units = "RPM"
+                title = "Main Roller"
+                value = 0
+                minValue = 0
+                maxValue = 300
+                exactTicks = true
+                majorTicks = arrayOf(50, 100, 150, 200, 250, 300)
+                minorTicks = 10
+                highlights = "0"
+            }
+            RadialGaugeType.FeedRoller -> {
+                width = w
+                height = h
+                units = "RPM"
+                title = "$id Roller"
+                value = 0
+                minValue = 0
+                maxValue = 600
+                exactTicks = true
+                majorTicks = arrayOf(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600)
+                minorTicks = 10
+                highlights = "0"
+
+            }
+            RadialGaugeType.Motor -> {
+                width = w
+                height = h
+                units = "RPM"
+                title = "$id Motor"
+                value = 0
+                minValue = 0
+                maxValue = 1800
+                exactTicks = true
+                majorTicks = arrayOf(200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800)
+                minorTicks = 100
+                highlights = "0"
+            }
+        }
+    }
+
     enum class RadialGaugeType {
         MainRoller,
         FeedRoller,
         Motor
-    }
-}
-
-private fun ReactCanvasGaugesProps.setCanvasGaugesParams(
-    radialGaugeType: SensorsForm.RadialGaugeType,
-    id: String? = null
-) {
-
-    val w = 250
-    val h = 250
-
-    console.warn("cssSize", w, h)
-
-    when (radialGaugeType) {
-        SensorsForm.RadialGaugeType.MainRoller -> {
-            width = w
-            height = h
-            units = "RPM"
-            title = "Main Roller"
-            value = 0
-            minValue = 0
-            maxValue = 300
-            exactTicks = true
-            majorTicks = arrayOf(50, 100, 150, 200, 250, 300)
-            minorTicks = 10
-            highlights = "0"
-        }
-        SensorsForm.RadialGaugeType.FeedRoller -> {
-            width = w
-            height = h
-            units = "RPM"
-            title = "$id Roller"
-            value = 0
-            minValue = 0
-            maxValue = 600
-            exactTicks = true
-            majorTicks = arrayOf(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600)
-            minorTicks = 10
-            highlights = "0"
-
-        }
-        SensorsForm.RadialGaugeType.Motor -> {
-            width = w
-            height = h
-            units = "RPM"
-            title = "$id Motor"
-            value = 0
-            minValue = 0
-            maxValue = 1800
-            exactTicks = true
-            majorTicks = arrayOf(
-                200,
-                400,
-                600,
-                800,
-                1000,
-                1200,
-                1400,
-                1600,
-                1800
-            )
-            minorTicks = 100
-            highlights = "0"
-        }
     }
 }
