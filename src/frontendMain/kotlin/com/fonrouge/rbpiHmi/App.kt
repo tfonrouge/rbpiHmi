@@ -22,20 +22,18 @@ import kotlin.math.max
 
 val AppScope = CoroutineScope(window.asCoroutineDispatcher())
 
-var viewTypeObservableValue = ObservableValue(App.ViewType.Main)
+var observableViewType = ObservableValue(App.ViewType.Main)
 
 class App : Application() {
 
     private val headerTitlePrefix = "HMI v1.0"
 
-    private var authConfig = false
-
-    var footerForm: FooterForm? = null
+    private var footerForm: FooterForm? = null
 
     init {
         require("css/kvapp.css")
 
-        viewTypeObservableValue.subscribe { viewType ->
+        observableViewType.subscribe { viewType ->
             footerForm?.let { footerForm ->
                 when (viewType) {
                     ViewType.Main -> {
@@ -59,15 +57,15 @@ class App : Application() {
     }
 
     override fun start(state: Map<String, Any>) {
-        val root = root("kvapp") {
+        root("kvapp") {
 //            div(className = "min-vh-100 d-flex flex-column justify-content-between") {
             div(className = "d-flex flex-column min-vh-100") {
                 val header = header(content = headerTitlePrefix, className = "header1") {
                     align = Align.CENTER
                 }
-                main().bind(observableState = viewTypeObservableValue) { viewType ->
+                main().bind(observableState = observableViewType) { viewType ->
                     when (viewType) {
-                        ViewType.Main -> add(MainView(footerForm))
+                        ViewType.Main -> add(MainView())
                         ViewType.Sensors -> add(SensorsView(footerForm))
                         ViewType.Config -> {
                             AppScope.launch {
@@ -76,7 +74,7 @@ class App : Application() {
                                     if (it) {
                                         add(ConfigView(footerForm))
                                     } else {
-                                        viewTypeObservableValue.setState(ViewType.Main)
+                                        observableViewType.setState(ViewType.Main)
                                         Toast.error(
                                             message = "Authentication failed: incorrect password.",
                                             options = ToastOptions(
@@ -86,7 +84,7 @@ class App : Application() {
                                         )
                                     }
                                 } ?: kotlin.run {
-                                    viewTypeObservableValue.setState(ViewType.Main)
+                                    observableViewType.setState(ViewType.Main)
                                     Toast.warning(
                                         message = "Authentication cancelled.",
                                         options = ToastOptions(

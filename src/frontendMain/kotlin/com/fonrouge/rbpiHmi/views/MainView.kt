@@ -1,6 +1,5 @@
 package com.fonrouge.rbpiHmi.views
 
-import com.fonrouge.rbpiHmi.FooterForm
 import com.fonrouge.rbpiHmi.RadialGauge
 import com.fonrouge.rbpiHmi.ReactCanvasGaugesProps
 import io.kvision.core.AlignItems
@@ -13,7 +12,7 @@ import io.kvision.panel.flexPanel
 import io.kvision.react.React
 import io.kvision.react.react
 
-class MainView(footer: FooterForm?) : SimplePanel() {
+class MainView : SimplePanel() {
 
     private lateinit var radialGaugeRollerFeed: React<Number>
     private lateinit var radialGaugeRollerA: React<Number>
@@ -36,7 +35,6 @@ class MainView(footer: FooterForm?) : SimplePanel() {
                         direction = FlexDirection.COLUMN,
                         wrap = FlexWrap.WRAP,
                         justify = JustifyContent.SPACEBETWEEN,
-//                alignItems = AlignItems.,
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "<H4>Feed Roller A</H4>", rich = true, className = "title1")
@@ -50,7 +48,6 @@ class MainView(footer: FooterForm?) : SimplePanel() {
                         direction = FlexDirection.COLUMN,
                         wrap = FlexWrap.WRAP,
                         justify = JustifyContent.SPACEBETWEEN,
-//                alignItems = AlignItems.,
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "<H4>Feed Roller B</H4>", rich = true, className = "title1")
@@ -70,7 +67,6 @@ class MainView(footer: FooterForm?) : SimplePanel() {
                         direction = FlexDirection.COLUMN,
                         wrap = FlexWrap.WRAP,
                         justify = JustifyContent.SPACEBETWEEN,
-//                alignItems = AlignItems.,
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "<H4>Motor A</H4>", rich = true, className = "title1")
@@ -84,7 +80,6 @@ class MainView(footer: FooterForm?) : SimplePanel() {
                         direction = FlexDirection.COLUMN,
                         wrap = FlexWrap.WRAP,
                         justify = JustifyContent.SPACEBETWEEN,
-//                alignItems = AlignItems.,
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "<H4>Motor B</H4>", rich = true, className = "title1")
@@ -129,9 +124,9 @@ class MainView(footer: FooterForm?) : SimplePanel() {
                 title = "Main Roller"
                 value = 0
                 minValue = 0
-                maxValue = 300
+                maxValue = 250
                 exactTicks = true
-                majorTicks = arrayOf(50, 100, 150, 200, 250, 300)
+                majorTicks = arrayOf(50, 100, 150, 200, 250)
                 minorTicks = 10
                 highlights = "0"
             }

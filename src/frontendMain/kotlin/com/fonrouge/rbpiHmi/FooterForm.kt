@@ -27,13 +27,13 @@ class FooterForm : SimplePanel() {
             className = "footer1"
         ) {
             buttonMain = button("Main", style = ButtonStyle.SECONDARY).onClick {
-                viewTypeObservableValue.setState(App.ViewType.Main)
+                observableViewType.setState(App.ViewType.Main)
             }
             buttonSensors = button("Sensors", style = ButtonStyle.SECONDARY).onClick {
-                viewTypeObservableValue.setState(App.ViewType.Sensors)
+                observableViewType.setState(App.ViewType.Sensors)
             }
             buttonConfig = button("Config", style = ButtonStyle.SECONDARY).onClick {
-                viewTypeObservableValue.setState(App.ViewType.Config)
+                observableViewType.setState(App.ViewType.Config)
             }
         }
     }
