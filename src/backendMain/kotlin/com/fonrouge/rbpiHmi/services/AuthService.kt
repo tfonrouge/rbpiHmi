@@ -1,4 +1,4 @@
-package com.fonrouge.rbpiHmi
+package com.fonrouge.rbpiHmi.services
 
 actual class AuthService : IAuthService {
     override suspend fun authenticate(password: String): Boolean {

@@ -1,4 +1,4 @@
-package com.fonrouge.rbpiHmi
+package com.fonrouge.rbpiHmi.services
 
 actual class PingService : IPingService {
 

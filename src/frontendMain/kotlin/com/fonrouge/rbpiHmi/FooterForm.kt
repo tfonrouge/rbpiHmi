@@ -1,6 +1,5 @@
 package com.fonrouge.rbpiHmi
 
-import io.kvision.core.AlignItems
 import io.kvision.core.FlexDirection
 import io.kvision.core.FlexWrap
 import io.kvision.core.JustifyContent
@@ -21,10 +20,9 @@ class FooterForm : SimplePanel() {
             direction = FlexDirection.ROW,
             wrap = FlexWrap.WRAP,
             justify = JustifyContent.SPACEBETWEEN,
-            alignItems = AlignItems.CENTER,
+//            alignItems = AlignItems.STRETCH,
 //            alignContent = AlignContent.CENTER,
             spacing = 10,
-            className = "footer1"
         ) {
             buttonMain = button("Main", style = ButtonStyle.SECONDARY).onClick {
                 observableViewType.setState(App.ViewType.Main)

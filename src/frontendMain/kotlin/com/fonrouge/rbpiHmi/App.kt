@@ -66,7 +66,7 @@ class App : Application() {
                 main().bind(observableState = observableViewType) { viewType ->
                     when (viewType) {
                         ViewType.Main -> add(MainView())
-                        ViewType.Sensors -> add(SensorsView(footerForm))
+                        ViewType.Sensors -> add(SensorsView())
                         ViewType.Config -> {
                             AppScope.launch {
                                 val a = AuthView()

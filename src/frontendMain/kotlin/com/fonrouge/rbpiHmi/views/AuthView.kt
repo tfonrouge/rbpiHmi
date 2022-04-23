@@ -18,7 +18,7 @@ class AuthView : Dialog<Boolean>(
     caption = "Enter admin password:",
     closeButton = true,
     centered = true,
-    size = ModalSize.SMALL,
+    size = ModalSize.LARGE,
 ) {
 
     private lateinit var password: Password

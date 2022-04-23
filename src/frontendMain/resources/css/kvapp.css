@@ -1,13 +1,21 @@
 
-body {
+html {
+    /*font-size: 1em !important;*/
     margin: 5px;
 }
 
-.header1 {
+header {
     background-color: cadetblue;
     color: azure;
     margin-bottom: 10px;
     font-size: 2rem;
+}
+
+footer .btn {
+    font-size: 2rem;
+    min-width: 25rem;
+    border-radius: 0;
+    /*box-shadow: 5px 5px;*/
 }
 
 .btn-digit {
@@ -22,33 +30,14 @@ body {
     border: 1px solid dimgrey;
     padding: 1rem;
     box-shadow: 5px 5px;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
     /*min-width: 20rem;*/
 }
-
-/*div.title1 {*/
-/*    color: azure;*/
-/*    background-color: gray;*/
-/*    text-align: center;*/
-/*}*/
 
 .title1 {
     color: azure;
     background-color: gray;
     text-align: center;
     margin-bottom: 1rem;
-}
-
-.footer1 {
-    margin-top: 1rem;
-    padding: 5px;
-    font-size: 5rem;
-    border: 2px solid dimgrey;
-    /*background-color: cadetblue;*/
-}
-
-footer .btn {
-    font-size: 3rem;
-    min-width: 25rem;
-    border-radius: 0;
-    /*box-shadow: 5px 5px;*/
 }

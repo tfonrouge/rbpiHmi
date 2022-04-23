@@ -1,4 +1,4 @@
-package com.fonrouge.rbpiHmi
+package com.fonrouge.rbpiHmi.services
 
 import io.kvision.annotations.KVService
 
