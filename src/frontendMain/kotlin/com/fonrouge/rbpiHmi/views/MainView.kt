@@ -180,8 +180,13 @@ class MainView : SimplePanel() {
         window.setInterval({
             AppScope.launch {
                 Model.hmiServiceGetState().let { hmiState ->
-                    setRollerFeedState(hmiState.rollerFeedState)
-                    setRollerFeedPosition(hmiState.rollerFeedPosition)
+                    if (hmiState.valid) {
+                        setRollerFeedState(hmiState.rollerFeedState)
+                        setRollerFeedPosition(hmiState.rollerFeedPosition)
+                    } else {
+                        setRollerFeedState(null)
+                        setRollerFeedPosition(null)
+                    }
                 }
             }
         }, timeout = 500)
@@ -245,16 +250,28 @@ class MainView : SimplePanel() {
         }
     }
 
-    private suspend fun setRollerFeedState(rollerFeedState: RollerFeedState) {
-        rollerStateAttachedImage.src = rollerFeedState.attachedRollState.imageSrc
-        rollerStateAttachedLabel.content = rollerFeedState.attachedRollId.name
-        rollerStateDetachedImage.src = rollerFeedState.detachedRollState.imageSrc
-        rollerStateDetachedLabel.content = rollerFeedState.detachedRollId.name
+    private suspend fun setRollerFeedState(rollerFeedState: RollerFeedState?) {
+        if (rollerFeedState != null) {
+            rollerStateAttachedImage.src = rollerFeedState.attachedRollState.imageSrc
+            rollerStateAttachedLabel.content = rollerFeedState.attachedRollId.name
+            rollerStateDetachedImage.src = rollerFeedState.detachedRollState.imageSrc
+            rollerStateDetachedLabel.content = rollerFeedState.detachedRollId.name
+        } else {
+            rollerStateAttachedImage.src = "question-mark-1.png"
+            rollerStateAttachedLabel.content = "?"
+            rollerStateDetachedImage.src = "question-mark-1.png"
+            rollerStateDetachedLabel.content = "?"
+        }
     }
 
-    private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition) {
-        rollerFeedPositionImage.src = rollerFeedPosition.imageSrc
-        rollerFeedPositionLabel.content = rollerFeedPosition.name
+    private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition?) {
+        if (rollerFeedPosition != null) {
+            rollerFeedPositionImage.src = rollerFeedPosition.imageSrc
+            rollerFeedPositionLabel.content = rollerFeedPosition.name
+        } else {
+            rollerFeedPositionImage.src = "question-mark-1.png"
+            rollerFeedPositionLabel.content = "?"
+        }
     }
 
     enum class RadialGaugeType {

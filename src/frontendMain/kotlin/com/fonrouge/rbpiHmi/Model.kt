@@ -22,7 +22,7 @@ object Model {
         return authService.authenticate(password)
     }
 
-    suspend fun hmiServiceGetState() : HmiState {
+    suspend fun hmiServiceGetState(): HmiState {
         return hmiService.getState()
     }
 }

@@ -86,7 +86,7 @@ kotlin {
                 implementation("io.ktor:ktor-server-auth:$ktorVersion")
                 implementation("io.ktor:ktor-server-compression:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
-                implementation("com.fazecast:jSerialComm:[2.0.0,3.0.0)")
+                implementation("com.fazecast:jSerialComm:2.9.1")
             }
         }
         val backendTest by getting {
