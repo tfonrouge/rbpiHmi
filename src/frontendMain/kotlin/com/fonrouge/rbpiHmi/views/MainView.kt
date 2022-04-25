@@ -18,14 +18,15 @@ import io.kvision.react.react
 import io.kvision.utils.rem
 import kotlinx.browser.window
 import kotlinx.coroutines.launch
+import kotlin.js.json
 
 class MainView : SimplePanel() {
 
-    private lateinit var radialGaugeRollerFeed: React<Number>
-    private lateinit var radialGaugeRollerA: React<Number>
-    private lateinit var radialGaugeRollerB: React<Number>
-    private lateinit var radialGaugeMotorA: React<Number>
-    private lateinit var radialGaugeMotorB: React<Number>
+    private lateinit var radialGaugeMainRollerRpm: React<Int>
+    private lateinit var radialGaugeARollerRpm: React<Int>
+    private lateinit var radialGaugeBRollerRpm: React<Int>
+    private lateinit var radialGaugeAMotorRpm: React<Int>
+    private lateinit var radialGaugeBMotorRpm: React<Int>
     private lateinit var rollerStateAttachedImage: Image
     private lateinit var rollerStateAttachedLabel: Label
     private lateinit var rollerStateDetachedImage: Image
@@ -56,8 +57,13 @@ class MainView : SimplePanel() {
                     className = "flexPanelCtrl1"
                 ) {
                     div(content = "Main Roller", rich = true, className = "title1")
-                    radialGaugeRollerFeed = react {
+                    radialGaugeMainRollerRpm = react(250) { getState, setState ->
                         RadialGauge {
+                            console.warn("radial gauge", value, getState())
+                            animation = true
+                            animatedValue = true
+                            animationDuration = 500
+                            value = getState()
                             setCanvasGaugesParams(RadialGaugeType.MainRoller, "A")
                         }
                     }
@@ -123,7 +129,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Feed Roller A", rich = true, className = "title1")
-                        radialGaugeRollerA = react {
+                        radialGaugeARollerRpm = react {
                             RadialGauge {
                                 setCanvasGaugesParams(RadialGaugeType.FeedRoller, "A")
                             }
@@ -136,7 +142,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Feed Roller B", rich = true, className = "title1")
-                        radialGaugeRollerB = react {
+                        radialGaugeBRollerRpm = react {
                             RadialGauge {
                                 setCanvasGaugesParams(RadialGaugeType.FeedRoller, "B")
                             }
@@ -154,7 +160,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor A", rich = true, className = "title1")
-                        radialGaugeMotorA = react {
+                        radialGaugeAMotorRpm = react {
                             RadialGauge {
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "A")
                             }
@@ -167,7 +173,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor B", rich = true, className = "title1")
-                        radialGaugeMotorB = react {
+                        radialGaugeBMotorRpm = react {
                             RadialGauge {
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "B")
                             }
@@ -180,16 +186,16 @@ class MainView : SimplePanel() {
         window.setInterval({
             AppScope.launch {
                 Model.hmiServiceGetState().let { hmiState ->
-                    if (hmiState.valid) {
-                        setRollerFeedState(hmiState.rollerFeedState)
-                        setRollerFeedPosition(hmiState.rollerFeedPosition)
-                    } else {
-                        setRollerFeedState(null)
-                        setRollerFeedPosition(null)
-                    }
+                    radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
+                    radialGaugeARollerRpm.state = hmiState.aRollerRpm
+                    radialGaugeBRollerRpm.state = hmiState.bRollerRpm
+                    radialGaugeAMotorRpm.state = hmiState.aMotorRpm
+                    radialGaugeBMotorRpm.state = hmiState.bMotorRpm
+                    setRollerFeedState(hmiState.rollerFeedState)
+                    setRollerFeedPosition(hmiState.rollerFeedPosition)
                 }
             }
-        }, timeout = 500)
+        }, timeout = 1000)
 
     }
 
@@ -208,13 +214,17 @@ class MainView : SimplePanel() {
                 height = h
                 units = "RPM"
                 title = "Main Roller"
-                value = 0
                 minValue = 0
-                maxValue = 250
+                maxValue = 200
                 exactTicks = true
-                majorTicks = arrayOf(50, 100, 150, 200, 250)
+                majorTicks = arrayOf(50, 100, 150, 200, 200)
                 minorTicks = 10
-                highlights = "0"
+                highlights = arrayOf(
+                    json("from" to 0, "to" to 90, "color" to "lightgray"),
+                    json("from" to 90, "to" to 120, "color" to "darkgray"),
+                    json("from" to 120, "to" to 150, "color" to "gray"),
+                    json("from" to 150, "to" to 200, "color" to "red"),
+                )
             }
 
             RadialGaugeType.FeedRoller -> {
@@ -223,14 +233,17 @@ class MainView : SimplePanel() {
                 height = h
                 units = "RPM"
                 title = "$id Roller"
-                value = 0
                 minValue = 0
                 maxValue = 600
                 exactTicks = true
                 majorTicks = arrayOf(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600)
                 minorTicks = 10
-                highlights = "0"
-
+                highlights = arrayOf(
+                    json("from" to 0, "to" to 240, "color" to "lightgray"),
+                    json("from" to 240, "to" to 400, "color" to "darkgray"),
+                    json("from" to 400, "to" to 500, "color" to "gray"),
+                    json("from" to 500, "to" to 600, "color" to "red"),
+                )
             }
 
             RadialGaugeType.Motor -> {
@@ -239,39 +252,31 @@ class MainView : SimplePanel() {
                 height = h
                 units = "RPM"
                 title = "$id Motor"
-                value = 0
                 minValue = 0
                 maxValue = 1800
                 exactTicks = true
                 majorTicks = arrayOf(200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800)
                 minorTicks = 100
-                highlights = "0"
+                highlights = arrayOf(
+                    json("from" to 0, "to" to 720, "color" to "lightgray"),
+                    json("from" to 720, "to" to 1200, "color" to "darkgray"),
+                    json("from" to 1200, "to" to 1500, "color" to "gray"),
+                    json("from" to 1500, "to" to 1800, "color" to "red"),
+                )
             }
         }
     }
 
-    private suspend fun setRollerFeedState(rollerFeedState: RollerFeedState?) {
-        if (rollerFeedState != null) {
-            rollerStateAttachedImage.src = rollerFeedState.attachedRollState.imageSrc
-            rollerStateAttachedLabel.content = rollerFeedState.attachedRollId.name
-            rollerStateDetachedImage.src = rollerFeedState.detachedRollState.imageSrc
-            rollerStateDetachedLabel.content = rollerFeedState.detachedRollId.name
-        } else {
-            rollerStateAttachedImage.src = "question-mark-1.png"
-            rollerStateAttachedLabel.content = "?"
-            rollerStateDetachedImage.src = "question-mark-1.png"
-            rollerStateDetachedLabel.content = "?"
-        }
+    private fun setRollerFeedState(rollerFeedState: RollerFeedState) {
+        rollerStateAttachedImage.src = rollerFeedState.attachedRollState.imageSrc
+        rollerStateAttachedLabel.content = rollerFeedState.attachedRollId.name
+        rollerStateDetachedImage.src = rollerFeedState.detachedRollState.imageSrc
+        rollerStateDetachedLabel.content = rollerFeedState.detachedRollId.name
     }
 
-    private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition?) {
-        if (rollerFeedPosition != null) {
-            rollerFeedPositionImage.src = rollerFeedPosition.imageSrc
-            rollerFeedPositionLabel.content = rollerFeedPosition.name
-        } else {
-            rollerFeedPositionImage.src = "question-mark-1.png"
-            rollerFeedPositionLabel.content = "?"
-        }
+    private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition) {
+        rollerFeedPositionImage.src = rollerFeedPosition.imageSrc
+        rollerFeedPositionLabel.content = rollerFeedPosition.name
     }
 
     enum class RadialGaugeType {
