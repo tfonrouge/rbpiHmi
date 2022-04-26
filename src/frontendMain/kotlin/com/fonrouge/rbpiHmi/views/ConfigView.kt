@@ -17,7 +17,7 @@ class ConfigView(footer: FooterForm?) : SimplePanel() {
                 simpleSelectRemote(
                     label = "Serial Port:",
                     serviceManager = ConfigServiceManager,
-                    function = IConfigService::getSerialPortUrlList,
+                    function = IConfigService::getSerialPortPathList,
                 )
             }
         }

@@ -5,13 +5,13 @@ import io.kvision.remote.SimpleRemoteOption
 
 actual class ConfigService : IConfigService {
 
-    override suspend fun getSerialPortUrlList(state: String?): List<SimpleRemoteOption> {
+    override suspend fun getSerialPortPathList(state: String?): List<SimpleRemoteOption> {
         val result = mutableListOf<SimpleRemoteOption>()
-        SerialComm.getSerialPorts()?.forEach {
+        SerialComm.getSerialPorts()?.forEach { serialPort ->
             result.add(
                 SimpleRemoteOption(
-                    value = it.portLocation,
-                    text = it.descriptivePortName
+                    value = serialPort.systemPortPath,
+                    text = serialPort.systemPortPath
                 )
             )
         }
