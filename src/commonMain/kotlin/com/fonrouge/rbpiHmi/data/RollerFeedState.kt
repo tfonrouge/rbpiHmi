@@ -1,13 +1,13 @@
 package com.fonrouge.rbpiHmi.data
 
-import com.fonrouge.rbpiHmi.enums.RollId
-import com.fonrouge.rbpiHmi.enums.RollState
+import com.fonrouge.rbpiHmi.enums.RollerId
+import com.fonrouge.rbpiHmi.enums.RollerState
 
 @kotlinx.serialization.Serializable
 class RollerFeedState(
-    val attachedRollId: RollId,
-    val attachedRollState: RollState,
-    val detachedRollState: RollState,
+    val attachedRollerId: RollerId,
+    val attachedRollerState: RollerState,
+    val detachedRollerState: RollerState,
 ) {
-    val detachedRollId get() = if (attachedRollId == RollId.A) RollId.B else RollId.A
+    val detachedRollerId get() = if (attachedRollerId == RollerId.A) RollerId.B else RollerId.A
 }

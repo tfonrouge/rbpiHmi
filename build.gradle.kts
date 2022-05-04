@@ -24,6 +24,9 @@ val kvisionVersion: String by System.getProperties()
 val ktorVersion: String by project
 val logbackVersion: String by project
 
+val exposed_version: String by project
+val h2_version: String by project
+
 val webDir = file("src/frontendMain/web")
 val mainClassName = "io.ktor.server.netty.EngineMain"
 
@@ -69,6 +72,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("io.kvision:kvision-server-ktor:$kvisionVersion")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
             }
             kotlin.srcDir("build/generated-src/common")
         }
@@ -87,6 +91,11 @@ kotlin {
                 implementation("io.ktor:ktor-server-compression:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
                 implementation("com.fazecast:jSerialComm:2.9.1")
+                implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+                implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
+                implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+                implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
+                implementation("com.h2database:h2:$h2_version")
             }
         }
         val backendTest by getting {

@@ -1,6 +1,6 @@
 package com.fonrouge.rbpiHmi.enums
 
-enum class RollId {
+enum class RollerId {
     A,
     B
 }

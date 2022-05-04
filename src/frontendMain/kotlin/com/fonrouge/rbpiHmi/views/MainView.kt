@@ -59,7 +59,6 @@ class MainView : SimplePanel() {
                     div(content = "Main Roller", rich = true, className = "title1")
                     radialGaugeMainRollerRpm = react(250) { getState, setState ->
                         RadialGauge {
-                            console.warn("radial gauge", value, getState())
                             animation = true
                             animatedValue = true
                             animationDuration = 500
@@ -268,10 +267,10 @@ class MainView : SimplePanel() {
     }
 
     private fun setRollerFeedState(rollerFeedState: RollerFeedState) {
-        rollerStateAttachedImage.src = rollerFeedState.attachedRollState.imageSrc
-        rollerStateAttachedLabel.content = rollerFeedState.attachedRollId.name
-        rollerStateDetachedImage.src = rollerFeedState.detachedRollState.imageSrc
-        rollerStateDetachedLabel.content = rollerFeedState.detachedRollId.name
+        rollerStateAttachedImage.src = rollerFeedState.attachedRollerState.imageSrc
+        rollerStateAttachedLabel.content = rollerFeedState.attachedRollerId.name
+        rollerStateDetachedImage.src = rollerFeedState.detachedRollerState.imageSrc
+        rollerStateDetachedLabel.content = rollerFeedState.detachedRollerId.name
     }
 
     private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition) {

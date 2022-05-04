@@ -1,10 +1,24 @@
-package com.fonrouge.rbpiHmi
+package com.fonrouge.rbpiHmi.data
 
 import com.fazecast.jSerialComm.SerialPort
 
 object SerialComm {
 
     var serialPort: SerialPort? = null
+
+    fun setSerialValues(appConfig: AppConfig) {
+        serialPort = SerialPort.getCommPort(appConfig.serialPortPath).apply {
+            baudRate = appConfig.baudRate.toInt()
+        }
+    }
+
+    var serialPortPath: String? = null
+        set(value) {
+            if (field != value) {
+                field = value
+                serialPort = SerialPort.getCommPort(value)
+            }
+        }
 
     fun getSerialPorts(): Array<out SerialPort>? {
         return SerialPort.getCommPorts()

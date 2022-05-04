@@ -18,7 +18,7 @@ object Model {
         return pingService.ping(message)
     }
 
-    suspend fun auth(password: String): Boolean {
+    suspend fun authenticate(password: String): Boolean {
         return authService.authenticate(password)
     }
 

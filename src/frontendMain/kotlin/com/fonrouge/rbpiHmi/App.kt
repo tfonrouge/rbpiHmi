@@ -1,7 +1,7 @@
 package com.fonrouge.rbpiHmi
 
+import com.fonrouge.rbpiHmi.views.AppConfigView
 import com.fonrouge.rbpiHmi.views.AuthView
-import com.fonrouge.rbpiHmi.views.ConfigView
 import com.fonrouge.rbpiHmi.views.MainView
 import com.fonrouge.rbpiHmi.views.SensorsView
 import io.kvision.*
@@ -10,9 +10,6 @@ import io.kvision.panel.root
 import io.kvision.state.ObservableValue
 import io.kvision.state.bind
 import io.kvision.toast.Toast
-import io.kvision.toast.ToastMethod
-import io.kvision.toast.ToastOptions
-import io.kvision.toast.ToastPosition
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +28,7 @@ class App : Application() {
     private var footerForm: FooterForm? = null
 
     init {
+
         require("css/kvapp.css")
 
         observableViewType.subscribe { viewType ->
@@ -67,34 +65,8 @@ class App : Application() {
                     when (viewType) {
                         ViewType.Main -> add(MainView())
                         ViewType.Sensors -> add(SensorsView())
-                        ViewType.Config -> {
-                            AppScope.launch {
-                                val a = AuthView()
-                                a.getResult()?.let {
-                                    if (it) {
-                                        add(ConfigView(footerForm))
-                                    } else {
-                                        observableViewType.setState(ViewType.Main)
-                                        Toast.error(
-                                            message = "Authentication failed: incorrect password.",
-                                            options = ToastOptions(
-                                                positionClass = ToastPosition.TOPRIGHT,
-                                                hideMethod = ToastMethod.SLIDEUP
-                                            )
-                                        )
-                                    }
-                                } ?: kotlin.run {
-                                    observableViewType.setState(ViewType.Main)
-                                    Toast.warning(
-                                        message = "Authentication cancelled.",
-                                        options = ToastOptions(
-                                            positionClass = ToastPosition.TOPRIGHT,
-                                            hideMethod = ToastMethod.SLIDEUP
-                                        )
-                                    )
-                                }
-                            }
-                        }
+                        ViewType.Config -> add(AuthView())
+                        ViewType.ConfigAuth -> add(AppConfigView())
                     }
                     header.content = "$headerTitlePrefix - ${viewType.name}"
                 }
@@ -126,6 +98,7 @@ class App : Application() {
         Main,
         Sensors,
         Config,
+        ConfigAuth,
     }
 }
 

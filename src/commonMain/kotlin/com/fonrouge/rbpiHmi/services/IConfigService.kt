@@ -5,7 +5,7 @@ import io.kvision.remote.SimpleRemoteOption
 
 @KVService
 interface IConfigService {
-    suspend fun getSerialPortPathList(
-        state: String?,
-    ): List<SimpleRemoteOption>
+    suspend fun getSerialPortPathList(state: String?): List<SimpleRemoteOption>
+
+    suspend fun getBaudRateList(state: String?): List<SimpleRemoteOption>
 }
