@@ -1,104 +1,134 @@
 package com.fonrouge.rbpiHmi.views
 
+import com.fonrouge.rbpiHmi.App
 import com.fonrouge.rbpiHmi.AppScope
 import com.fonrouge.rbpiHmi.Model
-import io.kvision.core.AlignItems
-import io.kvision.core.FlexDirection
-import io.kvision.core.JustifyContent
-import io.kvision.form.text.Password
-import io.kvision.form.text.password
-import io.kvision.html.ButtonStyle
+import com.fonrouge.rbpiHmi.observableViewType
+import io.kvision.core.*
 import io.kvision.html.button
-import io.kvision.modal.Dialog
-import io.kvision.modal.ModalSize
+import io.kvision.panel.SimplePanel
 import io.kvision.panel.flexPanel
+import io.kvision.toast.Toast
+import io.kvision.toast.ToastMethod
+import io.kvision.toast.ToastOptions
+import io.kvision.toast.ToastPosition
+import io.kvision.utils.px
+import io.kvision.utils.vmax
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class AuthView : Dialog<Boolean>(
-    caption = "Enter admin password:",
-    closeButton = true,
-    centered = true,
-    size = ModalSize.LARGE,
-) {
+class AuthView : SimplePanel() {
 
-    private lateinit var password: Password
+    lateinit var digitPad: DigitPad
 
     init {
-
-        console.warn("init on AuthView...")
-
-        var n = 0
-
         flexPanel(
             direction = FlexDirection.COLUMN,
-//            wrap = FlexWrap.WRAP,
-//            justify = JustifyContent.SPACEEVENLY,
-//            alignItems = AlignItems.STRETCH,
-//            alignContent = AlignContent.SPACEEVENLY,
+            justify = JustifyContent.CENTER
         ) {
-            flexPanel(
-                direction = FlexDirection.COLUMN,
-//                wrap = FlexWrap.WRAP,
-//                justify = JustifyContent.CENTER,
-//                alignItems = AlignItems.CENTER,
-//                alignContent = AlignContent.CENTER,
-//                spacing = 3
-            ) {
-                for (x in 1..3) {
-                    flexPanel(
-                        direction = FlexDirection.ROW,
-//                        wrap = FlexWrap.WRAP,
-//                        justify = JustifyContent.CENTER,
-//                        alignItems = AlignItems.CENTER,
-//                        alignContent = AlignContent.CENTER,
-                        spacing = 10
-                    ) {
-                        for (y in 1..3) {
-                            val n1 = ++n
-                            button(text = "$n", className = "btn-digit").onClick {
-                                digitPressed(n1)
-                            }
-                        }
-                    }
-                }
-                flexPanel(
-                    direction = FlexDirection.ROW,
-//                    wrap = FlexWrap.WRAP,
-//                    justify = JustifyContent.CENTER,
-//                    alignItems = AlignItems.CENTER,
-//                    alignContent = AlignContent.CENTER,
-                    spacing = 5
-                ) {
-                    button(text = "0", className = "btn-digit").onClick { digitPressed(0) }
-                    button(text = "ENTER", className = "btn-digit", style = ButtonStyle.SECONDARY).onClick {
-                        AppScope.launch {
-                            password.value?.let {
-                                setResult(result = Model.auth(it))
-                            }
-                        }
-                    }
-                }
-            }
+            height = 50.vmax
             flexPanel(
                 direction = FlexDirection.ROW,
-                justify = JustifyContent.SPACEBETWEEN,
-                alignItems = AlignItems.FLEXSTART,
-//                alignContent = AlignContent.SPACEEVENLY,
+                justify = JustifyContent.CENTER,
+                alignItems = AlignItems.CENTER
             ) {
-                password = password(value = "")
-                button("X", style = ButtonStyle.DARK).onClick {
-                    password.value = ""
+                flexPanel(alignItems = AlignItems.CENTER, className = "shadow") {
+                    padding = 20.px
+                    border = Border(width = 1.px, style = BorderStyle.SOLID, color = Color("gray"))
+                    digitPad = digitPad(
+                        type = DigitPad.Type.Password,
+                        label = "Enter admin password:"
+                    ) {
+                        AppScope.launch {
+                            authenticate(digitPad.textWidget.value)
+                        }
+                    }
+                    button(text = "Submit").onClick {
+                        digitPad.textWidget.value?.let {
+                            AppScope.launch {
+                                authenticate(it)
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun digitPressed(i: Int) {
-        if (password.value == null) {
-            password.value = i.toString()
-        } else {
-            password.value += i
+    private suspend fun authenticate(password: String?) {
+        password?.let {
+            if (Model.authenticate(password)) {
+                delay(1000)
+                observableViewType.value = App.ViewType.ConfigAuth
+                Toast.info(
+                    message = "Admin logged",
+                    options = ToastOptions(
+                        positionClass = ToastPosition.TOPRIGHT,
+                        hideMethod = ToastMethod.SLIDEUP
+                    )
+                )
+            } else {
+                observableViewType.setState(App.ViewType.Main)
+                Toast.error(
+                    message = "Authentication failed: incorrect password.",
+                    options = ToastOptions(
+                        positionClass = ToastPosition.TOPRIGHT,
+                        hideMethod = ToastMethod.SLIDEUP
+                    )
+                )
+            }
         }
-        console.warn("digit pressed:", i, "pwd", password.value)
     }
+
+    /*
+                                AuthView().getResult()?.let {
+                                    if (it) {
+                                        AppConfigView().getResult()?.let {
+                                            if (it) {
+                                                Toast.info(
+                                                    message = "Saved preferences ok",
+                                                    options = ToastOptions(
+                                                        positionClass = ToastPosition.TOPRIGHT,
+                                                        hideMethod = ToastMethod.SLIDEUP
+                                                    )
+                                                )
+                                            } else {
+                                                Toast.warning(
+                                                    message = "Error on saving preferences",
+                                                    options = ToastOptions(
+                                                        positionClass = ToastPosition.TOPRIGHT,
+                                                        hideMethod = ToastMethod.SLIDEUP
+                                                    )
+                                                )
+                                            }
+                                        } ?: Toast.warning(
+                                            message = "Cancelled",
+                                            options = ToastOptions(
+                                                positionClass = ToastPosition.TOPRIGHT,
+                                                hideMethod = ToastMethod.SLIDEUP
+                                            )
+                                        )
+                                        observableViewType.setState(ViewType.Main)
+                                    } else {
+                                        observableViewType.setState(ViewType.Main)
+                                        Toast.error(
+                                            message = "Authentication failed: incorrect password.",
+                                            options = ToastOptions(
+                                                positionClass = ToastPosition.TOPRIGHT,
+                                                hideMethod = ToastMethod.SLIDEUP
+                                            )
+                                        )
+                                    }
+                                } ?: kotlin.run {
+                                    observableViewType.setState(ViewType.Main)
+                                    Toast.warning(
+                                        message = "Authentication cancelled.",
+                                        options = ToastOptions(
+                                            positionClass = ToastPosition.TOPRIGHT,
+                                            hideMethod = ToastMethod.SLIDEUP
+                                        )
+                                    )
+                                }
+*/
+
 }
