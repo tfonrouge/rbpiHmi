@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* updated">
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/tables/Sensors.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/tables/User.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/ModelAuth.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/ModelHmi.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/LoginForm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/LoginForm.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/Model.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/frontendMain/resources/css/kvapp.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/resources/css/kvapp.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AuthView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AuthView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,14 +52,19 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-macos-x86_64-1.6.20" />
+  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-macos-x86_64-1.6.21" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="27w85lJiUlwEBBRrbF3fBRDeKmD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -71,16 +76,37 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/teo/IdeaProjects/RbPiHMI/src/frontendMain&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+    &quot;last_directory_selection&quot;: &quot;/Users/teo/IdeaProjects/rbpiHmi/build/generated-src/common/com/fonrouge/rbpiHmi/services&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/teo/IdeaProjects/rbpiHmi/build&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;,
+      &quot;h2&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/build" />
       <recent name="$PROJECT_DIR$/src/frontendMain" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/frontendMain/resources" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.fonrouge.rbpiHmi.data" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.fonrouge.rbpiHmi.data" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.fonrouge.rbpiHmi.data" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run backendRun">
+  <component name="RunManager" selected="Gradle.Run frontendRun">
     <configuration name="Run backendRun" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,6 +223,19 @@
       <workItem from="1650395582977" duration="170000" />
       <workItem from="1650488277293" duration="569000" />
       <workItem from="1650492005747" duration="767000" />
+      <workItem from="1650850569799" duration="1480000" />
+      <workItem from="1650942494813" duration="683000" />
+      <workItem from="1651174235998" duration="255000" />
+      <workItem from="1651453803737" duration="1246000" />
+      <workItem from="1651539515861" duration="7514000" />
+      <workItem from="1651550963044" duration="7192000" />
+      <workItem from="1651559091957" duration="2040000" />
+      <workItem from="1651580856861" duration="1410000" />
+      <workItem from="1651585257152" duration="7428000" />
+      <workItem from="1651594640010" duration="31150000" />
+      <workItem from="1651644478240" duration="910000" />
+      <workItem from="1651646489018" duration="48000" />
+      <workItem from="1651672929996" duration="14814000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -226,7 +265,35 @@
       <option name="project" value="LOCAL" />
       <updated>1650323345161</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="* updated">
+      <created>1650850664918</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650850664918</updated>
+    </task>
+    <task id="LOCAL-00006" summary="* updated">
+      <created>1650942775037</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650942775037</updated>
+    </task>
+    <task id="LOCAL-00007" summary="* updated">
+      <created>1651643026990</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1651643026990</updated>
+    </task>
+    <task id="LOCAL-00008" summary="* updated">
+      <created>1651643100169</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1651643100169</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

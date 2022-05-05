@@ -1,7 +1,7 @@
 package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.AppScope
-import com.fonrouge.rbpiHmi.Model
+import com.fonrouge.rbpiHmi.ModelHmi
 import com.fonrouge.rbpiHmi.data.RollerFeedState
 import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
 import com.fonrouge.rbpiHmi.lib.RadialGauge
@@ -184,7 +184,7 @@ class MainView : SimplePanel() {
 
         window.setInterval({
             AppScope.launch {
-                Model.hmiServiceGetState().let { hmiState ->
+                ModelHmi.hmiServiceGetState().let { hmiState ->
                     radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
                     radialGaugeARollerRpm.state = hmiState.aRollerRpm
                     radialGaugeBRollerRpm.state = hmiState.bRollerRpm

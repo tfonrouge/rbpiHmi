@@ -2,7 +2,7 @@ package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.App
 import com.fonrouge.rbpiHmi.AppScope
-import com.fonrouge.rbpiHmi.Model
+import com.fonrouge.rbpiHmi.ModelAuth
 import com.fonrouge.rbpiHmi.observableViewType
 import io.kvision.core.*
 import io.kvision.html.button
@@ -57,8 +57,8 @@ class AuthView : SimplePanel() {
 
     private suspend fun authenticate(password: String?) {
         password?.let {
-            if (Model.authenticate(password)) {
-                delay(1000)
+            if (ModelAuth.authenticate(password)) {
+                delay(250)
                 observableViewType.value = App.ViewType.ConfigAuth
                 Toast.info(
                     message = "Admin logged",

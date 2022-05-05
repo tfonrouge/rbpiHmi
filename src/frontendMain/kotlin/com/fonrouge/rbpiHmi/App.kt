@@ -79,7 +79,7 @@ class App : Application() {
             }
         }
         AppScope.launch {
-            val pingResult = Model.ping("Hello world from client!")
+            val pingResult = Model.ping("Hello from client")
             Toast.info("$pingResult ${getViewport()}")
         }
     }
