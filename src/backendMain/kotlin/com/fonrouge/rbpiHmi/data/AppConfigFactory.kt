@@ -1,6 +1,5 @@
 package com.fonrouge.rbpiHmi.data
 
-import io.ktor.server.application.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
@@ -9,8 +8,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.*
-import kotlin.io.path.Path
 
 object AppConfigFactory {
 
@@ -27,7 +24,12 @@ object AppConfigFactory {
         appConfig = try {
             Json.decodeFromStream(FileInputStream(propsFilename))
         } catch (e: Exception) {
-            AppConfig()
+            AppConfig(
+                serialPortPath = "",
+                numericPassword = "0000",
+                baudRate = "115200",
+                pingTimeoutInterval = 500
+            )
         }
         SerialComm.serialPortPath = appConfig.serialPortPath
     }

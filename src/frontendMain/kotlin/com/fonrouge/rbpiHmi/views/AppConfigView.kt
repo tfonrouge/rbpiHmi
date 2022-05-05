@@ -1,18 +1,20 @@
 package com.fonrouge.rbpiHmi.views
 
-import com.fonrouge.rbpiHmi.App
-import com.fonrouge.rbpiHmi.AppConfigModel
-import com.fonrouge.rbpiHmi.AppScope
+import com.fonrouge.rbpiHmi.*
 import com.fonrouge.rbpiHmi.data.AppConfig
-import com.fonrouge.rbpiHmi.observableViewType
 import com.fonrouge.rbpiHmi.services.ConfigServiceManager
 import com.fonrouge.rbpiHmi.services.IConfigService
 import io.kvision.core.FlexDirection
+import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
 import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.select.simpleSelectRemote
+import io.kvision.form.spinner.ButtonsType
+import io.kvision.form.spinner.ForceType
+import io.kvision.form.spinner.spinner
 import io.kvision.html.Button
+import io.kvision.html.ButtonStyle
 import io.kvision.html.button
 import io.kvision.modal.Dialog
 import io.kvision.panel.FlexPanel
@@ -20,9 +22,9 @@ import io.kvision.panel.flexPanel
 import io.kvision.toast.Toast
 import io.kvision.toast.ToastMethod
 import io.kvision.toast.ToastOptions
+import kotlinx.browser.window
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.js.timers.setTimeout
 
 class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
 
@@ -35,8 +37,8 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
 
     init {
         formPanel = formPanel {
-            flexPanel(direction = FlexDirection.COLUMN) {
-                flexPanel(direction = FlexDirection.ROW, spacing = 10) {
+            flexPanel(direction = FlexDirection.COLUMN, justify = JustifyContent.SPACEEVENLY) {
+                flexPanel(direction = FlexDirection.ROW, spacing = 10, justify = JustifyContent.SPACEEVENLY) {
                     simpleSelectRemote(
                         label = "Serial Port:",
                         serviceManager = ConfigServiceManager,
@@ -57,6 +59,19 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                         required = true,
                         validatorMessage = { "Select baud rate for PLC comms" }
                     )
+                    spinner(
+                        label = "Ping Interval millis",
+                        min = 100,
+                        max = 60000,
+                        step = 10,
+                        buttonsType = ButtonsType.VERTICAL,
+                        buttonStyle = ButtonStyle.OUTLINEPRIMARY,
+                        forceType = ForceType.ROUND
+                    ).bind(
+                        key = AppConfig::pingTimeoutInterval,
+                        required = true,
+                    )
+
                     digitPad(type = DigitPad.Type.Password, label = "Admin password:").apply {
                         textWidget
                             .bind(
@@ -70,32 +85,37 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                             }
                     }
                 }
-                button(text = "Save Settings").onClick {
-                    if (formPanel.validate()) {
-                        AppScope.launch {
-                            val d = formPanel.getData()
-                            AppConfigModel.writeAppConfig(d)
-                            observableViewType.value = App.ViewType.Main
+                flexPanel(
+                    direction = FlexDirection.ROW,
+                    justify = JustifyContent.FLEXEND
+                ) {
+                    button(text = "Save Settings").onClick {
+                        if (formPanel.validate()) {
+                            AppScope.launch {
+                                val d = formPanel.getData()
+                                ModelAppConfig.writeAppConfig(d)
+                                observableViewType.value = App.ViewType.Main
 //                            setResult()
+                            }
                         }
                     }
                 }
             }
         }
         AppScope.launch {
-            formPanel.setData(AppConfigModel.appConfig())
+            formPanel.setData(ModelAppConfig.appConfig())
         }
         startTimeOut()
     }
 
     private fun startTimeOut() {
-        setTimeout(
-            callback = {
+        timeoutAppConfigHandler = window.setTimeout(
+            handler = {
                 AppScope.launch {
                     confirmKeepDialog()
                 }
             },
-            ms = secsTimeout * 1000
+            timeout = secsTimeout * 1000
         )
     }
 
@@ -103,7 +123,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
         val label1 = "Keep configuring ?"
         val labelFunc = { count: Int -> "$label1 ($count secs)" }
         val btn: Button
-        val dialog: Dialog<Boolean> = Dialog(caption = "Confirm")
+        val dialog: Dialog<Boolean> = Dialog(
+            caption = "Confirm",
+            centered = true
+        )
 
         dialog.apply {
             btn = button(text = labelFunc(countLimit)).onClick {

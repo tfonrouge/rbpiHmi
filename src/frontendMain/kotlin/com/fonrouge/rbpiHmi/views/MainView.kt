@@ -1,9 +1,11 @@
 package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.AppScope
+import com.fonrouge.rbpiHmi.ModelAppConfig
 import com.fonrouge.rbpiHmi.ModelHmi
 import com.fonrouge.rbpiHmi.data.RollerFeedState
 import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
+import com.fonrouge.rbpiHmi.intervalPingHandler
 import com.fonrouge.rbpiHmi.lib.RadialGauge
 import com.fonrouge.rbpiHmi.lib.ReactCanvasGaugesRadialGaugeProps
 import io.kvision.core.AlignItems
@@ -34,7 +36,18 @@ class MainView : SimplePanel() {
     private lateinit var rollerFeedPositionImage: Image
     private lateinit var rollerFeedPositionLabel: Label
 
+    var intervalCounter = 0
+
+    var pingTimeoutInterval: Int? = null
+        set(value) {
+            if (field != value) {
+                field = value
+                startUpdate(field)
+            }
+        }
+
     init {
+
         flexPanel(
             direction = FlexDirection.ROW,
             wrap = FlexWrap.WRAP,
@@ -182,20 +195,32 @@ class MainView : SimplePanel() {
             }
         }
 
-        window.setInterval({
-            AppScope.launch {
-                ModelHmi.hmiServiceGetState().let { hmiState ->
-                    radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
-                    radialGaugeARollerRpm.state = hmiState.aRollerRpm
-                    radialGaugeBRollerRpm.state = hmiState.bRollerRpm
-                    radialGaugeAMotorRpm.state = hmiState.aMotorRpm
-                    radialGaugeBMotorRpm.state = hmiState.bMotorRpm
-                    setRollerFeedState(hmiState.rollerFeedState)
-                    setRollerFeedPosition(hmiState.rollerFeedPosition)
-                }
-            }
-        }, timeout = 1000)
+        AppScope.launch {
+            pingTimeoutInterval = ModelAppConfig.pingTimeoutInterval()
+            startUpdate(pingTimeoutInterval)
+        }
+    }
 
+    private fun startUpdate(timeout: Int?) {
+        intervalPingHandler = timeout?.let { it ->
+            window.setInterval(
+                handler = {
+                    AppScope.launch {
+                        console.warn("calling interval ($pingTimeoutInterval) ... ${++intervalCounter}")
+                        ModelHmi.hmiServiceGetState().let { hmiState ->
+                            radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
+                            radialGaugeARollerRpm.state = hmiState.aRollerRpm
+                            radialGaugeBRollerRpm.state = hmiState.bRollerRpm
+                            radialGaugeAMotorRpm.state = hmiState.aMotorRpm
+                            radialGaugeBMotorRpm.state = hmiState.bMotorRpm
+                            setRollerFeedState(hmiState.rollerFeedState)
+                            setRollerFeedPosition(hmiState.rollerFeedPosition)
+                        }
+                    }
+                },
+                timeout = it
+            )
+        }
     }
 
     private fun ReactCanvasGaugesRadialGaugeProps.setCanvasGaugesParams(

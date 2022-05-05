@@ -3,7 +3,7 @@ package com.fonrouge.rbpiHmi
 import com.fonrouge.rbpiHmi.data.AppConfig
 import com.fonrouge.rbpiHmi.services.AppConfigService
 
-object AppConfigModel {
+object ModelAppConfig {
     private val appConfigService = AppConfigService()
 
     suspend fun appConfig(): AppConfig {
@@ -12,5 +12,9 @@ object AppConfigModel {
 
     suspend fun writeAppConfig(appConfig: AppConfig): Boolean {
         return appConfigService.writeAppConfig(appConfig)
+    }
+
+    suspend fun pingTimeoutInterval(): Int {
+        return appConfigService.appConfig().pingTimeoutInterval
     }
 }

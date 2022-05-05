@@ -19,7 +19,19 @@ import kotlin.math.max
 
 val AppScope = CoroutineScope(window.asCoroutineDispatcher())
 
-var observableViewType = ObservableValue(App.ViewType.Main)
+var observableViewType: ObservableValue<App.ViewType?> = ObservableValue(null)
+
+var intervalPingHandler: Int? = null
+    set(value) {
+        field?.let { window.clearInterval(it) }
+        field = value
+    }
+
+var timeoutAppConfigHandler: Int? = null
+    set(value) {
+        field?.let { window.clearTimeout(it) }
+        field = value
+    }
 
 class App : Application() {
 
@@ -32,22 +44,40 @@ class App : Application() {
         require("css/kvapp.css")
 
         observableViewType.subscribe { viewType ->
+            if (viewType != ViewType.Main) {
+                intervalPingHandler = null
+            }
+            if (viewType != ViewType.ConfigAuth) {
+                timeoutAppConfigHandler = null
+            }
             footerForm?.let { footerForm ->
                 when (viewType) {
                     ViewType.Main -> {
+                        footerForm.buttonMain.disabled = true
+                        footerForm.buttonSensors.disabled = false
+                        footerForm.buttonConfig.disabled = false
                         footerForm.buttonMain.style = ButtonStyle.PRIMARY
                         footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
                         footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
                     }
                     ViewType.Sensors -> {
+                        footerForm.buttonMain.disabled = false
+                        footerForm.buttonSensors.disabled = true
+                        footerForm.buttonConfig.disabled = false
                         footerForm.buttonSensors.style = ButtonStyle.PRIMARY
                         footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
                         footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
                     }
-                    ViewType.Config -> {
+                    ViewType.Config, ViewType.ConfigAuth -> {
+                        footerForm.buttonMain.disabled = false
+                        footerForm.buttonSensors.disabled = false
+                        footerForm.buttonConfig.disabled = true
                         footerForm.buttonConfig.style = ButtonStyle.PRIMARY
                         footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
                         footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
+                    }
+                    null -> {
+
                     }
                 }
             }
@@ -67,8 +97,11 @@ class App : Application() {
                         ViewType.Sensors -> add(SensorsView())
                         ViewType.Config -> add(AuthView())
                         ViewType.ConfigAuth -> add(AppConfigView())
+                        null -> {
+
+                        }
                     }
-                    header.content = "$headerTitlePrefix - ${viewType.name}"
+                    header.content = "$headerTitlePrefix - ${viewType?.name}"
                 }
                 footer(className = "mt-auto") {
                     FooterForm().let {
@@ -79,6 +112,7 @@ class App : Application() {
             }
         }
         AppScope.launch {
+            observableViewType.value = ViewType.Main
             val pingResult = Model.ping("Hello from client")
             Toast.info("$pingResult ${getViewport()}")
         }

@@ -2,9 +2,9 @@ package com.fonrouge.rbpiHmi.services
 
 import com.fonrouge.rbpiHmi.data.HmiState
 import com.fonrouge.rbpiHmi.data.RollerFeedState
+import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
 import com.fonrouge.rbpiHmi.enums.RollerId
 import com.fonrouge.rbpiHmi.enums.RollerState
-import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
 import kotlin.random.Random
 
 actual class HmiService : IHmiService {
