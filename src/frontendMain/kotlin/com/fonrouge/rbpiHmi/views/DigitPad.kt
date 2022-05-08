@@ -116,7 +116,6 @@ class DigitPad(
                 }
             }
         }
-
         return dialog
     }
 

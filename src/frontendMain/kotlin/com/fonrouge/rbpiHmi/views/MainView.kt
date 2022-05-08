@@ -36,9 +36,9 @@ class MainView : SimplePanel() {
     private lateinit var rollerFeedPositionImage: Image
     private lateinit var rollerFeedPositionLabel: Label
 
-    var intervalCounter = 0
+    private var intervalCounter = 0
 
-    var pingTimeoutInterval: Int? = null
+    private var pingTimeoutInterval: Int? = null
         set(value) {
             if (field != value) {
                 field = value
@@ -47,6 +47,8 @@ class MainView : SimplePanel() {
         }
 
     init {
+
+        console.warn("onInit MainView....")
 
         flexPanel(
             direction = FlexDirection.ROW,
@@ -57,10 +59,7 @@ class MainView : SimplePanel() {
         ) {
             flexPanel(
                 direction = FlexDirection.COLUMN,
-//                wrap = FlexWrap.WRAP,
-//                justify = JustifyContent.FLEXEND,
                 alignItems = AlignItems.STRETCH,
-//                alignContent = AlignContent.SPACEAROUND
             ) {
                 flexPanel(
                     direction = FlexDirection.COLUMN,
@@ -70,7 +69,7 @@ class MainView : SimplePanel() {
                     className = "flexPanelCtrl1"
                 ) {
                     div(content = "Main Roller", rich = true, className = "title1")
-                    radialGaugeMainRollerRpm = react(250) { getState, setState ->
+                    radialGaugeMainRollerRpm = react(250) { getState, _ ->
                         RadialGauge {
                             animation = true
                             animatedValue = true
