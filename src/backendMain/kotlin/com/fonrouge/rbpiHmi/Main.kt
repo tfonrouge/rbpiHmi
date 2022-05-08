@@ -20,7 +20,7 @@ fun Application.main() {
         applyRoutes(ConfigServiceManager)
         applyRoutes(HmiServiceManager)
         applyRoutes(PingServiceManager)
-        applyRoutes(PlcConfigServiceManager)
+        applyRoutes(PLCServiceManager)
     }
     kvisionInit()
 }

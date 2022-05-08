@@ -22,6 +22,7 @@ import io.kvision.panel.flexPanel
 import io.kvision.toast.Toast
 import io.kvision.toast.ToastMethod
 import io.kvision.toast.ToastOptions
+import io.kvision.utils.event
 import kotlinx.browser.window
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -136,10 +137,9 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         dialog.onEvent {
-            focus = {
+            event("show.bs.modal") {
                 if (!waitingResponse) {
                     waitingResponse = true
-                    console.warn("focus", it)
                     AppScope.launch {
                         var countdown = countLimit
                         timeOutCancelled = false
