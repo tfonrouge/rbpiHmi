@@ -3,22 +3,25 @@ package com.fonrouge.rbpiHmi.data
 import com.fazecast.jSerialComm.SerialPort
 import com.fazecast.jSerialComm.SerialPortEvent
 import com.fazecast.jSerialComm.SerialPortMessageListener
+import com.fonrouge.rbpiHmi.dataComm.HelloQuery
+import com.fonrouge.rbpiHmi.dataComm.HelloResponse
+import com.fonrouge.rbpiHmi.dataComm.StateQuery
+import com.fonrouge.rbpiHmi.dataComm.StateResponse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.decodeFromJsonElement
 
 object PLCComm {
 
     var commId = 0L
 
-    var stateResponse: StateResponse? = null
-
     var helloResponse: HelloResponse? = null
 
-    var sJsonResponse: String? = null
+    var jsonElement: JsonElement? = null
 
     var serialCommConfig: SerialCommConfig? = null
         set(value) {
@@ -87,36 +90,43 @@ object PLCComm {
 
     private inline fun <reified T> SerialPort.sendQuery(query: T): Int {
         val s = Json.encodeToString(query) + "\n"
-        sJsonResponse = null
+        jsonElement = null
         return writeBytes(s.encodeToByteArray(), s.length.toLong())
     }
 
     private inline fun <reified T> getResponse(): T? = runBlocking {
         val millis = System.currentTimeMillis()
-        withTimeout(50) {
-            while (sJsonResponse == null) {
-                delay(10)
+        try {
+            withTimeout(50) {
+                while (jsonElement == null) {
+                    delay(10)
+                }
             }
+        } catch (e: java.lang.Exception) {
+            println("timeout error ${e.message}")
         }
         println("getResponse millis = ${System.currentTimeMillis() - millis}")
-        sJsonResponse?.let {
+        val result = jsonElement?.let {
+            println("jsonElement = $jsonElement")
             try {
-                Json.decodeFromString<T>(it)
+                Json.decodeFromJsonElement<T>(it)
             } catch (e: Exception) {
                 println("SerialPort.getResponse decoding error: ${e.message}")
                 null
             }
         }
+        jsonElement = null
+        result
     }
 
-    fun sendStateQuery(): Int? {
-        stateResponse = null
-        return serialPort?.sendQuery(
+    fun sendStateQuery(): StateResponse? {
+        serialPort?.sendQuery(
             StateQuery(
                 commId = commId++,
                 action = QueryAction.state
             )
         )
+        return getResponse()
     }
 
     class SerialMessageListener : SerialPortMessageListener {
@@ -126,8 +136,11 @@ object PLCComm {
 
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
-                sJsonResponse = String(bytes)
-                println("event = $sJsonResponse")
+                jsonElement = try {
+                    Json.parseToJsonElement(String(bytes))
+                } catch (e: Exception) {
+                    null
+                }
             }
         }
 

@@ -1,4 +1,6 @@
-package com.fonrouge.rbpiHmi.data
+package com.fonrouge.rbpiHmi.dataComm
+
+import com.fonrouge.rbpiHmi.data.QueryAction
 
 @kotlinx.serialization.Serializable
 class HelloQuery(

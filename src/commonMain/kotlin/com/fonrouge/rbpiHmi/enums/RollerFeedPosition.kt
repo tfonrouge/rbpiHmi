@@ -3,8 +3,8 @@ package com.fonrouge.rbpiHmi.enums
 enum class RollerFeedPosition(
     val imageSrc: String,
 ) {
-    Feeding("static-rotating-circle.png"),
-    Detaching("circle-arrow-right.png"),
-    Cutting("scissor.png"),
-    Attaching("circle-arrow-left.png")
+    feeding("static-rotating-circle.png"),
+    detaching("circle-arrow-right.png"),
+    cutting("scissor.png"),
+    attaching("circle-arrow-left.png")
 }

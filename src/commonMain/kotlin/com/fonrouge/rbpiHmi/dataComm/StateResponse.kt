@@ -1,10 +1,13 @@
-package com.fonrouge.rbpiHmi.data
+package com.fonrouge.rbpiHmi.dataComm
 
+import com.fonrouge.rbpiHmi.data.ResponseType
+import com.fonrouge.rbpiHmi.data.RollerFeedState
 import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
 
 @kotlinx.serialization.Serializable
 class StateResponse(
-    val valid: Boolean,
+    val commId: Long,
+    val type: ResponseType = ResponseType.state,
     val mainRollerRpm: Int,
     val aRollerRpm: Int,
     val bRollerRpm: Int,
