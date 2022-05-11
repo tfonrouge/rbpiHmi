@@ -1,13 +1,13 @@
 package com.fonrouge.rbpiHmi.services
 
-import com.fonrouge.rbpiHmi.data.SerialComm
+import com.fonrouge.rbpiHmi.data.PLCComm
 import io.kvision.remote.SimpleRemoteOption
 
 actual class ConfigService : IConfigService {
 
     override suspend fun getSerialPortPathList(state: String?): List<SimpleRemoteOption> {
         val result = mutableListOf(SimpleRemoteOption("", ""))
-        SerialComm.getSerialPorts()?.forEach { serialPort ->
+        PLCComm.getSerialPorts()?.forEach { serialPort ->
             result.add(
                 SimpleRemoteOption(
                     value = serialPort.systemPortPath,

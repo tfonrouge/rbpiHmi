@@ -2,8 +2,8 @@ package com.fonrouge.rbpiHmi.data
 
 @kotlinx.serialization.Serializable
 class AppConfig(
-    val serialPortPath: String,
-    val numericPassword: String,
-    val baudRate: String,
-    val pingTimeoutInterval: Int,
-)
+    val numericPassword: String = "0000",
+    val pingTimeoutInterval: Int = 1000,
+) {
+    var serialCommConfig: SerialCommConfig = SerialCommConfig()
+}

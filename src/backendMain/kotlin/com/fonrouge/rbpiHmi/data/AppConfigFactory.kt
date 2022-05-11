@@ -11,7 +11,11 @@ import java.nio.file.Paths
 
 object AppConfigFactory {
 
-    lateinit var appConfig: AppConfig
+    var appConfig: AppConfig = AppConfig()
+        set(value) {
+            PLCComm.serialCommConfig = value.serialCommConfig
+            field = value
+        }
 
     private const val propsFilename = "hmiApp.json"
 
@@ -24,21 +28,14 @@ object AppConfigFactory {
         appConfig = try {
             Json.decodeFromStream(FileInputStream(propsFilename))
         } catch (e: Exception) {
-            AppConfig(
-                serialPortPath = "",
-                numericPassword = "0000",
-                baudRate = "115200",
-                pingTimeoutInterval = 500
-            )
+            AppConfig()
         }
-        SerialComm.serialPortPath = appConfig.serialPortPath
     }
 
     @OptIn(ExperimentalSerializationApi::class)
     fun writeProperties(appConfig: AppConfig): Boolean {
         Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
         this.appConfig = appConfig
-        SerialComm.serialPortPath = appConfig.serialPortPath
         return true
     }
 

@@ -2,9 +2,11 @@ package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.*
 import com.fonrouge.rbpiHmi.data.AppConfig
+import com.fonrouge.rbpiHmi.data.SerialCommConfig
 import com.fonrouge.rbpiHmi.services.ConfigServiceManager
 import com.fonrouge.rbpiHmi.services.IConfigService
 import io.kvision.core.FlexDirection
+import io.kvision.core.FlexWrap
 import io.kvision.core.JustifyContent
 import io.kvision.core.onEvent
 import io.kvision.form.FormPanel
@@ -29,7 +31,8 @@ import kotlinx.coroutines.launch
 
 class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
 
-    private lateinit var formPanel: FormPanel<AppConfig>
+    private lateinit var serialCommConfigFormPanel: FormPanel<SerialCommConfig>
+    private lateinit var appConfigFormPanel: FormPanel<AppConfig>
     private var timeOutCancelled: Boolean? = null
     private var waitingResponse = false
 
@@ -37,74 +40,96 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
     val countLimit = 30
 
     init {
-        formPanel = formPanel {
-            flexPanel(direction = FlexDirection.COLUMN, justify = JustifyContent.SPACEEVENLY) {
-                flexPanel(direction = FlexDirection.ROW, spacing = 10, justify = JustifyContent.SPACEEVENLY) {
-                    simpleSelectRemote(
-                        label = "Serial Port:",
-                        serviceManager = ConfigServiceManager,
-                        function = IConfigService::getSerialPortPathList,
-                    ).bind(
-                        key = AppConfig::serialPortPath,
-                        required = true,
-                        validatorMessage = { "Serial port to PLC" },
-                    ) {
-                        it.value?.isNotEmpty()
-                    }
-                    simpleSelectRemote(
-                        label = "Baud rate:",
-                        serviceManager = ConfigServiceManager,
-                        function = IConfigService::getBaudRateList,
-                    ).bind(
-                        key = AppConfig::baudRate,
-                        required = true,
-                        validatorMessage = { "Select baud rate for PLC comms" }
-                    )
-                    spinner(
-                        label = "Ping Interval millis",
-                        min = 100,
-                        max = 60000,
-                        step = 10,
-                        buttonsType = ButtonsType.VERTICAL,
-                        buttonStyle = ButtonStyle.OUTLINEPRIMARY,
-                        forceType = ForceType.ROUND
-                    ).bind(
-                        key = AppConfig::pingTimeoutInterval,
-                        required = true,
-                    )
-
-                    digitPad(type = DigitPad.Type.Password, label = "Admin password:").apply {
-                        textWidget
-                            .bind(
-                                key = AppConfig::numericPassword,
-                                required = true,
-                                validatorMessage = { "only digits and length > 3" }
-                            ) {
-                                it.value?.let { s ->
-                                    s.contains(regex = Regex("^\\d+$")) && s.length > 3
-                                } ?: false
-                            }
+        flexPanel(direction = FlexDirection.ROW, wrap = FlexWrap.WRAP, justify = JustifyContent.SPACEEVENLY) {
+            serialCommConfigFormPanel = formPanel {
+                flexPanel(
+                    direction = FlexDirection.COLUMN,
+                    justify = JustifyContent.SPACEEVENLY,
+                    className = "flexPanelCtrl1"
+                ) {
+                    flexPanel(direction = FlexDirection.ROW, spacing = 10, justify = JustifyContent.SPACEEVENLY) {
+                        simpleSelectRemote(
+                            label = "Serial Port:",
+                            serviceManager = ConfigServiceManager,
+                            function = IConfigService::getSerialPortPathList,
+                        ).bind(
+                            key = SerialCommConfig::serialPortPath,
+                            required = true,
+                            validatorMessage = { "Serial port to PLC" },
+                        ) {
+                            it.value?.isNotEmpty()
+                        }
+                        simpleSelectRemote(
+                            label = "Baud rate:",
+                            serviceManager = ConfigServiceManager,
+                            function = IConfigService::getBaudRateList,
+                        ).bind(
+                            key = SerialCommConfig::baudRate,
+                            required = true,
+                            validatorMessage = { "Select baud rate for PLC comms" }
+                        )
                     }
                 }
+            }
+
+            appConfigFormPanel = formPanel {
                 flexPanel(
-                    direction = FlexDirection.ROW,
-                    justify = JustifyContent.FLEXEND
+                    direction = FlexDirection.COLUMN,
+                    justify = JustifyContent.SPACEEVENLY,
+                    className = "flexPanelCtrl1"
                 ) {
-                    button(text = "Save Settings").onClick {
-                        if (formPanel.validate()) {
-                            AppScope.launch {
-                                val d = formPanel.getData()
-                                ModelAppConfig.writeAppConfig(d)
-                                observableViewType.value = App.ViewType.Main
-//                            setResult()
+                    flexPanel(direction = FlexDirection.ROW, spacing = 10, justify = JustifyContent.SPACEEVENLY) {
+                        spinner(
+                            label = "Ping Interval millis",
+                            min = 100,
+                            max = 60000,
+                            step = 10,
+                            buttonsType = ButtonsType.VERTICAL,
+                            buttonStyle = ButtonStyle.OUTLINEPRIMARY,
+                            forceType = ForceType.ROUND
+                        ).bind(
+                            key = AppConfig::pingTimeoutInterval,
+                            required = true,
+                        )
+                        digitPad(type = DigitPad.Type.Password, label = "Admin password:")
+                            .apply {
+                                textWidget
+                                    .bind(
+                                        key = AppConfig::numericPassword,
+                                        required = true,
+                                        validatorMessage = { "only digits and length > 3" }
+                                    ) {
+                                        it.value?.let { s ->
+                                            s.contains(regex = Regex("^\\d+$")) && s.length > 3
+                                        } ?: false
+                                    }
                             }
-                        }
                     }
                 }
             }
         }
+
+        flexPanel(
+            direction = FlexDirection.ROW,
+            justify = JustifyContent.FLEXEND
+        ) {
+            button(text = "Save Settings").onClick {
+                if (serialCommConfigFormPanel.validate()) {
+                    AppScope.launch {
+                        val appConfig = appConfigFormPanel.getData()
+                        appConfig.serialCommConfig = serialCommConfigFormPanel.getData()
+                        ModelAppConfig.writeAppConfig(appConfig)
+                        observableViewType.value = App.ViewType.Main
+//                            setResult()
+                    }
+                }
+            }
+        }
+
         AppScope.launch {
-            formPanel.setData(ModelAppConfig.appConfig())
+            val appConfig = ModelAppConfig.appConfig()
+            appConfigFormPanel.setData(appConfig)
+            serialCommConfigFormPanel.setData(appConfig.serialCommConfig)
         }
         startTimeOut()
     }
