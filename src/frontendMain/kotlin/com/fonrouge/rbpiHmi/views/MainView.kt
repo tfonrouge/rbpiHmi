@@ -176,8 +176,9 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor A", rich = true, className = "title1")
-                        radialGaugeAMotorRpm = react {
+                        radialGaugeAMotorRpm = react(0) { getState, _ ->
                             RadialGauge {
+                                value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "A")
                             }
                         }
@@ -294,15 +295,15 @@ class MainView : SimplePanel() {
                 units = "RPM"
                 title = "$id Motor"
                 minValue = 0
-                maxValue = 1800
+                maxValue = 2000
                 exactTicks = true
-                majorTicks = arrayOf(200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800)
+                majorTicks = arrayOf(200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000)
                 minorTicks = 100
                 highlights = arrayOf(
                     json("from" to 0, "to" to 720, "color" to "lightgray"),
                     json("from" to 720, "to" to 1200, "color" to "darkgray"),
                     json("from" to 1200, "to" to 1500, "color" to "gray"),
-                    json("from" to 1500, "to" to 1800, "color" to "red"),
+                    json("from" to 1500, "to" to 2000, "color" to "red"),
                 )
             }
         }
