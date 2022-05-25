@@ -1,4 +1,4 @@
-package com.fonrouge.rbpiHmi.enums
+package com.fonrouge.rbpiHmi.dataComm.enums
 
 enum class RollerFeedPosition(
     val imageSrc: String,

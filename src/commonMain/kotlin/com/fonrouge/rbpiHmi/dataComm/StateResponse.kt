@@ -1,8 +1,7 @@
 package com.fonrouge.rbpiHmi.dataComm
 
 import com.fonrouge.rbpiHmi.data.ResponseType
-import com.fonrouge.rbpiHmi.data.RollerFeedState
-import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
+import com.fonrouge.rbpiHmi.dataComm.enums.RollerFeedPosition
 
 @kotlinx.serialization.Serializable
 class StateResponse(

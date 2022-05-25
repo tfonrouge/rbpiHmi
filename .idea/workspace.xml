@@ -6,6 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/DatabaseFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/DatabaseFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/ConfigService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/ConfigService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/RollerFeedState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/RollerFeedState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/enums/RollerFeedPosition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/RollerFeedPosition.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/enums/RollerId.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/RollerId.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/enums/RollerState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/RollerState.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +113,7 @@
       <recent name="com.fonrouge.rbpiHmi.data" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run backendRun">
+  <component name="RunManager" selected="Gradle.Run frontendRun">
     <configuration name="Run backendRun" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -243,7 +253,20 @@
       <workItem from="1651961308208" duration="46562000" />
       <workItem from="1652160611357" duration="2408000" />
       <workItem from="1652207763052" duration="948000" />
-      <workItem from="1652208746600" duration="19843000" />
+      <workItem from="1652208746600" duration="20670000" />
+      <workItem from="1652290931885" duration="150000" />
+      <workItem from="1652393701165" duration="163000" />
+      <workItem from="1652483454681" duration="20000" />
+      <workItem from="1652498324484" duration="18274000" />
+      <workItem from="1652561998569" duration="3634000" />
+      <workItem from="1652578729147" duration="10000" />
+      <workItem from="1652592162956" duration="709000" />
+      <workItem from="1652760191406" duration="597000" />
+      <workItem from="1652812707272" duration="375000" />
+      <workItem from="1652832436683" duration="31000" />
+      <workItem from="1652832715395" duration="37000" />
+      <workItem from="1652833205883" duration="13000" />
+      <workItem from="1652933321264" duration="454000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -343,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652239404852</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="* updated">
+      <created>1652248267897</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1652248267897</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,18 +399,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
-          <line>61</line>
+          <line>63</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
-          <line>107</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
-          <line>86</line>
-          <option name="timeStamp" value="24" />
+          <line>132</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

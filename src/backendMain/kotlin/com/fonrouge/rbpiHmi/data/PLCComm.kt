@@ -58,12 +58,15 @@ object PLCComm {
 
     var serialPort: SerialPort? = null
         set(value) {
+            helloResponse = null
             field?.let { serialPort ->
+//                serialPort.closePort()
                 if (serialPort.isOpen) {
                     serialPort.closePort()
                 }
             }
             field = establishComm(value)
+            sendHelloQuery()
         }
 
     fun getSerialPorts(): Array<out SerialPort>? {
@@ -77,27 +80,28 @@ object PLCComm {
             return null
         }
         serialPort1.addDataListener(SerialMessageListener())
-        serialPort1.sendQuery(
-            HelloQuery(
-                commId = commId++,
-                action = QueryAction.hello
-            )
-        )
-        helloResponse = getResponse()
-        println("hello response = $helloResponse")
         return serialPort1
     }
 
     private inline fun <reified T> SerialPort.sendQuery(query: T): Int {
-        val s = Json.encodeToString(query) + "\n"
-        jsonElement = null
-        return writeBytes(s.encodeToByteArray(), s.length.toLong())
+        if (query !is HelloQuery && helloResponse == null) {
+            sendHelloQuery()
+        }
+        return if (query is HelloQuery || helloResponse != null) {
+            val s = Json.encodeToString(query) + "\n"
+            jsonElement = null
+            val n = writeBytes(s.encodeToByteArray(), s.length.toLong())
+            println("SENT: $s")
+            n
+        } else 0
     }
 
     private inline fun <reified T> getResponse(): T? = runBlocking {
         val millis = System.currentTimeMillis()
+        val respMillis = 5000L
         try {
-            withTimeout(50) {
+            println("WAIT RESPONSE FOR $respMillis millis")
+            withTimeout(respMillis) {
                 while (jsonElement == null) {
                     delay(10)
                 }
@@ -105,7 +109,7 @@ object PLCComm {
         } catch (e: java.lang.Exception) {
             println("timeout error ${e.message}")
         }
-        println("getResponse millis = ${System.currentTimeMillis() - millis}")
+        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
         val result = jsonElement?.let {
             println("jsonElement = $jsonElement")
             try {
@@ -117,6 +121,17 @@ object PLCComm {
         }
         jsonElement = null
         result
+    }
+
+    fun sendHelloQuery(): HelloResponse? {
+        serialPort?.sendQuery(
+            HelloQuery(
+                commId = commId++,
+                action = QueryAction.hello,
+            )
+        )
+        helloResponse = getResponse()
+        return helloResponse
     }
 
     fun sendStateQuery(): StateResponse? {
@@ -136,6 +151,8 @@ object PLCComm {
 
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
+                val s = String(bytes)
+                println("RECEIVED = $s")
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {

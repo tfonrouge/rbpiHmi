@@ -32,6 +32,7 @@ actual class ConfigService : IConfigService {
             SimpleRemoteOption("115200", "115200 baud"),
             SimpleRemoteOption("230400", "230400 baud"),
             SimpleRemoteOption("250000", "250000 baud"),
+            SimpleRemoteOption("500000", "500000 baud"),
         )
     }
 }

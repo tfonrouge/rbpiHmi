@@ -4,8 +4,8 @@ import com.fonrouge.rbpiHmi.AppScope
 import com.fonrouge.rbpiHmi.ModelAppConfig
 import com.fonrouge.rbpiHmi.ModelHmi
 import com.fonrouge.rbpiHmi.data.ContainerPLCState
-import com.fonrouge.rbpiHmi.data.RollerFeedState
-import com.fonrouge.rbpiHmi.enums.RollerFeedPosition
+import com.fonrouge.rbpiHmi.dataComm.RollerFeedState
+import com.fonrouge.rbpiHmi.dataComm.enums.RollerFeedPosition
 import com.fonrouge.rbpiHmi.intervalPingHandler
 import com.fonrouge.rbpiHmi.lib.RadialGauge
 import com.fonrouge.rbpiHmi.lib.ReactCanvasGaugesRadialGaugeProps

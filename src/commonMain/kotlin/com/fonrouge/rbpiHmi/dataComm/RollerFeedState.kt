@@ -1,7 +1,7 @@
-package com.fonrouge.rbpiHmi.data
+package com.fonrouge.rbpiHmi.dataComm
 
-import com.fonrouge.rbpiHmi.enums.RollerId
-import com.fonrouge.rbpiHmi.enums.RollerState
+import com.fonrouge.rbpiHmi.dataComm.enums.RollerId
+import com.fonrouge.rbpiHmi.dataComm.enums.RollerState
 
 @kotlinx.serialization.Serializable
 class RollerFeedState(
