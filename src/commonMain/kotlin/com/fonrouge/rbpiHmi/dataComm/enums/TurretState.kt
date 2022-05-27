@@ -1,6 +1,6 @@
 package com.fonrouge.rbpiHmi.dataComm.enums
 
-enum class RollerFeedPosition(
+enum class TurretState(
     val imageSrc: String,
 ) {
     feeding("static-rotating-circle.png"),

@@ -19,7 +19,6 @@ fun Application.main() {
         applyRoutes(AuthServiceManager)
         applyRoutes(ConfigServiceManager)
         applyRoutes(HmiServiceManager)
-        applyRoutes(PingServiceManager)
     }
     kvisionInit()
 }

@@ -166,7 +166,7 @@ object PLCComm {
         }
 
         override fun delimiterIndicatesEndOfMessage(): Boolean {
-            return false
+            return true
         }
     }
 }

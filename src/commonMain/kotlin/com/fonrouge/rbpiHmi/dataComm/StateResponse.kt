@@ -1,7 +1,7 @@
 package com.fonrouge.rbpiHmi.dataComm
 
 import com.fonrouge.rbpiHmi.data.ResponseType
-import com.fonrouge.rbpiHmi.dataComm.enums.RollerFeedPosition
+import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 
 @kotlinx.serialization.Serializable
 class StateResponse(
@@ -12,6 +12,6 @@ class StateResponse(
     val bRollerRpm: Int,
     val aMotorRpm: Int,
     val bMotorRpm: Int,
-    val rollerFeedPosition: RollerFeedPosition,
-    val rollerFeedState: RollerFeedState,
+    val turretState: TurretState,
+    val rollersState: RollersState,
 )

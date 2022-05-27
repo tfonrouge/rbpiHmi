@@ -35,7 +35,7 @@ var timeoutAppConfigHandler: Int? = null
 
 class App : Application() {
 
-    private val headerTitlePrefix = "HMI v1.0"
+    private val headerTitlePrefix = "HMI v1.1"
 
     private var footerForm: FooterForm? = null
 
@@ -113,8 +113,6 @@ class App : Application() {
         }
         AppScope.launch {
             observableViewType.value = ViewType.Main
-            val pingResult = Model.ping("Hello from client")
-            Toast.info("$pingResult ${getViewport()}")
         }
     }
 

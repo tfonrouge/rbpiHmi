@@ -4,7 +4,7 @@ import com.fonrouge.rbpiHmi.dataComm.enums.RollerId
 import com.fonrouge.rbpiHmi.dataComm.enums.RollerState
 
 @kotlinx.serialization.Serializable
-class RollerFeedState(
+class RollersState(
     val attachedRollerId: RollerId,
     val attachedRollerState: RollerState,
     val detachedRollerState: RollerState,

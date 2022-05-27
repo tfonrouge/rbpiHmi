@@ -4,8 +4,8 @@ import com.fonrouge.rbpiHmi.AppScope
 import com.fonrouge.rbpiHmi.ModelAppConfig
 import com.fonrouge.rbpiHmi.ModelHmi
 import com.fonrouge.rbpiHmi.data.ContainerPLCState
-import com.fonrouge.rbpiHmi.dataComm.RollerFeedState
-import com.fonrouge.rbpiHmi.dataComm.enums.RollerFeedPosition
+import com.fonrouge.rbpiHmi.dataComm.RollersState
+import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 import com.fonrouge.rbpiHmi.intervalPingHandler
 import com.fonrouge.rbpiHmi.lib.RadialGauge
 import com.fonrouge.rbpiHmi.lib.ReactCanvasGaugesRadialGaugeProps
@@ -220,8 +220,8 @@ class MainView : SimplePanel() {
                                 radialGaugeBRollerRpm.state = hmiState.bRollerRpm
                                 radialGaugeAMotorRpm.state = hmiState.aMotorRpm
                                 radialGaugeBMotorRpm.state = hmiState.bMotorRpm
-                                setRollerFeedState(hmiState.rollerFeedState)
-                                setRollerFeedPosition(hmiState.rollerFeedPosition)
+                                setRollerFeedState(hmiState.rollersState)
+                                setRollerFeedPosition(hmiState.turretState)
                             }
                         } else {
                             Toast.error(
@@ -309,16 +309,16 @@ class MainView : SimplePanel() {
         }
     }
 
-    private fun setRollerFeedState(rollerFeedState: RollerFeedState) {
-        rollerStateAttachedImage.src = rollerFeedState.attachedRollerState.imageSrc
-        rollerStateAttachedLabel.content = rollerFeedState.attachedRollerId.name
-        rollerStateDetachedImage.src = rollerFeedState.detachedRollerState.imageSrc
-        rollerStateDetachedLabel.content = rollerFeedState.detachedRollerId.name
+    private fun setRollerFeedState(rollersState: RollersState) {
+        rollerStateAttachedImage.src = rollersState.attachedRollerState.imageSrc
+        rollerStateAttachedLabel.content = rollersState.attachedRollerId.name
+        rollerStateDetachedImage.src = rollersState.detachedRollerState.imageSrc
+        rollerStateDetachedLabel.content = rollersState.detachedRollerId.name
     }
 
-    private fun setRollerFeedPosition(rollerFeedPosition: RollerFeedPosition) {
-        rollerFeedPositionImage.src = rollerFeedPosition.imageSrc
-        rollerFeedPositionLabel.content = rollerFeedPosition.name
+    private fun setRollerFeedPosition(turretState: TurretState) {
+        rollerFeedPositionImage.src = turretState.imageSrc
+        rollerFeedPositionLabel.content = turretState.name
     }
 
     enum class RadialGaugeType {
