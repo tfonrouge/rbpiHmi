@@ -5,6 +5,28 @@ import io.kvision.remote.SimpleRemoteOption
 
 actual class ConfigService : IConfigService {
 
+    companion object {
+        val baudrateList = listOf(
+            300,
+            600,
+            1200,
+            1800,
+            2400,
+            4800,
+            9600,
+            19200,
+            28800,
+            38400,
+            57600,
+            76800,
+            115200,
+            230400,
+            460800,
+            576000,
+            921600
+        )
+    }
+
     override suspend fun getSerialPortPathList(state: String?): List<SimpleRemoteOption> {
         val result = mutableListOf(SimpleRemoteOption("", ""))
         PLCComm.getSerialPorts()?.forEach { serialPort ->
@@ -19,20 +41,6 @@ actual class ConfigService : IConfigService {
     }
 
     override suspend fun getBaudRateList(state: String?): List<SimpleRemoteOption> {
-        return listOf(
-            SimpleRemoteOption("300", "300 baud"),
-            SimpleRemoteOption("1200", "1200 baud"),
-            SimpleRemoteOption("2400", "2400 baud"),
-            SimpleRemoteOption("4800", "4800 baud"),
-            SimpleRemoteOption("9600", "9600 baud"),
-            SimpleRemoteOption("19200", "19200 baud"),
-            SimpleRemoteOption("38400", "38400 baud"),
-            SimpleRemoteOption("57600", "57600 baud"),
-            SimpleRemoteOption("74880", "74880 baud"),
-            SimpleRemoteOption("115200", "115200 baud"),
-            SimpleRemoteOption("230400", "230400 baud"),
-            SimpleRemoteOption("250000", "250000 baud"),
-            SimpleRemoteOption("500000", "500000 baud"),
-        )
+        return baudrateList.map { SimpleRemoteOption(it.toString(), "$it baud") }
     }
 }

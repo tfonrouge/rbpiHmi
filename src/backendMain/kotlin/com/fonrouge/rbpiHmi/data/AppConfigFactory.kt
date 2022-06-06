@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalSerializationApi::class)
+
 package com.fonrouge.rbpiHmi.data
 
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -23,7 +25,6 @@ object AppConfigFactory {
         readProperties()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     fun readProperties() {
         appConfig = try {
             Json.decodeFromStream(FileInputStream(propsFilename))
@@ -32,7 +33,6 @@ object AppConfigFactory {
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     fun writeProperties(appConfig: AppConfig): Boolean {
         Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
         this.appConfig = appConfig
