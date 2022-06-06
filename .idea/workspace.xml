@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* updated">
+    <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/ConfigService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/ConfigService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -268,7 +269,7 @@
       <workItem from="1653539282320" duration="2462000" />
       <workItem from="1653595776072" duration="11911000" />
       <workItem from="1653622643932" duration="204000" />
-      <workItem from="1654529045902" duration="4380000" />
+      <workItem from="1654529045902" duration="4722000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -382,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653622838737</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="* update">
+      <created>1654535299921</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1654535299921</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,7 +409,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="* updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="* updated" />
+    <MESSAGE value="* update" />
+    <option name="LAST_COMMIT_MESSAGE" value="* update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
