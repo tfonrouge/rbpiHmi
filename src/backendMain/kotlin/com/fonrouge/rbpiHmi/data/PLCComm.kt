@@ -7,6 +7,8 @@ import com.fonrouge.rbpiHmi.dataComm.HelloQuery
 import com.fonrouge.rbpiHmi.dataComm.HelloResponse
 import com.fonrouge.rbpiHmi.dataComm.StateQuery
 import com.fonrouge.rbpiHmi.dataComm.StateResponse
+import com.fonrouge.rbpiHmi.services.HelloService.Companion.helloResponse
+import io.kvision.remote.ServiceException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -18,8 +20,6 @@ import kotlinx.serialization.json.decodeFromJsonElement
 object PLCComm {
 
     var commId = 0L
-
-    var helloResponse: HelloResponse? = null
 
     var jsonElement: JsonElement? = null
 
@@ -66,7 +66,6 @@ object PLCComm {
                 }
             }
             field = establishComm(value)
-            sendHelloQuery()
         }
 
     fun getSerialPorts(): Array<out SerialPort>? {
@@ -96,7 +95,7 @@ object PLCComm {
         } else 0
     }
 
-    private inline fun <reified T> getResponse(): T? = runBlocking {
+    private inline fun <reified T> getResponse(): T = runBlocking {
         val millis = System.currentTimeMillis()
         val respMillis = 5000L
         try {
@@ -106,9 +105,10 @@ object PLCComm {
                     delay(10)
                 }
             }
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             println("timeout error ${e.message}")
             helloResponse = null
+            throw ServiceException("waiting response timeout error: ${e.message}")
         }
         println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
         val result = jsonElement?.let {
@@ -116,15 +116,14 @@ object PLCComm {
             try {
                 Json.decodeFromJsonElement<T>(it)
             } catch (e: Exception) {
-                println("SerialPort.getResponse decoding error: ${e.message}")
-                null
+                throw ServiceException("SerialPort.getResponse decoding error: ${e.message}")
             }
         }
         jsonElement = null
-        result
+        result ?: throw ServiceException("response null...")
     }
 
-    fun sendHelloQuery(): HelloResponse? {
+    fun sendHelloQuery(): HelloResponse {
         serialPort?.sendQuery(
             HelloQuery(
                 commId = commId++,
@@ -132,10 +131,10 @@ object PLCComm {
             )
         )
         helloResponse = getResponse()
-        return helloResponse
+        return helloResponse!!
     }
 
-    fun sendStateQuery(): StateResponse? {
+    fun sendStateQuery(): StateResponse {
         serialPort?.sendQuery(
             StateQuery(
                 commId = commId++,

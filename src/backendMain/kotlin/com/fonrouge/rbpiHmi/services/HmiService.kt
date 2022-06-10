@@ -1,15 +1,16 @@
 package com.fonrouge.rbpiHmi.services
 
-import com.fonrouge.rbpiHmi.data.ContainerPLCState
 import com.fonrouge.rbpiHmi.data.PLCComm
+import com.fonrouge.rbpiHmi.dataComm.StateResponse
+import io.kvision.remote.ServiceException
 
 actual class HmiService : IHmiService {
 
-    override suspend fun getState(): ContainerPLCState {
-        val stateResponse = PLCComm.sendStateQuery()
-        return ContainerPLCState(
-            valid = stateResponse != null,
-            stateResponse = stateResponse
-        )
+    override suspend fun getHmiServiceState(): StateResponse {
+        return try {
+            PLCComm.sendStateQuery()
+        } catch (e: Exception) {
+            throw ServiceException("getHmiServiceState() error: ${e.message}")
+        }
     }
 }

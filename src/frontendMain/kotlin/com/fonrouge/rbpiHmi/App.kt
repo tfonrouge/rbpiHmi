@@ -117,9 +117,9 @@ class App : Application() {
         ModelHello.helloResponseObservableValue.subscribe {
             header?.content = headerLabel(observableViewType.value)
         }
-        AppScope.launch {
-            ModelHello.getHelloResponse()
-        }
+//        AppScope.launch {
+//            ModelHello.getHelloResponse()
+//        }
     }
 
     private fun headerLabel(viewType: ViewType?): String {

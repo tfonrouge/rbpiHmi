@@ -1,7 +1,6 @@
 package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.*
-import com.fonrouge.rbpiHmi.data.ContainerPLCState
 import com.fonrouge.rbpiHmi.dataComm.RollersState
 import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 import com.fonrouge.rbpiHmi.lib.RadialGauge
@@ -16,11 +15,10 @@ import io.kvision.panel.flexPanel
 import io.kvision.react.React
 import io.kvision.react.react
 import io.kvision.toast.Toast
-import io.kvision.toast.ToastMethod
 import io.kvision.toast.ToastOptions
-import io.kvision.toast.ToastPosition
 import io.kvision.utils.rem
 import kotlinx.browser.window
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.js.json
 
@@ -44,7 +42,7 @@ class MainView : SimplePanel() {
         set(value) {
             if (field != value) {
                 field = value
-                startUpdate(field)
+                startPeriodicUpdate(field)
             }
         }
 
@@ -199,40 +197,37 @@ class MainView : SimplePanel() {
 
         AppScope.launch {
             pingTimeoutInterval = ModelAppConfig.pingTimeoutInterval()
-            startUpdate(pingTimeoutInterval)
+            startPeriodicUpdate(pingTimeoutInterval)
         }
     }
 
     private suspend fun getHmiServiceState() {
-        val containerPLCState: ContainerPLCState = ModelHmi.getHmiServiceState()
-        if (containerPLCState.valid && containerPLCState.stateResponse != null) {
-            containerPLCState.stateResponse.let { hmiState ->
-                radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
-                radialGaugeARollerRpm.state = hmiState.aRollerRpm
-                radialGaugeBRollerRpm.state = hmiState.bRollerRpm
-                radialGaugeAMotorRpm.state = hmiState.aMotorRpm
-                radialGaugeBMotorRpm.state = hmiState.bMotorRpm
-                setRollerFeedState(hmiState.rollersState)
-                setRollerFeedPosition(hmiState.turretState)
+        try {
+            ModelHmi.getHmiServiceState().apply {
+                radialGaugeMainRollerRpm.state = mainRollerRpm
+                radialGaugeARollerRpm.state = aRollerRpm
+                radialGaugeBRollerRpm.state = bRollerRpm
+                radialGaugeAMotorRpm.state = aMotorRpm
+                radialGaugeBMotorRpm.state = bMotorRpm
+                setRollerFeedState(rollersState)
+                setRollerFeedPosition(turretState)
             }
-        } else {
+        } catch (e: Exception) {
             Toast.error(
-                message = "Communication error with PLC hardware",
-                title = "Error",
+                message = e.message ?: "?",
+                title = "getHmiServiceState() error:",
                 options = ToastOptions(
-                    positionClass = ToastPosition.TOPCENTER,
-                    escapeHtml = false,
-                    showMethod = ToastMethod.FADEOUT,
+                    preventDuplicates = true,
                 )
             )
         }
     }
-    private fun startUpdate(timeout: Int?) {
+
+    private fun startPeriodicUpdate(timeout: Int?) {
         intervalPingHandler = timeout?.let { it ->
             window.setInterval(
                 handler = {
                     AppScope.launch {
-                        console.warn("calling interval ($pingTimeoutInterval) ... ${++intervalCounter}")
                         if (ModelHello.helloResponseObservableValue.value == null) {
                             ModelHello.getHelloResponse()
                         } else {
