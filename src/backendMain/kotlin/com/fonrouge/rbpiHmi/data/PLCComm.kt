@@ -108,6 +108,7 @@ object PLCComm {
             }
         } catch (e: java.lang.Exception) {
             println("timeout error ${e.message}")
+            helloResponse = null
         }
         println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
         val result = jsonElement?.let {

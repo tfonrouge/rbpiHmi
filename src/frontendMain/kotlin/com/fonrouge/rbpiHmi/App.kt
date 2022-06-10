@@ -9,7 +9,6 @@ import io.kvision.html.*
 import io.kvision.panel.root
 import io.kvision.state.ObservableValue
 import io.kvision.state.bind
-import io.kvision.toast.Toast
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
@@ -85,10 +84,11 @@ class App : Application() {
     }
 
     override fun start(state: Map<String, Any>) {
+        var header: Header? = null
         root("kvapp") {
 //            div(className = "min-vh-100 d-flex flex-column justify-content-between") {
             div(className = "d-flex flex-column min-vh-100") {
-                val header = header(content = headerTitlePrefix, className = "header1") {
+                header = header(content = headerTitlePrefix, className = "header1") {
                     align = Align.CENTER
                 }
                 main().bind(observableState = observableViewType) { viewType ->
@@ -101,7 +101,7 @@ class App : Application() {
 
                         }
                     }
-                    header.content = "$headerTitlePrefix - ${viewType?.name}"
+                    header?.content = headerLabel(observableViewType.value)
                 }
                 footer(className = "mt-auto") {
                     FooterForm().let {
@@ -114,6 +114,19 @@ class App : Application() {
         AppScope.launch {
             observableViewType.value = ViewType.Main
         }
+        ModelHello.helloResponseObservableValue.subscribe {
+            header?.content = headerLabel(observableViewType.value)
+        }
+        AppScope.launch {
+            ModelHello.getHelloResponse()
+        }
+    }
+
+    private fun headerLabel(viewType: ViewType?): String {
+        return "$headerTitlePrefix - ${viewType?.name} -> " +
+                (ModelHello.helloResponseObservableValue.value?.let {
+                    "Connected to ${it.item}"
+                } ?: "<NOT CONNECTED TO PLC>")
     }
 
     private fun getViewport(): String {

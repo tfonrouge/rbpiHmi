@@ -1,12 +1,9 @@
 package com.fonrouge.rbpiHmi.views
 
-import com.fonrouge.rbpiHmi.AppScope
-import com.fonrouge.rbpiHmi.ModelAppConfig
-import com.fonrouge.rbpiHmi.ModelHmi
+import com.fonrouge.rbpiHmi.*
 import com.fonrouge.rbpiHmi.data.ContainerPLCState
 import com.fonrouge.rbpiHmi.dataComm.RollersState
 import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
-import com.fonrouge.rbpiHmi.intervalPingHandler
 import com.fonrouge.rbpiHmi.lib.RadialGauge
 import com.fonrouge.rbpiHmi.lib.ReactCanvasGaugesRadialGaugeProps
 import io.kvision.core.AlignItems
@@ -206,33 +203,40 @@ class MainView : SimplePanel() {
         }
     }
 
+    private suspend fun getHmiServiceState() {
+        val containerPLCState: ContainerPLCState = ModelHmi.getHmiServiceState()
+        if (containerPLCState.valid && containerPLCState.stateResponse != null) {
+            containerPLCState.stateResponse.let { hmiState ->
+                radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
+                radialGaugeARollerRpm.state = hmiState.aRollerRpm
+                radialGaugeBRollerRpm.state = hmiState.bRollerRpm
+                radialGaugeAMotorRpm.state = hmiState.aMotorRpm
+                radialGaugeBMotorRpm.state = hmiState.bMotorRpm
+                setRollerFeedState(hmiState.rollersState)
+                setRollerFeedPosition(hmiState.turretState)
+            }
+        } else {
+            Toast.error(
+                message = "Communication error with PLC hardware",
+                title = "Error",
+                options = ToastOptions(
+                    positionClass = ToastPosition.TOPCENTER,
+                    escapeHtml = false,
+                    showMethod = ToastMethod.FADEOUT,
+                )
+            )
+        }
+    }
     private fun startUpdate(timeout: Int?) {
         intervalPingHandler = timeout?.let { it ->
             window.setInterval(
                 handler = {
                     AppScope.launch {
                         console.warn("calling interval ($pingTimeoutInterval) ... ${++intervalCounter}")
-                        val containerPLCState: ContainerPLCState = ModelHmi.getHmiServiceState()
-                        if (containerPLCState.valid && containerPLCState.stateResponse != null) {
-                            containerPLCState.stateResponse.let { hmiState ->
-                                radialGaugeMainRollerRpm.state = hmiState.mainRollerRpm
-                                radialGaugeARollerRpm.state = hmiState.aRollerRpm
-                                radialGaugeBRollerRpm.state = hmiState.bRollerRpm
-                                radialGaugeAMotorRpm.state = hmiState.aMotorRpm
-                                radialGaugeBMotorRpm.state = hmiState.bMotorRpm
-                                setRollerFeedState(hmiState.rollersState)
-                                setRollerFeedPosition(hmiState.turretState)
-                            }
+                        if (ModelHello.helloResponseObservableValue.value == null) {
+                            ModelHello.getHelloResponse()
                         } else {
-                            Toast.error(
-                                message = "Communication error with PLC hardware",
-                                title = "Error",
-                                options = ToastOptions(
-                                    positionClass = ToastPosition.TOPCENTER,
-                                    escapeHtml = false,
-                                    showMethod = ToastMethod.FADEOUT,
-                                )
-                            )
+                            getHmiServiceState()
                         }
                     }
                 },

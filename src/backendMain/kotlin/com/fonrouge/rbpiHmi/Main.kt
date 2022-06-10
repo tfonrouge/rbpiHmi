@@ -15,6 +15,7 @@ fun Application.main() {
     DatabaseFactory.init()
     install(Compression)
     routing {
+        applyRoutes(HelloServiceManager)
         applyRoutes(AppConfigServiceManager)
         applyRoutes(AuthServiceManager)
         applyRoutes(ConfigServiceManager)
