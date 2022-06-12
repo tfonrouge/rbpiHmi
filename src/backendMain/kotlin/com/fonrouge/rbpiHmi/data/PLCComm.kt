@@ -97,7 +97,7 @@ object PLCComm {
 
     private inline fun <reified T> getResponse(): T = runBlocking {
         val millis = System.currentTimeMillis()
-        val respMillis = 5000L
+        val respMillis = 1000L
         try {
 //            println("WAIT RESPONSE FOR $respMillis millis")
             withTimeout(respMillis) {

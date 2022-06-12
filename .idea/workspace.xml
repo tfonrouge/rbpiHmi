@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +108,7 @@
       <recent name="com.fonrouge.rbpiHmi.data" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run frontendRun">
+  <component name="RunManager" selected="Gradle.Run backendRun">
     <configuration name="Run backendRun" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -274,10 +276,6 @@
       <workItem from="1654875203740" duration="3645000" />
       <workItem from="1654880493149" duration="8673000" />
       <workItem from="1654890774749" duration="1861000" />
-      <workItem from="1654892661622" duration="44000" />
-      <workItem from="1654949596402" duration="5545000" />
-      <workItem from="1654975930513" duration="3669000" />
-      <workItem from="1655002678383" duration="10272000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -412,21 +410,7 @@
       <option name="project" value="LOCAL" />
       <updated>1654882179296</updated>
     </task>
-    <task id="LOCAL-00020" summary="* update">
-      <created>1654892693700</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1654892693700</updated>
-    </task>
-    <task id="LOCAL-00021" summary="* update">
-      <created>1655021848445</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1655021848445</updated>
-    </task>
-    <option name="localTasksCounter" value="22" />
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -460,6 +444,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/rbpiHmi$Run_backendRun.ic" NAME="Run backendRun Coverage Results" MODIFIED="1653610754809" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/rbpiHmi$Run_backendRun.ic" NAME="Run backendRun Coverage Results" MODIFIED="1652135319671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
