@@ -90,7 +90,7 @@ object PLCComm {
             val s = Json.encodeToString(query) + "\n"
             jsonElement = null
             val n = writeBytes(s.encodeToByteArray(), s.length.toLong())
-            println("SENT: $s")
+//            println("SENT: $s")
             n
         } else 0
     }
@@ -99,7 +99,7 @@ object PLCComm {
         val millis = System.currentTimeMillis()
         val respMillis = 5000L
         try {
-            println("WAIT RESPONSE FOR $respMillis millis")
+//            println("WAIT RESPONSE FOR $respMillis millis")
             withTimeout(respMillis) {
                 while (jsonElement == null) {
                     delay(10)
@@ -110,9 +110,9 @@ object PLCComm {
             helloResponse = null
             throw ServiceException("waiting response timeout error: ${e.message}")
         }
-        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
+//        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
         val result = jsonElement?.let {
-            println("jsonElement = $jsonElement")
+//            println("jsonElement = $jsonElement")
             try {
                 Json.decodeFromJsonElement<T>(it)
             } catch (e: Exception) {
@@ -152,10 +152,11 @@ object PLCComm {
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
                 val s = String(bytes)
-                println("RECEIVED = $s")
+//                println("RECEIVED = $s")
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {
+                    print("No Json received (commId $commId)> $s")
                     null
                 }
             }
