@@ -18,7 +18,6 @@ import io.kvision.toast.Toast
 import io.kvision.toast.ToastOptions
 import io.kvision.utils.rem
 import kotlinx.browser.window
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.js.json
 
@@ -33,8 +32,8 @@ class MainView : SimplePanel() {
     private lateinit var rollerStateAttachedLabel: Label
     private lateinit var rollerStateDetachedImage: Image
     private lateinit var rollerStateDetachedLabel: Label
-    private lateinit var rollerFeedPositionImage: Image
-    private lateinit var rollerFeedPositionLabel: Label
+    private lateinit var rollerWindPositionImage: Image
+    private lateinit var rollerWindPositionLabel: Label
 
     private var intervalCounter = 0
 
@@ -84,7 +83,7 @@ class MainView : SimplePanel() {
                     className = "flexPanelCtrl1",
                     alignItems = AlignItems.STRETCH
                 ) {
-                    div(content = "Feed Roller Status", rich = true, className = "title1")
+                    div(content = "Wind Roller Status", rich = true, className = "title1")
                     flexPanel(
                         direction = FlexDirection.ROW,
                         alignItems = AlignItems.BASELINE,
@@ -119,11 +118,11 @@ class MainView : SimplePanel() {
                         justify = JustifyContent.SPACEBETWEEN,
                         className = "flexPanelCtrl1",
                     ) {
-                        rollerFeedPositionImage = image(src = "question-mark-1.png") {
+                        rollerWindPositionImage = image(src = "question-mark-1.png") {
                             width = 2.rem
                             height = 2.rem
                         }
-                        rollerFeedPositionLabel = label(rich = true)
+                        rollerWindPositionLabel = label(rich = true)
                     }
                 }
             }
@@ -139,10 +138,10 @@ class MainView : SimplePanel() {
                         justify = JustifyContent.SPACEBETWEEN,
                         className = "flexPanelCtrl1"
                     ) {
-                        div(content = "Feed Roller A", rich = true, className = "title1")
+                        div(content = "Wind Roller A", rich = true, className = "title1")
                         radialGaugeARollerRpm = react {
                             RadialGauge {
-                                setCanvasGaugesParams(RadialGaugeType.FeedRoller, "A")
+                                setCanvasGaugesParams(RadialGaugeType.WindRoller, "A")
                             }
                         }
                     }
@@ -152,10 +151,10 @@ class MainView : SimplePanel() {
                         justify = JustifyContent.SPACEBETWEEN,
                         className = "flexPanelCtrl1"
                     ) {
-                        div(content = "Feed Roller B", rich = true, className = "title1")
+                        div(content = "Wind Roller B", rich = true, className = "title1")
                         radialGaugeBRollerRpm = react {
                             RadialGauge {
-                                setCanvasGaugesParams(RadialGaugeType.FeedRoller, "B")
+                                setCanvasGaugesParams(RadialGaugeType.WindRoller, "B")
                             }
                         }
                     }
@@ -196,7 +195,7 @@ class MainView : SimplePanel() {
         }
 
         AppScope.launch {
-            pingTimeoutInterval = ModelAppConfig.pingTimeoutInterval()
+            pingTimeoutInterval = ModelAppConfig.hmiRefreshInterval()
             startPeriodicUpdate(pingTimeoutInterval)
         }
     }
@@ -209,8 +208,8 @@ class MainView : SimplePanel() {
                 radialGaugeBRollerRpm.state = bRollerRpm
                 radialGaugeAMotorRpm.state = aMotorRpm
                 radialGaugeBMotorRpm.state = bMotorRpm
-                setRollerFeedState(rollersState)
-                setRollerFeedPosition(turretState)
+                setRollerWindState(rollersState)
+                setRollerWindPosition(turretState)
             }
         } catch (e: Exception) {
             Toast.error(
@@ -268,7 +267,7 @@ class MainView : SimplePanel() {
                 )
             }
 
-            RadialGaugeType.FeedRoller -> {
+            RadialGaugeType.WindRoller -> {
                 colorBorderInner = "red"
                 width = w
                 height = h
@@ -308,19 +307,19 @@ class MainView : SimplePanel() {
         }
     }
 
-    private fun setRollerFeedState(rollersState: RollersState) {
+    private fun setRollerWindState(rollersState: RollersState) {
         rollerStateAttachedImage.src = rollersState.attachedRollerState.imageSrc
         rollerStateAttachedLabel.content = rollersState.attachedRollerId.name
         rollerStateDetachedImage.src = rollersState.detachedRollerState.imageSrc
         rollerStateDetachedLabel.content = rollersState.detachedRollerId.name
     }
 
-    private fun setRollerFeedPosition(turretState: TurretState) {
-        rollerFeedPositionImage.src = turretState.imageSrc
-        rollerFeedPositionLabel.content = turretState.name
+    private fun setRollerWindPosition(turretState: TurretState) {
+        rollerWindPositionImage.src = turretState.imageSrc
+        rollerWindPositionLabel.content = turretState.name
     }
 
     enum class RadialGaugeType {
-        MainRoller, FeedRoller, Motor
+        MainRoller, WindRoller, Motor
     }
 }

@@ -15,7 +15,7 @@ object AppConfigFactory {
 
     var appConfig: AppConfig = AppConfig()
         set(value) {
-            PLCComm.serialCommConfig = value.serialCommConfig
+            PLCComm.serialCommConfig = value.commLinkConfig.serialCommConfig
             field = value
         }
 
@@ -29,7 +29,10 @@ object AppConfigFactory {
         appConfig = try {
             Json.decodeFromStream(FileInputStream(propsFilename))
         } catch (e: Exception) {
-            AppConfig()
+            AppConfig(
+                commLinkConfig = CommLinkConfig(),
+                sensorsConfig = SensorsConfig()
+            )
         }
     }
 

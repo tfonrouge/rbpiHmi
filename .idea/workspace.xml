@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* update">
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/CommLinkConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SensorsConfig.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AuthService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AuthService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SerialCommConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SerialCommConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/RollerState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/RollerState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/TurretState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/enums/TurretState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/ModelAppConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/ModelAppConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/MainView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,10 +57,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin Enum" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -278,6 +289,10 @@
       <workItem from="1654949596402" duration="5545000" />
       <workItem from="1654975930513" duration="3669000" />
       <workItem from="1655002678383" duration="10272000" />
+      <workItem from="1655048493430" duration="58000" />
+      <workItem from="1655086198363" duration="9000" />
+      <workItem from="1655138634684" duration="8000" />
+      <workItem from="1655142490539" duration="11538000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -426,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655021848445</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="* update">
+      <created>1655048546542</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1655048546542</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

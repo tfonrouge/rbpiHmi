@@ -14,7 +14,7 @@ object ModelAppConfig {
         return appConfigService.writeAppConfig(appConfig)
     }
 
-    suspend fun pingTimeoutInterval(): Int {
-        return appConfigService.appConfig().pingTimeoutInterval
+    suspend fun hmiRefreshInterval(): Int {
+        return appConfigService.appConfig().commLinkConfig.hmiRefreshInterval
     }
 }
