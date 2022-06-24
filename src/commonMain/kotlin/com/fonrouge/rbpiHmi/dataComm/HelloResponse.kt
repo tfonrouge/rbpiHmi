@@ -12,4 +12,5 @@ class HelloResponse(
     val email: String,
     val buildDate: String,
     val version: String,
+    val user: String,
 )

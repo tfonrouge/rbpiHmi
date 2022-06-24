@@ -35,8 +35,6 @@ class MainView : SimplePanel() {
     private lateinit var rollerWindPositionImage: Image
     private lateinit var rollerWindPositionLabel: Label
 
-    private var intervalCounter = 0
-
     private var pingTimeoutInterval: Int? = null
         set(value) {
             if (field != value) {
@@ -94,20 +92,20 @@ class MainView : SimplePanel() {
                     ) {
                         flexPanel(direction = FlexDirection.COLUMN, alignItems = AlignItems.CENTER) {
                             rollerStateAttachedImage = image("question-mark-1.png") {
-                                width = 2.rem
-                                height = 2.rem
+                                width = 1.5.rem
+                                height = 1.5.rem
                             }
                             rollerStateAttachedLabel = label(rich = true)
 //                            rollerStateAttachedLabel = div(content = "?", rich = true)
                         }
                         image("double-arrow.png") {
-                            width = 4.rem
-                            height = 2.rem
+                            width = 1.5.rem
+                            height = 1.5.rem
                         }
                         flexPanel(direction = FlexDirection.COLUMN, alignItems = AlignItems.CENTER) {
                             rollerStateDetachedImage = image("question-mark-1.png") {
-                                width = 2.rem
-                                height = 2.rem
+                                width = 1.5.rem
+                                height = 1.5.rem
                             }
                             rollerStateDetachedLabel = label(rich = true)
                         }
@@ -119,8 +117,8 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1",
                     ) {
                         rollerWindPositionImage = image(src = "question-mark-1.png") {
-                            width = 2.rem
-                            height = 2.rem
+                            width = 1.5.rem
+                            height = 1.5.rem
                         }
                         rollerWindPositionLabel = label(rich = true)
                     }
@@ -243,8 +241,8 @@ class MainView : SimplePanel() {
         radialGaugeType: RadialGaugeType, id: String? = null
     ) {
 
-        val w = 300
-        val h = 300
+        val w = 150
+        val h = 150
 
         when (radialGaugeType) {
 

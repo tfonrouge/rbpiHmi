@@ -3,7 +3,6 @@ package com.fonrouge.rbpiHmi
 import com.fonrouge.rbpiHmi.views.AppConfigView
 import com.fonrouge.rbpiHmi.views.AuthView
 import com.fonrouge.rbpiHmi.views.MainView
-import com.fonrouge.rbpiHmi.views.SensorsView
 import io.kvision.*
 import io.kvision.html.*
 import io.kvision.panel.root
@@ -53,27 +52,15 @@ class App : Application() {
                 when (viewType) {
                     ViewType.Main -> {
                         footerForm.buttonMain.disabled = true
-                        footerForm.buttonSensors.disabled = false
                         footerForm.buttonConfig.disabled = false
                         footerForm.buttonMain.style = ButtonStyle.PRIMARY
-                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
-                        footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
-                    }
-                    ViewType.Sensors -> {
-                        footerForm.buttonMain.disabled = false
-                        footerForm.buttonSensors.disabled = true
-                        footerForm.buttonConfig.disabled = false
-                        footerForm.buttonSensors.style = ButtonStyle.PRIMARY
-                        footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
                         footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
                     }
                     ViewType.Config, ViewType.ConfigAuth -> {
                         footerForm.buttonMain.disabled = false
-                        footerForm.buttonSensors.disabled = false
                         footerForm.buttonConfig.disabled = true
                         footerForm.buttonConfig.style = ButtonStyle.PRIMARY
                         footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
-                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
                     }
                     null -> {
 
@@ -88,13 +75,12 @@ class App : Application() {
         root("kvapp") {
 //            div(className = "min-vh-100 d-flex flex-column justify-content-between") {
             div(className = "d-flex flex-column min-vh-100") {
-                header = header(content = headerTitlePrefix, className = "header1") {
+                header = header(content = headerTitlePrefix, rich = true, className = "header") {
                     align = Align.CENTER
                 }
                 main().bind(observableState = observableViewType) { viewType ->
                     when (viewType) {
                         ViewType.Main -> add(MainView())
-                        ViewType.Sensors -> add(SensorsView())
                         ViewType.Config -> add(AuthView())
                         ViewType.ConfigAuth -> add(AppConfigView())
                         null -> {
@@ -125,7 +111,7 @@ class App : Application() {
     private fun headerLabel(viewType: ViewType?): String {
         return "$headerTitlePrefix - ${viewType?.name} -> " +
                 (ModelHello.helloResponseObservableValue.value?.let {
-                    "Connected to ${it.item}"
+                    "Connected to ${it.item}, User: <b>${it.user}</b>"
                 } ?: "<NOT CONNECTED TO PLC>")
     }
 
@@ -141,7 +127,6 @@ class App : Application() {
 
     enum class ViewType {
         Main,
-        Sensors,
         Config,
         ConfigAuth,
     }

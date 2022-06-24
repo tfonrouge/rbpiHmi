@@ -7,15 +7,9 @@ import com.fonrouge.rbpiHmi.data.SensorsConfig
 import com.fonrouge.rbpiHmi.data.SerialCommConfig
 import com.fonrouge.rbpiHmi.services.ConfigServiceManager
 import com.fonrouge.rbpiHmi.services.IConfigService
-import io.kvision.core.FlexDirection
-import io.kvision.core.FlexWrap
-import io.kvision.core.JustifyContent
-import io.kvision.core.onEvent
-import io.kvision.form.FormHorizontalRatio
-import io.kvision.form.FormPanel
-import io.kvision.form.FormType
+import io.kvision.core.*
+import io.kvision.form.*
 import io.kvision.form.check.checkBox
-import io.kvision.form.formPanel
 import io.kvision.form.select.simpleSelectRemote
 import io.kvision.form.spinner.ButtonsType
 import io.kvision.form.spinner.ForceType
@@ -24,10 +18,7 @@ import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.html.button
 import io.kvision.modal.Dialog
-import io.kvision.panel.FlexPanel
-import io.kvision.panel.flexPanel
-import io.kvision.panel.tab
-import io.kvision.panel.tabPanel
+import io.kvision.panel.*
 import io.kvision.toast.Toast
 import io.kvision.toast.ToastMethod
 import io.kvision.toast.ToastOptions
@@ -48,31 +39,156 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
     private val secsTimeout = 120
     private val countLimit = 30
 
+    private val advancedControlList = mutableListOf<GenericFormControl<*>>()
+    private val advancedConfigDisabled = true
+
     init {
         tabPanel {
             tab(label = "Sensors") {
-                flexPanel(direction = FlexDirection.ROW) {
+                flexPanel(direction = FlexDirection.COLUMN) {
                     marginTop = 1.rem
                     sensorsConfigFormPanel =
                         formPanel(type = FormType.HORIZONTAL, horizRatio = FormHorizontalRatio.RATIO_9) {
-                            spinner(
-                                label = "MS to start spinning winding roller after detaching:",
-                                min = 0,
-                                max = 5000,
-                                step = 5
-                            )
-                                .bind(SensorsConfig::delayToSpinWindingRoller, required = true)
-                            spinner(
-                                label = "% of additional spin speed to winding roller:",
-                                min = -50,
-                                max = 50,
-                                decimals = 1
-                            )
-                                .bind(SensorsConfig::additionalSpeedSpinToWindingRoller, required = true)
-                            spinner(label = "MS to stop winded roller after cut operation:", min = 0, max = 60000)
-                                .bind(SensorsConfig::delayToStopWindedRollerAfterCut, required = true)
-                            checkBox(label = "Spin un-winded roller before attaching:")
-                                .bind(SensorsConfig::spinUnWindedRollerBeforeAttaching, required = true)
+                            fieldsetPanel(legend = "Spinning winding roller after detaching signal:") {
+                                spinner(
+                                    label = "Milliseconds delay to start spinning:",
+                                    min = 0,
+                                    max = 5000,
+                                    step = 5,
+                                ).bind(SensorsConfig::delayToSpinWindingRoller, required = true)
+                                spinner(
+                                    label = "Detaching signal input Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startDetachingSignalPinNumber, required = true)
+                                spinner(
+                                    label = "High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startDetachingSignalHighState, required = true)
+                            }
+                            fieldsetPanel(legend = "Additional spin speed to winding roller:") {
+                                spinner(
+                                    label = "Percent:",
+                                    min = -50,
+                                    max = 50,
+                                    decimals = 1
+                                ).bind(SensorsConfig::additionalSpeedSpinToWindingRoller, required = true)
+                            }
+                            fieldsetPanel(legend = "Stop winded roller after cut operation:") {
+                                spinner(label = "Milliseconds delay to stop winded roller:", min = 0, max = 60000)
+                                    .bind(SensorsConfig::delayToStopWindedRollerAfterCut, required = true)
+                                spinner(
+                                    label = "Cut operation signal input Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::CutOperationSignalPinNumber, required = true)
+                                spinner(
+                                    label = "Cut operation signal input High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::CutOperationSignalHighState, required = true)
+                            }
+                            fieldsetPanel(legend = "Spin-up un-winded roller before attaching:") {
+                                checkBox()
+                                    .bind(SensorsConfig::spinUpUnWindedRollerBeforeAttaching, required = true)
+                            }
+                            fieldsetPanel(legend = "Main feeder roller rpm input signal:") {
+                                spinner(
+                                    label = "Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::feederRollerRpmSignalPinNumber, required = true)
+                                spinner(
+                                    label = "High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::feederRollerRpmSignalHighState, required = true)
+                            }
+                            fieldsetPanel(legend = "Winding roller rpm input signal:") {
+                                spinner(
+                                    label = "(A) winding roller Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aWindingRollerRpmSignalPinNumber, required = true)
+                                spinner(
+                                    label = "(A) winding roller High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aWindingRollerRpmSignalHighState, required = true)
+                                spinner(
+                                    label = "(B) winding roller Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bWindingRollerRpmSignalPinNumber, required = true)
+                                spinner(
+                                    label = "(B) winding roller High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bWindingRollerRpmSignalHighState, required = true)
+                            }
+                            fieldsetPanel(legend = "Start attaching input signal:") {
+                                spinner(
+                                    label = "Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startAttachingSignalPinNumber, required = true)
+                                spinner(
+                                    label = "High State:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startAttachingSignalHighState, required = true)
+                            }
+                            checkBox(label = "Edit advanced settings:") {
+                                enableTooltip(
+                                    options = TooltipOptions(
+                                        title = "WARNING: enable only if you know what you are doing...",
+                                        placement = Placement.TOP
+                                    )
+                                )
+                            }.onEvent {
+                                change = {
+                                    advancedControlList.forEach {
+                                        it.disabled = !self.value
+                                    }
+                                }
+                            }
                         }
                 }
             }
