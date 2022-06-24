@@ -4,8 +4,8 @@ import com.fonrouge.rbpiHmi.data.ResponseType
 
 @kotlinx.serialization.Serializable
 class HelloResponse(
-    val commId: Long,
-    val type: ResponseType = ResponseType.hello,
+    override val commId: Long,
+    override val type: ResponseType = ResponseType.hello,
     val item: String,
     val maker: String,
     val www: String,
@@ -13,4 +13,4 @@ class HelloResponse(
     val buildDate: String,
     val version: String,
     val user: String,
-)
+) : IResponse

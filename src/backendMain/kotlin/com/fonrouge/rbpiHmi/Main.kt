@@ -1,7 +1,7 @@
 package com.fonrouge.rbpiHmi
 
 import com.fonrouge.rbpiHmi.data.AppConfigFactory
-import com.fonrouge.rbpiHmi.data.DatabaseFactory
+import com.fonrouge.rbpiHmi.db.DatabaseFactory
 import com.fonrouge.rbpiHmi.services.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.compression.*

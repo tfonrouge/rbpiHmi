@@ -3,10 +3,7 @@ package com.fonrouge.rbpiHmi.data
 import com.fazecast.jSerialComm.SerialPort
 import com.fazecast.jSerialComm.SerialPortEvent
 import com.fazecast.jSerialComm.SerialPortMessageListener
-import com.fonrouge.rbpiHmi.dataComm.HelloQuery
-import com.fonrouge.rbpiHmi.dataComm.HelloResponse
-import com.fonrouge.rbpiHmi.dataComm.StateQuery
-import com.fonrouge.rbpiHmi.dataComm.StateResponse
+import com.fonrouge.rbpiHmi.dataComm.*
 import com.fonrouge.rbpiHmi.services.HelloService.Companion.helloResponse
 import io.kvision.remote.ServiceException
 import kotlinx.coroutines.delay
@@ -82,7 +79,7 @@ object PLCComm {
         return serialPort1
     }
 
-    private inline fun <reified T> SerialPort.sendQuery(query: T): Int {
+    private inline fun <reified T: IQuery> SerialPort.sendQuery(query: T): Int {
         if (query !is HelloQuery && helloResponse == null) {
             sendHelloQuery()
         }
@@ -125,10 +122,7 @@ object PLCComm {
 
     fun sendHelloQuery(): HelloResponse {
         serialPort?.sendQuery(
-            HelloQuery(
-                commId = commId++,
-                action = QueryAction.hello,
-            )
+            HelloQuery()
         )
         helloResponse = getResponse()
         return helloResponse!!
@@ -136,11 +130,13 @@ object PLCComm {
 
     fun sendStateQuery(): StateResponse {
         serialPort?.sendQuery(
-            StateQuery(
-                commId = commId++,
-                action = QueryAction.state
-            )
+            StateQuery()
         )
+        return getResponse()
+    }
+
+    fun sendConfigQuery(configQuery: ConfigQuery) : ConfigResponse {
+        serialPort?.sendQuery(configQuery)
         return getResponse()
     }
 

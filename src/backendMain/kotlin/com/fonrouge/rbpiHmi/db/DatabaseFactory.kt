@@ -1,5 +1,6 @@
-package com.fonrouge.rbpiHmi.data
+package com.fonrouge.rbpiHmi.db
 
+import com.fonrouge.rbpiHmi.data.PLCConfigs
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

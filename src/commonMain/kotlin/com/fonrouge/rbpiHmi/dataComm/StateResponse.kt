@@ -5,8 +5,8 @@ import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 
 @kotlinx.serialization.Serializable
 class StateResponse(
-    val commId: Long,
-    val type: ResponseType = ResponseType.state,
+    override val commId: Long,
+    override val type: ResponseType = ResponseType.state,
     val mainRollerRpm: Int,
     val aRollerRpm: Int,
     val bRollerRpm: Int,
@@ -14,4 +14,4 @@ class StateResponse(
     val bMotorRpm: Int,
     val turretState: TurretState,
     val rollersState: RollersState,
-)
+) : IResponse

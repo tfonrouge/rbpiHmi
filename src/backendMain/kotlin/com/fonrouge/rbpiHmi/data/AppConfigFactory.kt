@@ -2,6 +2,7 @@
 
 package com.fonrouge.rbpiHmi.data
 
+import com.fonrouge.rbpiHmi.dataComm.ConfigQuery
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
@@ -16,6 +17,7 @@ object AppConfigFactory {
     var appConfig: AppConfig = AppConfig()
         set(value) {
             PLCComm.serialCommConfig = value.commLinkConfig.serialCommConfig
+            PLCComm.sendConfigQuery(ConfigQuery(value.sensorsConfig))
             field = value
         }
 
@@ -38,7 +40,7 @@ object AppConfigFactory {
 
     fun writeProperties(appConfig: AppConfig): Boolean {
         Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
-        this.appConfig = appConfig
+        AppConfigFactory.appConfig = appConfig
         return true
     }
 

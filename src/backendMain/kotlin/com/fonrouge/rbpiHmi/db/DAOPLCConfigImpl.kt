@@ -1,4 +1,6 @@
-package com.fonrouge.rbpiHmi.data
+package com.fonrouge.rbpiHmi.db
+
+import com.fonrouge.rbpiHmi.data.PLCConfig
 
 class DAOPLCConfigImpl : DAOPLCConfig {
     override suspend fun allConfigs(): List<PLCConfig> {

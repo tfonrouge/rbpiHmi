@@ -4,5 +4,6 @@ enum class ResponseType {
     error,
     hello,
     ok,
-    state
+    state,
+    config
 }
