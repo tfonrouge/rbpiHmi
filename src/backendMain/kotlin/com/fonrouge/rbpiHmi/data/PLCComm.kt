@@ -93,7 +93,7 @@ object PLCComm {
     }
 
     private inline fun <reified T> getResponse(): T = runBlocking {
-        val millis = System.currentTimeMillis()
+//        val millis = System.currentTimeMillis()
         val respMillis = 1000L
         try {
 //            println("WAIT RESPONSE FOR $respMillis millis")
@@ -121,17 +121,13 @@ object PLCComm {
     }
 
     fun sendHelloQuery(): HelloResponse {
-        serialPort?.sendQuery(
-            HelloQuery()
-        )
+        serialPort?.sendQuery(HelloQuery())
         helloResponse = getResponse()
         return helloResponse!!
     }
 
     fun sendStateQuery(): StateResponse {
-        serialPort?.sendQuery(
-            StateQuery()
-        )
+        serialPort?.sendQuery(StateQuery())
         return getResponse()
     }
 
@@ -152,7 +148,7 @@ object PLCComm {
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {
-                    print("No Json received (commId $commId)> $s")
+                    print("NoJson($commId)> $s")
                     null
                 }
             }

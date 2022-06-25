@@ -91,7 +91,7 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::CutOperationSignalPinNumber, required = true)
+                                }.bind(SensorsConfig::cutOperationSignalPinNumber, required = true)
                                 spinner(
                                     label = "Cut operation signal input High State:",
                                     min = 0,
@@ -99,7 +99,7 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::CutOperationSignalHighState, required = true)
+                                }.bind(SensorsConfig::cutOperationSignalHighState, required = true)
                             }
                             fieldsetPanel(legend = "Spin-up un-winded roller before attaching:") {
                                 checkBox()
@@ -174,6 +174,42 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startAttachingSignalHighState, required = true)
+                            }
+                            fieldsetPanel(legend = "Motor (A)") {
+                                spinner(
+                                    label = "Start/Stop Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorStartStopPinNumber, required = true)
+                                spinner(
+                                    label = "Speed Pin number:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedPinNumber, required = true)
+                            }
+                            fieldsetPanel(legend = "Motor (B)") {
+                                spinner(
+                                    label = "Start/Stop Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorStartStopPinNumber, required = true)
+                                spinner(
+                                    label = "Speed Pin number:",
+                                    min = 0,
+                                    max = 1
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedPinNumber, required = true)
                             }
                             checkBox(label = "Edit advanced settings:") {
                                 enableTooltip(
@@ -283,6 +319,7 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                         val commLinkConfig = commLinkConfigFormPanel.getData()
                         commLinkConfig.serialCommConfig = serialCommConfigFormPanel.getData()
                         val sensorsConfig = sensorsConfigFormPanel.getData()
+                        console.warn("WRITTING APPCONFIG")
                         ModelAppConfig.writeAppConfig(
                             AppConfig(
                                 commLinkConfig = commLinkConfig,

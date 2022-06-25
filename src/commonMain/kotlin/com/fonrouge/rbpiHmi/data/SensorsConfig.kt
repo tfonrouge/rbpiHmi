@@ -35,7 +35,15 @@ class SensorsConfig(
     @EncodeDefault()
     val startAttachingSignalHighState: Int = 1,
     @EncodeDefault()
-    val CutOperationSignalPinNumber: Int = 17,
+    val cutOperationSignalPinNumber: Int = 17,
     @EncodeDefault()
-    val CutOperationSignalHighState: Int = 1,
+    val cutOperationSignalHighState: Int = 1,
+    @EncodeDefault()
+    val aMotorStartStopPinNumber: Int = 18,
+    @EncodeDefault()
+    val bMotorStartStopPinNumber: Int = 19,
+    @EncodeDefault()
+    val aMotorSpeedPinNumber: Int = 20,
+    @EncodeDefault()
+    val bMotorSpeedPinNumber: Int = 21,
 )

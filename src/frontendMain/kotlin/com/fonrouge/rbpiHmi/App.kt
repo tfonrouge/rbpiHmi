@@ -3,6 +3,7 @@ package com.fonrouge.rbpiHmi
 import com.fonrouge.rbpiHmi.views.AppConfigView
 import com.fonrouge.rbpiHmi.views.AuthView
 import com.fonrouge.rbpiHmi.views.MainView
+import com.fonrouge.rbpiHmi.views.SensorsView
 import io.kvision.*
 import io.kvision.html.*
 import io.kvision.panel.root
@@ -81,6 +82,7 @@ class App : Application() {
                 main().bind(observableState = observableViewType) { viewType ->
                     when (viewType) {
                         ViewType.Main -> add(MainView())
+                        ViewType.Sensors -> add(SensorsView())
                         ViewType.Config -> add(AuthView())
                         ViewType.ConfigAuth -> add(AppConfigView())
                         null -> {
@@ -127,6 +129,7 @@ class App : Application() {
 
     enum class ViewType {
         Main,
+        Sensors,
         Config,
         ConfigAuth,
     }

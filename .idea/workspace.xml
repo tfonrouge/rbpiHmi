@@ -5,23 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* update">
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/ConfigQuery.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/ConfigResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/IQuery.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/IResponse.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/SensorsView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/DAOPLCConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/db/DAOPLCConfig.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/DAOPLCConfigImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/db/DAOPLCConfigImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/DatabaseFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/db/DatabaseFactory.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/QueryAction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/QueryAction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/ResponseType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/ResponseType.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloQuery.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateQuery.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/StateResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AppConfigService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AppConfigService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/CommLinkConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/CommLinkConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SensorsConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SensorsConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SerialCommConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SerialCommConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,27 +76,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_directory_selection": "/Users/teo/IdeaProjects/rbpiHmi/build/generated-src/common/com/fonrouge/rbpiHmi/services",
-    "last_opened_file_path": "/Users/teo/IdeaProjects/rbpiHmi/build",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/teo/IdeaProjects/rbpiHmi/build/generated-src/common/com/fonrouge/rbpiHmi/services&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/teo/IdeaProjects/rbpiHmi/build&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "h2",
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;h2&quot;,
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/build" />
@@ -302,7 +296,9 @@
       <workItem from="1655169092605" duration="25000" />
       <workItem from="1655227347472" duration="365000" />
       <workItem from="1655996201538" duration="19776000" />
-      <workItem from="1656079759489" duration="11206000" />
+      <workItem from="1656079759489" duration="14999000" />
+      <workItem from="1656163623113" duration="2339000" />
+      <workItem from="1656166784974" duration="13130000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -472,11 +468,29 @@
       <option name="project" value="LOCAL" />
       <updated>1656032536438</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="* update">
+      <created>1656096661099</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1656096661100</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -499,8 +513,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
-          <line>60</line>
-          <option name="timeStamp" value="13" />
+          <line>82</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
+          <line>109</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt</url>
+          <line>45</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AppConfigService.kt</url>
+          <line>12</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

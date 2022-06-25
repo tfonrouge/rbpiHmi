@@ -17,7 +17,11 @@ object AppConfigFactory {
     var appConfig: AppConfig = AppConfig()
         set(value) {
             PLCComm.serialCommConfig = value.commLinkConfig.serialCommConfig
-            PLCComm.sendConfigQuery(ConfigQuery(value.sensorsConfig))
+            try {
+                PLCComm.sendConfigQuery(ConfigQuery(value.sensorsConfig))
+            } catch (e: Exception) {
+                println("sendConfigQuery error: ${e.message}")
+            }
             field = value
         }
 
@@ -38,7 +42,7 @@ object AppConfigFactory {
         }
     }
 
-    fun writeProperties(appConfig: AppConfig): Boolean {
+    fun writeAppConfig(appConfig: AppConfig): Boolean {
         Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
         AppConfigFactory.appConfig = appConfig
         return true

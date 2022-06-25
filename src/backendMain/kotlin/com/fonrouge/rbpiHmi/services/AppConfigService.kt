@@ -10,6 +10,6 @@ actual class AppConfigService : IAppConfigService {
     }
 
     override suspend fun writeAppConfig(appConfig: AppConfig): Boolean {
-        return AppConfigFactory.writeProperties(appConfig)
+        return AppConfigFactory.writeAppConfig(appConfig)
     }
 }
