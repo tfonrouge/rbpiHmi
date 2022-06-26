@@ -7,6 +7,7 @@ import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 class StateResponse(
     override val commId: Long,
     override val type: ResponseType = ResponseType.state,
+    val startDetachingSignal: Boolean,
     val mainRollerRpm: Int,
     val aRollerRpm: Int,
     val bRollerRpm: Int,

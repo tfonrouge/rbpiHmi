@@ -12,7 +12,6 @@ import io.kvision.panel.flexPanel
 class FooterForm : SimplePanel() {
 
     lateinit var buttonMain: Button
-    lateinit var buttonSensors: Button
     lateinit var buttonConfig: Button
 
     init {
@@ -26,9 +25,6 @@ class FooterForm : SimplePanel() {
         ) {
             buttonMain = button("Main", style = ButtonStyle.SECONDARY).onClick {
                 observableViewType.setState(App.ViewType.Main)
-            }
-            buttonSensors = button("Sensors", style = ButtonStyle.SECONDARY).onClick {
-                observableViewType.setState(App.ViewType.Sensors)
             }
             buttonConfig = button("Config", style = ButtonStyle.SECONDARY).onClick {
                 observableViewType.setState(App.ViewType.Config)

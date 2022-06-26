@@ -144,7 +144,7 @@ object PLCComm {
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
                 val s = String(bytes)
-//                println("RECEIVED = $s")
+                println("RECEIVED = $s")
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {
