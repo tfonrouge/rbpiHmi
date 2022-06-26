@@ -53,15 +53,27 @@ class App : Application() {
                 when (viewType) {
                     ViewType.Main -> {
                         footerForm.buttonMain.disabled = true
+                        footerForm.buttonSensors.disabled = false
                         footerForm.buttonConfig.disabled = false
                         footerForm.buttonMain.style = ButtonStyle.PRIMARY
+                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
+                        footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
+                    }
+                    ViewType.Sensors -> {
+                        footerForm.buttonMain.disabled = false
+                        footerForm.buttonSensors.disabled = true
+                        footerForm.buttonConfig.disabled = false
+                        footerForm.buttonSensors.style = ButtonStyle.PRIMARY
+                        footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
                         footerForm.buttonConfig.style = ButtonStyle.OUTLINESECONDARY
                     }
                     ViewType.Config, ViewType.ConfigAuth -> {
                         footerForm.buttonMain.disabled = false
+                        footerForm.buttonSensors.disabled = false
                         footerForm.buttonConfig.disabled = true
                         footerForm.buttonConfig.style = ButtonStyle.PRIMARY
                         footerForm.buttonMain.style = ButtonStyle.OUTLINESECONDARY
+                        footerForm.buttonSensors.style = ButtonStyle.OUTLINESECONDARY
                     }
                     null -> {
 
