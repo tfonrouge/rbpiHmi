@@ -9,8 +9,6 @@ import io.kvision.core.AlignItems
 import io.kvision.core.FlexDirection
 import io.kvision.core.FlexWrap
 import io.kvision.core.JustifyContent
-import io.kvision.form.check.CheckBox
-import io.kvision.form.check.checkBox
 import io.kvision.html.*
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.flexPanel
@@ -25,7 +23,7 @@ import kotlin.js.json
 
 class MainView : SimplePanel() {
 
-    private lateinit var checkboxStartDetachingSignal: CheckBox
+    private lateinit var buttonStartDetachingSignal: Button
     private lateinit var radialGaugeMainRollerRpm: React<Int>
     private lateinit var radialGaugeARollerRpm: React<Int>
     private lateinit var radialGaugeBRollerRpm: React<Int>
@@ -60,7 +58,7 @@ class MainView : SimplePanel() {
             flexPanel(
                 direction = FlexDirection.COLUMN
             ) {
-                checkboxStartDetachingSignal = checkBox(label = ":startDetachingSignal", value = true)
+                buttonStartDetachingSignal= button(text = "StartDetachingSignal")
             }
             flexPanel(
                 direction = FlexDirection.COLUMN,
@@ -209,7 +207,8 @@ class MainView : SimplePanel() {
     private suspend fun getHmiServiceState() {
         try {
             ModelHmi.getHmiServiceState().apply {
-                checkboxStartDetachingSignal.value = startDetachingSignal
+                buttonStartDetachingSignal.style = if(startDetachingSignal)
+                    ButtonStyle.SUCCESS else ButtonStyle.OUTLINEDARK
                 radialGaugeMainRollerRpm.state = mainRollerRpm
                 radialGaugeARollerRpm.state = aRollerRpm
                 radialGaugeBRollerRpm.state = bRollerRpm
