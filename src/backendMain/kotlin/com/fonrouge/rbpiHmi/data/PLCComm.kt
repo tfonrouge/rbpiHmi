@@ -12,6 +12,7 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 
 object PLCComm {
@@ -79,7 +80,7 @@ object PLCComm {
         return serialPort1
     }
 
-    private inline fun <reified T: IQuery> SerialPort.sendQuery(query: T): Int {
+    private inline fun <reified T : IQuery> SerialPort.sendQuery(query: T): Int {
         if (query !is HelloQuery && helloResponse == null) {
             sendHelloQuery()
         }
@@ -131,7 +132,7 @@ object PLCComm {
         return getResponse()
     }
 
-    fun sendConfigQuery(configQuery: ConfigQuery) : ConfigResponse {
+    fun sendConfigQuery(configQuery: ConfigQuery): ConfigResponse {
         serialPort?.sendQuery(configQuery)
         return getResponse()
     }
@@ -144,12 +145,20 @@ object PLCComm {
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
                 val s = String(bytes)
-//                println("RECEIVED = $s")
+                println("RECEIVED = $s")
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {
                     print("NoJson($commId)> $s")
                     null
+                }
+                jsonElement?.let {
+                    (it as? JsonObject)?.let { jsonObject ->
+                        if (jsonObject.containsKey("configure")) {
+                            println("sending configuring data to PLC...")
+                            sendConfigQuery(ConfigQuery(AppConfigFactory.appConfig.sensorsConfig))
+                        }
+                    }
                 }
             }
         }
