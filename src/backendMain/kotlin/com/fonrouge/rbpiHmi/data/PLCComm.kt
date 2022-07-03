@@ -23,6 +23,7 @@ object PLCComm {
 
     var serialCommConfig: SerialCommConfig? = null
         set(value) {
+/*
             val s1 = try {
                 Json.encodeToString(field)
             } catch (e: java.lang.Exception) {
@@ -34,6 +35,8 @@ object PLCComm {
                 null
             }
             if (s1 != s2) {
+*/
+            if (true) {
                 serialPort = if (value != null) {
                     try {
                         val serialPort1 = SerialPort.getCommPort(value.serialPortPath)
@@ -58,7 +61,6 @@ object PLCComm {
         set(value) {
             helloResponse = null
             field?.let { serialPort ->
-//                serialPort.closePort()
                 if (serialPort.isOpen) {
                     serialPort.closePort()
                 }
@@ -93,9 +95,9 @@ object PLCComm {
         } else 0
     }
 
-    private inline fun <reified T> getResponse(): T = runBlocking {
+    private inline fun <reified T> getResponse(): T? = runBlocking {
 //        val millis = System.currentTimeMillis()
-        val respMillis = 1000L
+        val respMillis = AppConfigFactory.appConfig.commLinkConfig.hmiRefreshInterval + 1000L
         try {
 //            println("WAIT RESPONSE FOR $respMillis millis")
             withTimeout(respMillis) {
@@ -114,26 +116,26 @@ object PLCComm {
             try {
                 Json.decodeFromJsonElement<T>(it)
             } catch (e: Exception) {
+                (it as? JsonObject)?.let { jsonObject ->
+                    if (jsonObject.containsKey("hello")) {
+                        helloResponse = null
+                    }
+                }
                 throw ServiceException("SerialPort.getResponse decoding error: ${e.message}")
             }
         }
         jsonElement = null
-        result ?: throw ServiceException("response null...")
+        result
     }
 
-    fun sendHelloQuery(): HelloResponse {
-        serialPort?.sendQuery(HelloQuery())
+    fun sendHelloQuery(): HelloResponse? {
+        serialPort?.sendQuery(HelloQuery(AppConfigFactory.appConfig.sensorsConfig))
         helloResponse = getResponse()
-        return helloResponse!!
+        return helloResponse
     }
 
-    fun sendStateQuery(): StateResponse {
+    fun sendStateQuery(): StateResponse? {
         serialPort?.sendQuery(StateQuery())
-        return getResponse()
-    }
-
-    fun sendConfigQuery(configQuery: ConfigQuery): ConfigResponse {
-        serialPort?.sendQuery(configQuery)
         return getResponse()
     }
 
@@ -145,20 +147,12 @@ object PLCComm {
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
                 val s = String(bytes)
-                println("RECEIVED = $s")
+//                println("RECEIVED = $s")
                 jsonElement = try {
                     Json.parseToJsonElement(String(bytes))
                 } catch (e: Exception) {
                     print("NoJson($commId)> $s")
                     null
-                }
-                jsonElement?.let {
-                    (it as? JsonObject)?.let { jsonObject ->
-                        if (jsonObject.containsKey("configure")) {
-                            println("sending configuring data to PLC...")
-                            sendConfigQuery(ConfigQuery(AppConfigFactory.appConfig.sensorsConfig))
-                        }
-                    }
                 }
             }
         }

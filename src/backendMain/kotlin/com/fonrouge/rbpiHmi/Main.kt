@@ -11,8 +11,6 @@ import io.kvision.remote.kvisionInit
 
 @Suppress("unused")
 fun Application.main() {
-    AppConfigFactory.init()
-    DatabaseFactory.init()
     install(Compression)
     routing {
         applyRoutes(HelloServiceManager)
@@ -22,4 +20,6 @@ fun Application.main() {
         applyRoutes(HmiServiceManager)
     }
     kvisionInit()
+    AppConfigFactory.init()
+    DatabaseFactory.init()
 }

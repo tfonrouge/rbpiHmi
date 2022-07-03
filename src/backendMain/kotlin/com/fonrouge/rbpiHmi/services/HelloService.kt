@@ -11,13 +11,12 @@ actual class HelloService : IHelloService {
     }
 
     override suspend fun getHelloResponse(): HelloResponse {
-        return try {
-            PLCComm.sendHelloQuery().let {
-                helloResponse = it
-                it
-            }
-        } catch (e: Exception) {
-            throw ServiceException("getHelloResponse() error: ${e.message}")
+        helloResponse?.let {
+            return it
         }
+        return PLCComm.sendHelloQuery()?.let {
+            helloResponse = it
+            it
+        } ?: throw ServiceException("hello response error from PLC...")
     }
 }
