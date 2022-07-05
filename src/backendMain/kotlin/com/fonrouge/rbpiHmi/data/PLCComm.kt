@@ -23,7 +23,6 @@ object PLCComm {
 
     var serialCommConfig: SerialCommConfig? = null
         set(value) {
-/*
             val s1 = try {
                 Json.encodeToString(field)
             } catch (e: java.lang.Exception) {
@@ -35,8 +34,6 @@ object PLCComm {
                 null
             }
             if (s1 != s2) {
-*/
-            if (true) {
                 serialPort = if (value != null) {
                     try {
                         val serialPort1 = SerialPort.getCommPort(value.serialPortPath)
@@ -107,7 +104,6 @@ object PLCComm {
             }
         } catch (e: Exception) {
             println("timeout error ${e.message}")
-            helloResponse = null
             throw ServiceException("waiting response timeout error: ${e.message}")
         }
 //        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")

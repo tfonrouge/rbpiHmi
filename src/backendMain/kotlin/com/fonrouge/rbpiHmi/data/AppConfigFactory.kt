@@ -2,7 +2,9 @@
 
 package com.fonrouge.rbpiHmi.data
 
+import com.fonrouge.rbpiHmi.services.HelloService
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
@@ -16,12 +18,8 @@ object AppConfigFactory {
     var appConfig: AppConfig = AppConfig()
         set(value) {
             PLCComm.serialCommConfig = value.commLinkConfig.serialCommConfig
-            try {
-                PLCComm.sendHelloQuery()
-            } catch (e: Exception) {
-                println("sendConfigQuery error: ${e.message}")
-            }
             field = value
+            HelloService.helloResponse = null
         }
 
     private const val propsFilename = "hmiApp.json"
@@ -42,8 +40,20 @@ object AppConfigFactory {
     }
 
     fun writeAppConfig(appConfig: AppConfig): Boolean {
-        Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
-        AppConfigFactory.appConfig = appConfig
+        val s1 = try {
+            Json.encodeToString(AppConfigFactory.appConfig)
+        } catch (e: java.lang.Exception) {
+            null
+        }
+        val s2 = try {
+            Json.encodeToString(appConfig)
+        } catch (e: Exception) {
+            null
+        }
+        if (s1 != s2) {
+            Json.encodeToStream(appConfig, FileOutputStream(propsFilename))
+            AppConfigFactory.appConfig = appConfig
+        }
         return true
     }
 
