@@ -11,8 +11,10 @@ class StateResponse(
     val mainRollerRpm: Int,
     val aRollerRpm: Int,
     val bRollerRpm: Int,
-    val aMotorRpm: Int,
-    val bMotorRpm: Int,
+    val aMotorStartupRpm: Int,
+    val bMotorStartupRpm: Int,
+    val aMotorFinalRpm: Int,
+    val bMotorFinalRpm: Int,
     val turretState: TurretState,
     val rollersState: RollersState,
 ) : IResponse

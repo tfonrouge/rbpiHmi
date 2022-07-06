@@ -212,8 +212,8 @@ class MainView : SimplePanel() {
                 radialGaugeMainRollerRpm.state = mainRollerRpm
                 radialGaugeARollerRpm.state = aRollerRpm
                 radialGaugeBRollerRpm.state = bRollerRpm
-                radialGaugeAMotorRpm.state = aMotorRpm
-                radialGaugeBMotorRpm.state = bMotorRpm
+                radialGaugeAMotorRpm.state = aMotorFinalRpm
+                radialGaugeBMotorRpm.state = bMotorFinalRpm
                 setRollerWindState(rollersState)
                 setRollerWindPosition(turretState)
             }
