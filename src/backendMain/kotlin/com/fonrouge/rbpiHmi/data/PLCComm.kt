@@ -142,14 +142,13 @@ object PLCComm {
                 val result = try {
                     val json = Json.parseToJsonElement(string) as JsonObject
                     when (json["type"]?.jsonPrimitive?.contentOrNull) {
-                        "message" -> {
+                        "Message" -> {
                             val messageResponse = Json.decodeFromJsonElement<MessageResponse>(json)
                             println("[MSG #${messageResponse.commId}] [${messageResponse.msgType}] ${messageResponse.message}")
                             null
                         }
-                        "requestHello" -> {
+                        "RequestHello" -> {
                             waitingHelloResponse = false
-                            helloResponse = null
                             sendHelloQuery()
                             null
                         }

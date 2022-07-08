@@ -9,5 +9,5 @@ class StateQuery(
     @EncodeDefault
     override val commId: Long = IQuery.commId
     @EncodeDefault
-    override val action: QueryAction = QueryAction.state
+    override val action: QueryAction = QueryAction.State
 }

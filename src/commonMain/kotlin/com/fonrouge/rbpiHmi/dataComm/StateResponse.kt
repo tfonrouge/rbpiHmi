@@ -6,7 +6,7 @@ import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 @kotlinx.serialization.Serializable
 class StateResponse(
     override val commId: Long,
-    override val type: ResponseType = ResponseType.state,
+    override val type: ResponseType = ResponseType.State,
     val startDetachingSignal: Boolean,
     val mainRollerRpm: Int,
     val aRollerRpm: Int,

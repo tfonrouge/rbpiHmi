@@ -11,5 +11,5 @@ class HelloQuery(
     @EncodeDefault
     override val commId: Long = IQuery.commId
     @EncodeDefault
-    override val action: QueryAction = QueryAction.hello
+    override val action: QueryAction = QueryAction.Hello
 }
