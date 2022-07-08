@@ -2,7 +2,6 @@
 
 package com.fonrouge.rbpiHmi.data
 
-import com.fonrouge.rbpiHmi.services.HelloService
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -19,7 +18,12 @@ object AppConfigFactory {
         set(value) {
             PLCComm.serialCommConfig = value.commLinkConfig.serialCommConfig
             field = value
-            HelloService.helloResponse = null
+//            HelloService.helloResponse = null
+            try {
+                PLCComm.sendHelloQuery()
+            } catch (e: Exception) {
+                println("ERROR = ${e.message}")
+            }
         }
 
     private const val propsFilename = "hmiApp.json"

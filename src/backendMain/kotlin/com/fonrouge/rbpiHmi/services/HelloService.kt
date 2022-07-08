@@ -8,6 +8,12 @@ actual class HelloService : IHelloService {
 
     companion object {
         var helloResponse: HelloResponse? = null
+            set(value) {
+                field = value
+                if (PLCComm.waitingHelloResponse) {
+                    PLCComm.waitingHelloResponse = false
+                }
+            }
     }
 
     override suspend fun getHelloResponse(): HelloResponse {

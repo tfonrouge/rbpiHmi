@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="059b5546-6fcc-4987-a3dd-7bbbf2d28f1e" name="Changes" comment="* update">
+      <change afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/MessageResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/HelloService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/HelloService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/HmiService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/HmiService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/ConfigResponse.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloQuery.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/HelloQuery.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/ResponseType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/ResponseType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SensorsConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/data/SensorsConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commonMain/kotlin/com/fonrouge/rbpiHmi/dataComm/ConfigQuery.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/frontendMain/kotlin/com/fonrouge/rbpiHmi/views/AppConfigView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +56,8 @@
       <list>
         <option value="Kotlin Enum" />
         <option value="Kotlin Object" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -88,7 +89,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.tabs&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -160,7 +161,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="/Users/teo/IdeaProjects/RbPiHMI [generateKVisionSources]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="/Users/teo/IdeaProjects/RbPiHMI [generateKVisionSources]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -181,7 +182,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="/Users/teo/IdeaProjects/RbPiHMI [wrapper --gradle-version 7.4.2 --distribution-type all]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="/Users/teo/IdeaProjects/RbPiHMI [wrapper --gradle-version 7.4.2 --distribution-type all]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -212,12 +213,6 @@
       <item itemvalue="Gradle./Users/teo/IdeaProjects/RbPiHMI [generateKVisionSources]" />
       <item itemvalue="Gradle./Users/teo/IdeaProjects/RbPiHMI [wrapper --gradle-version 7.4.2 --distribution-type all]" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle./Users/teo/IdeaProjects/RbPiHMI [wrapper --gradle-version 7.4.2 --distribution-type all]" />
-        <item itemvalue="Gradle./Users/teo/IdeaProjects/RbPiHMI [generateKVisionSources]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -305,7 +300,11 @@
       <workItem from="1656295397434" duration="20000" />
       <workItem from="1656518911254" duration="14895000" />
       <workItem from="1656706391181" duration="11448000" />
-      <workItem from="1656814403770" duration="18687000" />
+      <workItem from="1656814403770" duration="24837000" />
+      <workItem from="1657049257153" duration="2642000" />
+      <workItem from="1657063123155" duration="37870000" />
+      <workItem from="1657223896972" duration="15279000" />
+      <workItem from="1657291264972" duration="8245000" />
     </task>
     <task id="LOCAL-00001" summary="* updated">
       <created>1650305185789</created>
@@ -510,7 +509,28 @@
       <option name="project" value="LOCAL" />
       <updated>1656802639139</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="* update">
+      <created>1656863136030</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1656863136030</updated>
+    </task>
+    <task id="LOCAL-00031" summary="* update">
+      <created>1657049411364</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1657049411364</updated>
+    </task>
+    <task id="LOCAL-00032" summary="* update">
+      <created>1657134031962</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1657134031963</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,14 +567,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/AppConfigFactory.kt</url>
-          <line>44</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/services/AppConfigService.kt</url>
-          <line>12</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/src/backendMain/kotlin/com/fonrouge/rbpiHmi/data/PLCComm.kt</url>
+          <line>150</line>
+          <option name="timeStamp" value="85" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

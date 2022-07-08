@@ -39,7 +39,7 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
     private val secsTimeout = 120
     private val countLimit = 30
 
-    private val advancedControlList = mutableListOf<GenericFormControl<*>>()
+    private val advancedControlList = mutableListOf<FormControl>()
     private val advancedConfigDisabled = true
 
     init {
@@ -64,14 +64,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startDetachingSignalPinNumber, required = true)
-                                spinner(
-                                    label = "High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::startDetachingSignalHighState, required = true)
+                                }.bind(SensorsConfig::startDetachingSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Additional spin speed to winding roller:") {
                                 spinner(
@@ -92,14 +88,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::cutOperationSignalPinNumber, required = true)
-                                spinner(
-                                    label = "Cut operation signal input High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::cutOperationSignalHighState, required = true)
+                                }.bind(SensorsConfig::cutOperationSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Spin-up un-winded roller before attaching:") {
                                 checkBox()
@@ -114,14 +106,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::feederRollerRpmSignalPinNumber, required = true)
-                                spinner(
-                                    label = "High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::feederRollerRpmSignalHighState, required = true)
+                                }.bind(SensorsConfig::feederRollerRpmSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Winding roller rpm input signal:") {
                                 spinner(
@@ -132,14 +120,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::aWindingRollerRpmSignalPinNumber, required = true)
-                                spinner(
-                                    label = "(A) winding roller High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::aWindingRollerRpmSignalHighState, required = true)
+                                }.bind(SensorsConfig::aWindingRollerRpmSignalInverter, required = true)
                                 spinner(
                                     label = "(B) winding roller Pin number:",
                                     min = 0,
@@ -148,14 +132,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::bWindingRollerRpmSignalPinNumber, required = true)
-                                spinner(
-                                    label = "(B) winding roller High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::bWindingRollerRpmSignalHighState, required = true)
+                                }.bind(SensorsConfig::bWindingRollerRpmSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Start attaching input signal:") {
                                 spinner(
@@ -166,14 +146,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startAttachingSignalPinNumber, required = true)
-                                spinner(
-                                    label = "High State:",
-                                    min = 0,
-                                    max = 1
-                                ) {
+                                checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::startAttachingSignalHighState, required = true)
+                                }.bind(SensorsConfig::startAttachingSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Motor (A)") {
                                 spinner(

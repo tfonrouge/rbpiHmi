@@ -10,16 +10,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.*
 
 object PLCComm {
 
     var commId = 0L
 
-    var jsonElement: JsonElement? = null
+    var jsonObject: JsonObject? = null
+
+    var waitingHelloResponse = false
 
     var serialCommConfig: SerialCommConfig? = null
         set(value) {
@@ -79,60 +78,56 @@ object PLCComm {
         return serialPort1
     }
 
-    private inline fun <reified T : IQuery> SerialPort.sendQuery(query: T): Int {
-        if (query !is HelloQuery && helloResponse == null) {
-            sendHelloQuery()
-        }
-        return if (query is HelloQuery || helloResponse != null) {
-            val s = Json.encodeToString(query) + "\n"
-            jsonElement = null
-            val n = writeBytes(s.encodeToByteArray(), s.length.toLong())
-//            println("SENT: $s")
-            n
-        } else 0
+    private inline fun <reified T : IQuery> SerialPort.sendQuery(query: T) {
+        val s = Json.encodeToString(query) + "\n"
+        jsonObject = null
+        writeBytes(s.encodeToByteArray(), s.length.toLong())
     }
 
     private inline fun <reified T> getResponse(): T? = runBlocking {
 //        val millis = System.currentTimeMillis()
         val respMillis = AppConfigFactory.appConfig.commLinkConfig.hmiRefreshInterval + 1000L
         try {
-//            println("WAIT RESPONSE FOR $respMillis millis")
+//            println("WAIT RESPONSE (${T::class.simpleName}) FOR $respMillis millis")
             withTimeout(respMillis) {
-                while (jsonElement == null) {
+                while (jsonObject == null) {
                     delay(10)
                 }
             }
         } catch (e: Exception) {
-            println("timeout error ${e.message}")
-            throw ServiceException("waiting response timeout error: ${e.message}")
+            val msg = "waiting (${T::class.simpleName}) response timeout error: ${e.message}"
+            println(msg)
+            throw ServiceException(msg)
         }
-//        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonElement")
-        val result = jsonElement?.let {
-//            println("jsonElement = $jsonElement")
+//        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonObject")
+        val result = jsonObject?.let {
+//            println("jsonElement = $jsonObject")
             try {
                 Json.decodeFromJsonElement<T>(it)
             } catch (e: Exception) {
-                (it as? JsonObject)?.let { jsonObject ->
-                    if (jsonObject.containsKey("hello")) {
-                        helloResponse = null
-                    }
-                }
                 throw ServiceException("SerialPort.getResponse decoding error: ${e.message}")
             }
         }
-        jsonElement = null
+        jsonObject = null
         result
     }
 
     fun sendHelloQuery(): HelloResponse? {
-        serialPort?.sendQuery(HelloQuery(AppConfigFactory.appConfig.sensorsConfig))
-        helloResponse = getResponse()
+        if (!waitingHelloResponse) {
+            waitingHelloResponse = true
+            serialPort?.sendQuery(HelloQuery(AppConfigFactory.appConfig.sensorsConfig))
+            helloResponse = getResponse()
+        }
         return helloResponse
     }
 
     fun sendStateQuery(): StateResponse? {
-        serialPort?.sendQuery(StateQuery())
-        return getResponse()
+        if (helloResponse != null) {
+            serialPort?.sendQuery(StateQuery())
+            return getResponse()
+        }
+        sendHelloQuery()
+        return null
     }
 
     class SerialMessageListener : SerialPortMessageListener {
@@ -142,13 +137,30 @@ object PLCComm {
 
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
-                val s = String(bytes)
-//                println("RECEIVED = $s")
-                jsonElement = try {
-                    Json.parseToJsonElement(String(bytes))
+                val string = String(bytes)
+//                println("RECEIVED = $string")
+                val result = try {
+                    val json = Json.parseToJsonElement(string) as JsonObject
+                    when (json["type"]?.jsonPrimitive?.contentOrNull) {
+                        "message" -> {
+                            val messageResponse = Json.decodeFromJsonElement<MessageResponse>(json)
+                            println("[MSG #${messageResponse.commId}] [${messageResponse.msgType}] ${messageResponse.message}")
+                            null
+                        }
+                        "requestHello" -> {
+                            waitingHelloResponse = false
+                            helloResponse = null
+                            sendHelloQuery()
+                            null
+                        }
+                        else -> json
+                    }
                 } catch (e: Exception) {
-                    print("NoJson($commId)> $s")
+                    print("NoJson($commId)> $string")
                     null
+                }
+                result?.let {
+                    jsonObject = it
                 }
             }
         }

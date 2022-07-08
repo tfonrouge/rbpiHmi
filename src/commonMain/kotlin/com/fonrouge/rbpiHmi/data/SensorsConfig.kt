@@ -17,27 +17,27 @@ class SensorsConfig(
     @EncodeDefault()
     val startDetachingSignalPinNumber: Int = 34,
     @EncodeDefault()
-    val startDetachingSignalHighState: Int = 1,
+    val startDetachingSignalInverter: Boolean = false,
     @EncodeDefault()
     val feederRollerRpmSignalPinNumber: Int = 35,
     @EncodeDefault()
-    val feederRollerRpmSignalHighState: Int = 1,
+    val feederRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
     val aWindingRollerRpmSignalPinNumber: Int = 36,
     @EncodeDefault()
-    val aWindingRollerRpmSignalHighState: Int = 1,
+    val aWindingRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
     val bWindingRollerRpmSignalPinNumber: Int = 39,
     @EncodeDefault()
-    val bWindingRollerRpmSignalHighState: Int = 1,
+    val bWindingRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
     val startAttachingSignalPinNumber: Int = 16,
     @EncodeDefault()
-    val startAttachingSignalHighState: Int = 1,
+    val startAttachingSignalInverter: Boolean = false,
     @EncodeDefault()
     val cutOperationSignalPinNumber: Int = 17,
     @EncodeDefault()
-    val cutOperationSignalHighState: Int = 1,
+    val cutOperationSignalInverter: Boolean = false,
     @EncodeDefault()
     val aMotorStartStopPinNumber: Int = 18,
     @EncodeDefault()
