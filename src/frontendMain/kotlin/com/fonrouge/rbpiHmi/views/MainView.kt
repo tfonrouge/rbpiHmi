@@ -26,8 +26,8 @@ class MainView : SimplePanel() {
     private lateinit var radialGaugeMainRollerRpm: React<Int>
     private lateinit var radialGaugeARollerRpm: React<Int>
     private lateinit var radialGaugeBRollerRpm: React<Int>
-    private lateinit var radialGaugeAMotorRpm: React<Int>
-    private lateinit var radialGaugeBMotorRpm: React<Int>
+    private lateinit var radialGaugeAMotorRpm: React<Double>
+    private lateinit var radialGaugeBMotorRpm: React<Double>
     private lateinit var rollerStateAttachedImage: Image
     private lateinit var rollerStateAttachedLabel: Label
     private lateinit var rollerStateDetachedImage: Image
@@ -168,7 +168,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor A", rich = true, className = "title1")
-                        radialGaugeAMotorRpm = react(0) { getState, _ ->
+                        radialGaugeAMotorRpm = react(0.0) { getState, _ ->
                             RadialGauge {
                                 value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "A")

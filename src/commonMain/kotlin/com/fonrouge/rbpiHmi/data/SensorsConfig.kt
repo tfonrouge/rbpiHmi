@@ -11,6 +11,8 @@ class SensorsConfig(
     @EncodeDefault()
     val additionalSpeedSpinToWindingRoller: Double = 5.0,
     @EncodeDefault()
+    val delayToSpinEmptyRoller: Int = 0,
+    @EncodeDefault()
     val delayToStopWindedRollerAfterCut: Int = 5000,
     @EncodeDefault()
     val spinUpUnWindedRollerBeforeAttaching: Boolean = true,
@@ -34,6 +36,8 @@ class SensorsConfig(
     val startAttachingSignalPinNumber: Int = 16,
     @EncodeDefault()
     val startAttachingSignalInverter: Boolean = true,
+    @EncodeDefault
+    val detachingAttachingMaxTime: Int = 3000,
     @EncodeDefault()
     val cutOperationSignalPinNumber: Int = 17,
     @EncodeDefault()
@@ -51,7 +55,9 @@ class SensorsConfig(
     @EncodeDefault()
     val aMotorSpeedNominalRpm: Int = 1800,
     @EncodeDefault()
-    val aMotorSpeedNominalHertz: Int = 60,
+    val aMotorSpeedFinalRelation: Double = 0.5,
+    @EncodeDefault()
+    val aMotorSpeedNominalHertz: Double = 60.0,
     @EncodeDefault()
     val aMotorSpeedPwmChannel: Int = 0,
     @EncodeDefault()
@@ -59,11 +65,13 @@ class SensorsConfig(
     @EncodeDefault()
     val aMotorSpeedPwmResolution: Int = 11,
     @EncodeDefault()
-    val bMotorSpeedPinNumber: Int = 21,
+    val bMotorSpeedPinNumber: Int = 22,
     @EncodeDefault()
     val bMotorSpeedNominalRpm: Int = 1800,
     @EncodeDefault()
-    val bMotorSpeedNominalHertz: Int = 60,
+    val bMotorSpeedFinalRelation: Double = 0.5,
+    @EncodeDefault()
+    val bMotorSpeedNominalHertz: Double = 60.0,
     @EncodeDefault()
     val bMotorSpeedPwmChannel: Int = 1,
     @EncodeDefault()

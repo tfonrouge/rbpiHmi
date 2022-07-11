@@ -75,6 +75,14 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startAttachingSignalInverter, required = true)
                                 spinner(
+                                    label = "Detaching/Attaching Cycle Max Time (ms):",
+                                    min = 0,
+                                    max = 5,
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::detachingAttachingMaxTime, required = true)
+                                spinner(
                                     label = "Cut Signal Pin number:",
                                     min = 0,
                                     max = 39
@@ -87,29 +95,33 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::cutOperationSignalInverter, required = true)
                             }
-                            fieldsetPanel(legend = "Spinning winding roller after detaching signal:") {
+                            fieldsetPanel(legend = "Spinning Winding roller after detaching signal:") {
                                 spinner(
                                     label = "Milliseconds delay to start spinning:",
                                     min = 0,
                                     max = 5000,
                                     step = 5,
                                 ).bind(SensorsConfig::delayToSpinWindingRoller, required = true)
-                            }
-                            fieldsetPanel(legend = "Additional spin speed to winding roller:") {
                                 spinner(
-                                    label = "Percent:",
+                                    label = "Percent Speed increment:",
                                     min = -50,
                                     max = 50,
                                     decimals = 1
                                 ).bind(SensorsConfig::additionalSpeedSpinToWindingRoller, required = true)
                             }
+                            fieldsetPanel(legend = "Spin-up empty roller before winding:") {
+                                checkBox(label = "Spin-up")
+                                    .bind(SensorsConfig::spinUpUnWindedRollerBeforeAttaching, required = true)
+                                spinner(
+                                    label = "Delay to start spinning after detaching signal:",
+                                    min = 0,
+                                    max = 5000,
+                                    step = 5,
+                                ).bind(SensorsConfig::delayToSpinEmptyRoller, required = true)
+                            }
                             fieldsetPanel(legend = "Stop winded roller after cut operation:") {
                                 spinner(label = "Milliseconds delay to stop winded roller:", min = 0, max = 60000)
                                     .bind(SensorsConfig::delayToStopWindedRollerAfterCut, required = true)
-                            }
-                            fieldsetPanel(legend = "Spin-up un-winded roller before attaching:") {
-                                checkBox()
-                                    .bind(SensorsConfig::spinUpUnWindedRollerBeforeAttaching, required = true)
                             }
                             fieldsetPanel(legend = "Main feeder roller rpm input signal:") {
                                 spinner(
@@ -181,9 +193,19 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::aMotorSpeedNominalRpm, required = true)
                                 spinner(
+                                    label = "Final Relation:",
+                                    min = -2,
+                                    max = +2,
+                                    decimals = 3
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedFinalRelation, required = true)
+                                spinner(
                                     label = "Nominal Hertz:",
                                     min = 30,
-                                    max = 100
+                                    max = 100,
+                                    decimals = 1
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
@@ -243,9 +265,19 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::bMotorSpeedNominalRpm, required = true)
                                 spinner(
+                                    label = "Final Relation:",
+                                    min = -2,
+                                    max = +2,
+                                    decimals = 3
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedFinalRelation, required = true)
+                                spinner(
                                     label = "Nominal Hertz:",
                                     min = 30,
-                                    max = 100
+                                    max = 100,
+                                    decimals = 1
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
