@@ -17,7 +17,7 @@ class SensorsConfig(
     @EncodeDefault()
     val startDetachingSignalPinNumber: Int = 34,
     @EncodeDefault()
-    val startDetachingSignalInverter: Boolean = false,
+    val startDetachingSignalInverter: Boolean = true,
     @EncodeDefault()
     val feederRollerRpmSignalPinNumber: Int = 35,
     @EncodeDefault()
@@ -33,17 +33,41 @@ class SensorsConfig(
     @EncodeDefault()
     val startAttachingSignalPinNumber: Int = 16,
     @EncodeDefault()
-    val startAttachingSignalInverter: Boolean = false,
+    val startAttachingSignalInverter: Boolean = true,
     @EncodeDefault()
     val cutOperationSignalPinNumber: Int = 17,
     @EncodeDefault()
-    val cutOperationSignalInverter: Boolean = false,
+    val cutOperationSignalInverter: Boolean = true,
     @EncodeDefault()
     val aMotorStartStopPinNumber: Int = 18,
     @EncodeDefault()
+    val aMotorStartStopSignalInverter: Boolean = true,
+    @EncodeDefault()
     val bMotorStartStopPinNumber: Int = 19,
     @EncodeDefault()
-    val aMotorSpeedPinNumber: Int = 20,
+    val bMotorStartStopSignalInverter: Boolean = true,
+    @EncodeDefault()
+    val aMotorSpeedPinNumber: Int = 21,
+    @EncodeDefault()
+    val aMotorSpeedNominalRpm: Int = 1800,
+    @EncodeDefault()
+    val aMotorSpeedNominalHertz: Int = 60,
+    @EncodeDefault()
+    val aMotorSpeedPwmChannel: Int = 0,
+    @EncodeDefault()
+    val aMotorSpeedPwmFreq: Int = 5000,
+    @EncodeDefault()
+    val aMotorSpeedPwmResolution: Int = 11,
     @EncodeDefault()
     val bMotorSpeedPinNumber: Int = 21,
+    @EncodeDefault()
+    val bMotorSpeedNominalRpm: Int = 1800,
+    @EncodeDefault()
+    val bMotorSpeedNominalHertz: Int = 60,
+    @EncodeDefault()
+    val bMotorSpeedPwmChannel: Int = 1,
+    @EncodeDefault()
+    val bMotorSpeedPwmFreq: Int = 5000,
+    @EncodeDefault()
+    val bMotorSpeedPwmResolution: Int = 11,
 )

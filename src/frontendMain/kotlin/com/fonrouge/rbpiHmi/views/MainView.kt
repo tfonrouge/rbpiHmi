@@ -23,7 +23,6 @@ import kotlin.js.json
 
 class MainView : SimplePanel() {
 
-    private lateinit var buttonStartDetachingSignal: Button
     private lateinit var radialGaugeMainRollerRpm: React<Int>
     private lateinit var radialGaugeARollerRpm: React<Int>
     private lateinit var radialGaugeBRollerRpm: React<Int>
@@ -55,11 +54,6 @@ class MainView : SimplePanel() {
             alignItems = AlignItems.START,
             spacing = 10
         ) {
-            flexPanel(
-                direction = FlexDirection.COLUMN
-            ) {
-                buttonStartDetachingSignal= button(text = "StartDetachingSignal")
-            }
             flexPanel(
                 direction = FlexDirection.COLUMN,
                 alignItems = AlignItems.STRETCH,
@@ -207,8 +201,6 @@ class MainView : SimplePanel() {
     private suspend fun getHmiServiceState() {
         try {
             ModelHmi.getHmiServiceState().apply {
-                buttonStartDetachingSignal.style = if(startDetachingSignal)
-                    ButtonStyle.SUCCESS else ButtonStyle.OUTLINEDARK
                 radialGaugeMainRollerRpm.state = mainRollerRpm
                 radialGaugeARollerRpm.state = aRollerRpm
                 radialGaugeBRollerRpm.state = bRollerRpm

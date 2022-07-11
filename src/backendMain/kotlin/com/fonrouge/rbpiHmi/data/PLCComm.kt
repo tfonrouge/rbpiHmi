@@ -152,10 +152,16 @@ object PLCComm {
                             sendHelloQuery()
                             null
                         }
+                        "Error" -> {
+                            println(json.toString())
+                            null
+                        }
                         else -> json
                     }
                 } catch (e: Exception) {
-                    print("NoJson($commId)> $string")
+                    if (string.isNotEmpty()) {
+                        print("NoJson($commId)> $string")
+                    }
                     null
                 }
                 result?.let {

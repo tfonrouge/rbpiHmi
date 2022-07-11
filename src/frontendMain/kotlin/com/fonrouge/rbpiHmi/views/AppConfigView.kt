@@ -49,15 +49,9 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                     marginTop = 1.rem
                     sensorsConfigFormPanel =
                         formPanel(type = FormType.HORIZONTAL, horizRatio = FormHorizontalRatio.RATIO_9) {
-                            fieldsetPanel(legend = "Spinning winding roller after detaching signal:") {
+                            fieldsetPanel(legend = "State Input Signals") {
                                 spinner(
-                                    label = "Milliseconds delay to start spinning:",
-                                    min = 0,
-                                    max = 5000,
-                                    step = 5,
-                                ).bind(SensorsConfig::delayToSpinWindingRoller, required = true)
-                                spinner(
-                                    label = "Detaching signal input Pin number:",
+                                    label = "Detaching Signal Pin number:",
                                     min = 0,
                                     max = 39
                                 ) {
@@ -68,6 +62,38 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startDetachingSignalInverter, required = true)
+                                spinner(
+                                    label = "Attaching Signal Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startAttachingSignalPinNumber, required = true)
+                                checkBox(label = ":Signal Inverter") {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::startAttachingSignalInverter, required = true)
+                                spinner(
+                                    label = "Cut Signal Pin number:",
+                                    min = 0,
+                                    max = 39
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::cutOperationSignalPinNumber, required = true)
+                                checkBox(label = ":Signal Inverter") {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::cutOperationSignalInverter, required = true)
+                            }
+                            fieldsetPanel(legend = "Spinning winding roller after detaching signal:") {
+                                spinner(
+                                    label = "Milliseconds delay to start spinning:",
+                                    min = 0,
+                                    max = 5000,
+                                    step = 5,
+                                ).bind(SensorsConfig::delayToSpinWindingRoller, required = true)
                             }
                             fieldsetPanel(legend = "Additional spin speed to winding roller:") {
                                 spinner(
@@ -80,18 +106,6 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                             fieldsetPanel(legend = "Stop winded roller after cut operation:") {
                                 spinner(label = "Milliseconds delay to stop winded roller:", min = 0, max = 60000)
                                     .bind(SensorsConfig::delayToStopWindedRollerAfterCut, required = true)
-                                spinner(
-                                    label = "Cut operation signal input Pin number:",
-                                    min = 0,
-                                    max = 39
-                                ) {
-                                    disabled = advancedConfigDisabled
-                                    advancedControlList.add(this)
-                                }.bind(SensorsConfig::cutOperationSignalPinNumber, required = true)
-                                checkBox(label = ":Signal Inverter") {
-                                    disabled = advancedConfigDisabled
-                                    advancedControlList.add(this)
-                                }.bind(SensorsConfig::cutOperationSignalInverter, required = true)
                             }
                             fieldsetPanel(legend = "Spin-up un-winded roller before attaching:") {
                                 checkBox()
@@ -137,20 +151,6 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::bWindingRollerRpmSignalInverter, required = true)
                             }
-                            fieldsetPanel(legend = "Start attaching input signal:") {
-                                spinner(
-                                    label = "Pin number:",
-                                    min = 0,
-                                    max = 39
-                                ) {
-                                    disabled = advancedConfigDisabled
-                                    advancedControlList.add(this)
-                                }.bind(SensorsConfig::startAttachingSignalPinNumber, required = true)
-                                checkBox(label = ":Signal Inverter") {
-                                    disabled = advancedConfigDisabled
-                                    advancedControlList.add(this)
-                                }.bind(SensorsConfig::startAttachingSignalInverter, required = true)
-                            }
                             fieldsetPanel(legend = "Motor (A)") {
                                 spinner(
                                     label = "Start/Stop Pin number:",
@@ -160,6 +160,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::aMotorStartStopPinNumber, required = true)
+                                checkBox(label = ":Start/Stop Signal Inverter") {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorStartStopSignalInverter, required = true)
                                 spinner(
                                     label = "Speed Pin number:",
                                     min = 0,
@@ -168,6 +172,46 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::aMotorSpeedPinNumber, required = true)
+                                spinner(
+                                    label = "Nominal RPM:",
+                                    min = 750,
+                                    max = 4000
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedNominalRpm, required = true)
+                                spinner(
+                                    label = "Nominal Hertz:",
+                                    min = 30,
+                                    max = 100
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedNominalHertz, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Channel:",
+                                    min = 0,
+                                    max = 15
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedPwmChannel, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Freq:",
+                                    min = 1,
+                                    max = 10000
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedPwmFreq, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Resolution:",
+                                    min = 1,
+                                    max = 16
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::aMotorSpeedPwmResolution, required = true)
                             }
                             fieldsetPanel(legend = "Motor (B)") {
                                 spinner(
@@ -178,6 +222,10 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::bMotorStartStopPinNumber, required = true)
+                                checkBox(label = ":Start/Stop Signal Inverter") {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorStartStopSignalInverter, required = true)
                                 spinner(
                                     label = "Speed Pin number:",
                                     min = 0,
@@ -186,6 +234,46 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::bMotorSpeedPinNumber, required = true)
+                                spinner(
+                                    label = "Nominal RPM:",
+                                    min = 750,
+                                    max = 4000
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedNominalRpm, required = true)
+                                spinner(
+                                    label = "Nominal Hertz:",
+                                    min = 30,
+                                    max = 100
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedNominalHertz, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Channel:",
+                                    min = 0,
+                                    max = 15
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedPwmChannel, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Freq:",
+                                    min = 1,
+                                    max = 10000
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedPwmFreq, required = true)
+                                spinner(
+                                    label = "ESP32 PWM Resolution:",
+                                    min = 1,
+                                    max = 16
+                                ) {
+                                    disabled = advancedConfigDisabled
+                                    advancedControlList.add(this)
+                                }.bind(SensorsConfig::bMotorSpeedPwmResolution, required = true)
                             }
                             checkBox(label = "Edit advanced settings:") {
                                 enableTooltip(
