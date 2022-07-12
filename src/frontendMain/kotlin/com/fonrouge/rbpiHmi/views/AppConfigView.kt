@@ -77,7 +77,8 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                 spinner(
                                     label = "Detaching/Attaching Cycle Max Time (ms):",
                                     min = 0,
-                                    max = 5,
+                                    max = 5000,
+                                    step = 100
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
