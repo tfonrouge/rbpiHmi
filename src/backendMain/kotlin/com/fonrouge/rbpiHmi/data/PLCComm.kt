@@ -143,8 +143,7 @@ object PLCComm {
                     val json = Json.parseToJsonElement(string) as JsonObject
                     when (json["type"]?.jsonPrimitive?.contentOrNull) {
                         "Message" -> {
-                            val messageResponse = Json.decodeFromJsonElement<MessageResponse>(json)
-                            println("[MSG #${messageResponse.commId}] [${messageResponse.msgType}] ${messageResponse.message}")
+                            println(json.toString())
                             null
                         }
                         "RequestHello" -> {
@@ -159,8 +158,8 @@ object PLCComm {
                         else -> json
                     }
                 } catch (e: Exception) {
-                    if (string.isNotEmpty()) {
-                        print("NoJson($commId)> $string")
+                    if (string.isNotEmpty() && string != "\r\n") {
+                        print("NoJson(${commId++})> $string")
                     }
                     null
                 }
