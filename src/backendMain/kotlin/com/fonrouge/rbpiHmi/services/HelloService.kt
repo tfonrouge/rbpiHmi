@@ -10,6 +10,9 @@ actual class HelloService : IHelloService {
         var helloResponse: HelloResponse? = null
             set(value) {
                 field = value
+                if (value != null) {
+                    println("HelloResponse received...")
+                }
                 if (PLCComm.waitingHelloResponse) {
                     PLCComm.waitingHelloResponse = false
                 }
@@ -20,9 +23,6 @@ actual class HelloService : IHelloService {
         helloResponse?.let {
             return it
         }
-        return PLCComm.sendHelloQuery()?.let {
-            helloResponse = it
-            it
-        } ?: throw ServiceException("hello response error from PLC...")
+        throw ServiceException("No hello response yet from PLC...")
     }
 }

@@ -5,18 +5,14 @@ import com.fazecast.jSerialComm.SerialPortEvent
 import com.fazecast.jSerialComm.SerialPortMessageListener
 import com.fonrouge.rbpiHmi.dataComm.*
 import com.fonrouge.rbpiHmi.services.HelloService.Companion.helloResponse
-import io.kvision.remote.ServiceException
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
+import com.fonrouge.rbpiHmi.services.HmiService.Companion.stateResponse
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 
 object PLCComm {
 
     var commId = 0L
-
-    var jsonObject: JsonObject? = null
 
     var waitingHelloResponse = false
 
@@ -80,54 +76,26 @@ object PLCComm {
 
     private inline fun <reified T : IQuery> SerialPort.sendQuery(query: T) {
         val s = Json.encodeToString(query) + "\n"
-        jsonObject = null
         writeBytes(s.encodeToByteArray(), s.length.toLong())
     }
 
-    private inline fun <reified T> getResponse(): T? = runBlocking {
-//        val millis = System.currentTimeMillis()
-        val respMillis = AppConfigFactory.appConfig.commLinkConfig.hmiRefreshInterval + 1000L
-        try {
-//            println("WAIT RESPONSE (${T::class.simpleName}) FOR $respMillis millis")
-            withTimeout(respMillis) {
-                while (jsonObject == null) {
-                    delay(10)
-                }
-            }
-        } catch (e: Exception) {
-            val msg = "waiting (${T::class.simpleName}) response timeout error: ${e.message}"
-            println(msg)
-            throw ServiceException(msg)
-        }
-//        println("RESPONSE millis = ${System.currentTimeMillis() - millis} with jsonElement = $jsonObject")
-        val result = jsonObject?.let {
-//            println("jsonElement = $jsonObject")
-            try {
-                Json.decodeFromJsonElement<T>(it)
-            } catch (e: Exception) {
-                throw ServiceException("SerialPort.getResponse decoding error: ${e.message}")
-            }
-        }
-        jsonObject = null
-        result
-    }
-
-    fun sendHelloQuery(): HelloResponse? {
+    @OptIn(ExperimentalSerializationApi::class)
+    fun sendHelloQuery() {
         if (!waitingHelloResponse) {
             waitingHelloResponse = true
             serialPort?.sendQuery(HelloQuery(AppConfigFactory.appConfig.sensorsConfig))
-            helloResponse = getResponse()
         }
-        return helloResponse
     }
 
-    fun sendStateQuery(): StateResponse? {
-        if (helloResponse != null) {
-            serialPort?.sendQuery(StateQuery())
-            return getResponse()
-        }
-        sendHelloQuery()
-        return null
+    @OptIn(ExperimentalSerializationApi::class)
+    fun sendStateQuery() {
+        serialPort?.sendQuery(StateQuery())
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    fun sendResetQuery() {
+        helloResponse = null
+        serialPort?.sendQuery(ResetQuery())
     }
 
     class SerialMessageListener : SerialPortMessageListener {
@@ -138,33 +106,42 @@ object PLCComm {
         override fun serialEvent(event: SerialPortEvent?) {
             event?.receivedData?.let { bytes ->
                 val string = String(bytes)
-//                println("RECEIVED = $string")
-                val result = try {
-                    val json = Json.parseToJsonElement(string) as JsonObject
-                    when (json["type"]?.jsonPrimitive?.contentOrNull) {
-                        "Message" -> {
-                            println(json.toString())
-                            null
-                        }
-                        "RequestHello" -> {
-                            waitingHelloResponse = false
-                            sendHelloQuery()
-                            null
-                        }
-                        "Error" -> {
-                            println(json.toString())
-                            null
-                        }
-                        else -> json
-                    }
+                val json = try {
+                    Json.parseToJsonElement(string) as JsonObject
                 } catch (e: Exception) {
-                    if (string.isNotEmpty() && string != "\r\n") {
-                        print("NoJson(${commId++})> $string")
-                    }
                     null
                 }
-                result?.let {
-                    jsonObject = it
+                when (val type = json?.get("type")?.jsonPrimitive?.contentOrNull) {
+                    "Message" -> {
+                        println(json.toString())
+                    }
+                    "RequestHello" -> {
+                        waitingHelloResponse = false
+                        sendHelloQuery()
+                    }
+                    "Error" -> {
+                        println(json)
+                    }
+                    "Hello" -> {
+                        println("Receiving hello response: $json")
+                        helloResponse = Json.decodeFromJsonElement<HelloResponse>(json)
+                    }
+                    "State" -> {
+                        stateResponse = try {
+                            Json.decodeFromJsonElement<StateResponse>(json)
+                        } catch (e: Exception) {
+                            println("decoding error: ${e.message}")
+                            null
+                        }
+                    }
+                    null -> {
+                        if (string.isNotEmpty() && string != "\r\n") {
+                            print("NoJson(${commId++})> $string")
+                        }
+                    }
+                    else -> {
+                        println("Unkown type: '$type'")
+                    }
                 }
             }
         }
