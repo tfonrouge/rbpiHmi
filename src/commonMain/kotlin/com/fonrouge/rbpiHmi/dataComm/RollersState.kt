@@ -9,5 +9,10 @@ class RollersState(
     val attachedRollerState: RollerState,
     val detachedRollerState: RollerState,
 ) {
-    val detachedRollerId get() = if (attachedRollerId == RollerId.A) RollerId.B else RollerId.A
+    val detachedRollerId: RollerId
+        get() = when (attachedRollerId) {
+            RollerId.A -> RollerId.B
+            RollerId.B -> RollerId.A
+            RollerId.Unknown -> RollerId.Unknown
+        }
 }

@@ -128,6 +128,7 @@ object PLCComm {
                     }
                     "State" -> {
                         stateResponse = try {
+//                            println("STATE: $json")
                             Json.decodeFromJsonElement<StateResponse>(json)
                         } catch (e: Exception) {
                             println("decoding error: ${e.message}")
