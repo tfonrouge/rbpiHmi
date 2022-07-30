@@ -431,7 +431,7 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
         }
 
         AppScope.launch {
-            val appConfig = ModelAppConfig.appConfig()
+            val appConfig = ModelAppConfig.getAppConfig()
             sensorsConfigFormPanel.setData(appConfig.sensorsConfig)
             commLinkConfigFormPanel.setData(appConfig.commLinkConfig)
             serialCommConfigFormPanel.setData(appConfig.commLinkConfig.serialCommConfig)

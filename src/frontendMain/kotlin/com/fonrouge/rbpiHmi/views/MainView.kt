@@ -1,6 +1,7 @@
 package com.fonrouge.rbpiHmi.views
 
 import com.fonrouge.rbpiHmi.*
+import com.fonrouge.rbpiHmi.ModelAppConfig.appConfig
 import com.fonrouge.rbpiHmi.dataComm.RollersState
 import com.fonrouge.rbpiHmi.dataComm.enums.TurretState
 import com.fonrouge.rbpiHmi.lib.RadialGauge
@@ -68,9 +69,6 @@ class MainView : SimplePanel() {
                     div(content = "Main Roller", rich = true, className = "title1")
                     radialGaugeMainRollerRpm = react(250) { getState, _ ->
                         RadialGauge {
-                            animation = true
-                            animatedValue = true
-                            animationDuration = 500
                             value = getState()
                             setCanvasGaugesParams(RadialGaugeType.MainRoller, "A")
                         }
@@ -137,8 +135,9 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Wind Roller A", rich = true, className = "title1")
-                        radialGaugeARollerRpm = react {
+                        radialGaugeARollerRpm = react(600) { getState, _ ->
                             RadialGauge {
+                                value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.WindRoller, "A")
                             }
                         }
@@ -150,8 +149,9 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Wind Roller B", rich = true, className = "title1")
-                        radialGaugeBRollerRpm = react {
+                        radialGaugeBRollerRpm = react(600) { getState, _ ->
                             RadialGauge {
+                                value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.WindRoller, "B")
                             }
                         }
@@ -168,7 +168,7 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor A", rich = true, className = "title1")
-                        radialGaugeAMotorRpm = react(0) { getState, _ ->
+                        radialGaugeAMotorRpm = react(2000) { getState, _ ->
                             RadialGauge {
                                 value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "A")
@@ -182,8 +182,9 @@ class MainView : SimplePanel() {
                         className = "flexPanelCtrl1"
                     ) {
                         div(content = "Motor B", rich = true, className = "title1")
-                        radialGaugeBMotorRpm = react {
+                        radialGaugeBMotorRpm = react(2000) { getState, _ ->
                             RadialGauge {
+                                value = getState()
                                 setCanvasGaugesParams(RadialGaugeType.Motor, "B")
                             }
                         }
@@ -202,10 +203,10 @@ class MainView : SimplePanel() {
         try {
             ModelHmi.getHmiServiceState().apply {
                 radialGaugeMainRollerRpm.state = mainRollerRpm
-                radialGaugeARollerRpm.state = aRollerRpm
-                radialGaugeBRollerRpm.state = bRollerRpm
-                radialGaugeAMotorRpm.state = aMotorFinalRpm
-                radialGaugeBMotorRpm.state = bMotorFinalRpm
+                radialGaugeARollerRpm.state = (aMotorRpm * appConfig.sensorsConfig.aMotorSpeedFinalRelation).toInt()
+                radialGaugeBRollerRpm.state = (bMotorRpm * appConfig.sensorsConfig.bMotorSpeedFinalRelation).toInt()
+                radialGaugeAMotorRpm.state = aMotorRpm
+                radialGaugeBMotorRpm.state = bMotorRpm
                 setRollerWindState(rollersState)
                 setRollerWindPosition(turretState)
             }

@@ -4,10 +4,14 @@ import com.fonrouge.rbpiHmi.data.AppConfig
 import com.fonrouge.rbpiHmi.services.AppConfigService
 
 object ModelAppConfig {
-    private val appConfigService = AppConfigService()
 
-    suspend fun appConfig(): AppConfig {
-        return appConfigService.appConfig()
+    val appConfigService = AppConfigService()
+
+    var appConfig: AppConfig = AppConfig()
+
+    suspend fun getAppConfig(): AppConfig {
+        appConfig = appConfigService.appConfig()
+        return appConfig
     }
 
     suspend fun writeAppConfig(appConfig: AppConfig): Boolean {
