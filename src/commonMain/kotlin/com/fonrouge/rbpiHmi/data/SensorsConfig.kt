@@ -21,11 +21,11 @@ class SensorsConfig(
     @EncodeDefault()
     val startDetachingSignalInverter: Boolean = false,
     @EncodeDefault()
-    val feederRollerRpmSignalPinNumber: Int = 15,
+    val feederRollerRpmSignalPinNumber: Int = 2,
     @EncodeDefault()
     val feederRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
-    val aWindingRollerRpmSignalPinNumber: Int = 2,
+    val aWindingRollerRpmSignalPinNumber: Int = 15,
     @EncodeDefault()
     val aWindingRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
@@ -63,7 +63,7 @@ class SensorsConfig(
     @EncodeDefault()
     val aMotorSpeedPwmFreq: Int = 5000,
     @EncodeDefault()
-    val aMotorSpeedPwmResolution: Int = 11,
+    val aMotorSpeedPwmResolution: Int = 13,
     @EncodeDefault()
     val bMotorSpeedPinNumber: Int = 26,
     @EncodeDefault()
@@ -77,5 +77,5 @@ class SensorsConfig(
     @EncodeDefault()
     val bMotorSpeedPwmFreq: Int = 5000,
     @EncodeDefault()
-    val bMotorSpeedPwmResolution: Int = 11,
+    val bMotorSpeedPwmResolution: Int = 13,
 )
