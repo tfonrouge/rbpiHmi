@@ -17,41 +17,41 @@ class SensorsConfig(
     @EncodeDefault()
     val spinUpUnWindedRollerBeforeAttaching: Boolean = true,
     @EncodeDefault()
-    val startDetachingSignalPinNumber: Int = 34,
+    val startDetachingSignalPinNumber: Int = 5,
     @EncodeDefault()
-    val startDetachingSignalInverter: Boolean = true,
+    val startDetachingSignalInverter: Boolean = false,
     @EncodeDefault()
-    val feederRollerRpmSignalPinNumber: Int = 35,
+    val feederRollerRpmSignalPinNumber: Int = 15,
     @EncodeDefault()
     val feederRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
-    val aWindingRollerRpmSignalPinNumber: Int = 36,
+    val aWindingRollerRpmSignalPinNumber: Int = 2,
     @EncodeDefault()
     val aWindingRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
-    val bWindingRollerRpmSignalPinNumber: Int = 39,
+    val bWindingRollerRpmSignalPinNumber: Int = 4,
     @EncodeDefault()
     val bWindingRollerRpmSignalInverter: Boolean = false,
     @EncodeDefault()
-    val startAttachingSignalPinNumber: Int = 16,
+    val attachedSignalPinNumber: Int = 18,
     @EncodeDefault()
-    val startAttachingSignalInverter: Boolean = true,
+    val attachedSignalInverter: Boolean = false,
     @EncodeDefault
     val detachingAttachingMaxTime: Int = 3000,
     @EncodeDefault()
-    val cutOperationSignalPinNumber: Int = 17,
+    val cutOperationSignalPinNumber: Int = 19,
     @EncodeDefault()
-    val cutOperationSignalInverter: Boolean = true,
+    val cutOperationSignalInverter: Boolean = false,
     @EncodeDefault()
-    val aMotorStartStopPinNumber: Int = 18,
+    val aMotorStartStopPinNumber: Int = 32,
     @EncodeDefault()
-    val aMotorStartStopSignalInverter: Boolean = true,
+    val aMotorStartStopSignalInverter: Boolean = false,
     @EncodeDefault()
-    val bMotorStartStopPinNumber: Int = 19,
+    val bMotorStartStopPinNumber: Int = 33,
     @EncodeDefault()
-    val bMotorStartStopSignalInverter: Boolean = true,
+    val bMotorStartStopSignalInverter: Boolean = false,
     @EncodeDefault()
-    val aMotorSpeedPinNumber: Int = 21,
+    val aMotorSpeedPinNumber: Int = 25,
     @EncodeDefault()
     val aMotorSpeedNominalRpm: Int = 1800,
     @EncodeDefault()
@@ -65,7 +65,7 @@ class SensorsConfig(
     @EncodeDefault()
     val aMotorSpeedPwmResolution: Int = 11,
     @EncodeDefault()
-    val bMotorSpeedPinNumber: Int = 22,
+    val bMotorSpeedPinNumber: Int = 26,
     @EncodeDefault()
     val bMotorSpeedNominalRpm: Int = 1800,
     @EncodeDefault()

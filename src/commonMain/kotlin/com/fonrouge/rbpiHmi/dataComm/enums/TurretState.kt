@@ -6,5 +6,5 @@ enum class TurretState(
     winding("static-rotating-circle.png"),
     detaching("circle-arrow-right.png"),
     cutting("scissor.png"),
-    attaching("circle-arrow-left.png")
+    attached("circle-arrow-left.png")
 }

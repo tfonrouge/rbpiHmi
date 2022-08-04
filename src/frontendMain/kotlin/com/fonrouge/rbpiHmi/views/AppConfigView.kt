@@ -63,17 +63,17 @@ class AppConfigView : FlexPanel(direction = FlexDirection.COLUMN) {
                                     advancedControlList.add(this)
                                 }.bind(SensorsConfig::startDetachingSignalInverter, required = true)
                                 spinner(
-                                    label = "Attaching Signal Pin number:",
+                                    label = "Attached Signal Pin number:",
                                     min = 0,
                                     max = 39
                                 ) {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::startAttachingSignalPinNumber, required = true)
+                                }.bind(SensorsConfig::attachedSignalPinNumber, required = true)
                                 checkBox(label = ":Signal Inverter") {
                                     disabled = advancedConfigDisabled
                                     advancedControlList.add(this)
-                                }.bind(SensorsConfig::startAttachingSignalInverter, required = true)
+                                }.bind(SensorsConfig::attachedSignalInverter, required = true)
                                 spinner(
                                     label = "Detaching/Attaching Cycle Max Time (ms):",
                                     min = 0,
